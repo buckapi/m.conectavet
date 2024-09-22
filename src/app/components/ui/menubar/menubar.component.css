@@ -3,15 +3,34 @@
   }
   
   .arrow-badge {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 10px solid red;
     position: absolute;
-    top: -20px;
+    top: -30px; /* Ajusta según lo necesites */
+    left: 50%;
+    transform: translateX(-50%);
   }
+  
+  .arrow-badge::before,
+  .arrow-badge::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 2px;
+    background-color: red;
+    position: absolute;
+  }
+  
+  .arrow-badge::before {
+    transform: rotate(30deg); /* Flecha inclinada hacia la derecha */
+    top: 0;
+    left: 0;
+  }
+  
+  .arrow-badge::after {
+    transform: rotate(-30deg); /* Flecha inclinada hacia la izquierda */
+    top: 0;
+    right: 0;
+  }
+  
   
   .marker-icon {
     transition: transform 0.3s ease-in-out; /* Animación suave */

@@ -1,20 +1,20 @@
 <div class="dz-box style-4">
-    <div class="title-bar align-items-end mb-0" [hidden]="global.isScrollingDown">
+    <div class="title-bar align-items-end mb-0">
         <div class="left">
             <h4 class="title max-w200">Nuestros servicios</h4>
         </div>
         <a href="products.html">ver todas</a>
     </div>
-    <div class="swiper dz-category-swiper3 mb-3" style="padding: 15px 15px 7px 15px !important;">
+    <div class="swiper dz-category-swiper3 mb-3">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let item of global.categories">
+            <div class="swiper-slide" *ngFor="let item of categories">
                 <a  
                    class="category-tag tag-lg"
                    style="cursor: pointer;"
-*ngIf="item.status=='active'"
+
                    (click)="selectCategory(item[0])"
                    [ngClass]="{'active': item[0] === config.categorySelected}">
-                  {{ item.name }} 
+                  {{ item[1] }}
                 </a>
               </div>
               

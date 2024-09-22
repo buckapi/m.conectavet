@@ -16573,7 +16573,7 @@ label input {
   margin: 0 -15px;
   border-bottom: 1px solid var(--border-color); }
   .dz-box.style-2 {
-    border-top: 1px solid var(--border-color);
+    /* border-top: 1px solid var(--border-color); */
     border-bottom: 1px solid var(--border-color); }
   .dz-box.style-3 {
     padding: 30px 15px; }

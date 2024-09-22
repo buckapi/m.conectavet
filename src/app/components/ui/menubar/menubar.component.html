@@ -6,14 +6,19 @@
       </a>
   
       <!-- Ícono de marker con el badge -->
-      <a class="nav-link marker-icon" (click)="preventClick($event)">
+      <!-- <a class="nav-link marker-icon" (click)="preventClick($event)">
         <i class="fi fi-rr-marker" style="color: red; font-size: 35px;">
           <span class="arrow-badge" [ngClass]="{'slide-up': isOffcanvasActive}"></span>
         </i>
+      </a> -->
+      <a class="nav-link marker-icon" (click)="preventClick($event)" style="position: relative;">         
+        <img src="https://app.conectavet.cl/assets/images/banner_title_img02.png" alt="Marker Image" style="height: 45px; box-shadow: 0px 10px 20px 0px rgba(255, 36, 23, 0.5);border-radius: 50%;">   
+        <span class="arrow-badge" [ngClass]="{'slide-up': isOffcanvasActive}" style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%);"></span>
       </a>
+      
   
       <!-- Ícono de mensajes -->
-      <a class="nav-link" (click)="global.setRoute('messages')">
+      <a class="nav-link" (click)="global.setRoute('messages')"  [class.active]="global.activeRoute === 'messages'">
         <i class="fi fi-rr-comment"></i>
       </a>
     </div>
