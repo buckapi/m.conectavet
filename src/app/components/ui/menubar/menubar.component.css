@@ -1,0 +1,37 @@
+.nav-link {
+    cursor: pointer !important;
+  }
+  
+  .arrow-badge {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid red;
+    position: absolute;
+    top: -20px;
+  }
+  
+  .marker-icon {
+    transition: transform 0.3s ease-in-out; /* Animación suave */
+    position: relative; /* Necesario para mover el ícono correctamente */
+  }
+  .offcanvas-body {
+    padding: 0; /* Elimina cualquier padding predeterminado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    margin-bottom: -35px;
+  }
+  
+  .offcanvas-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    top: -35px; /* Ajusta la posición de la imagen hacia arriba */
+  }
+  

@@ -1,0 +1,37 @@
+<div class="menubar-area footer-fixed">
+    <div class="toolbar-inner menubar-nav" style="justify-content: space-around;">
+      <!-- Ícono de home -->
+      <a (click)="global.setRoute('home')" [class.active]="global.activeRoute === 'home'" class="nav-link">
+        <i class="fi fi-rr-home"></i>
+      </a>
+  
+      <!-- Ícono de marker con el badge -->
+      <a class="nav-link marker-icon" (click)="preventClick($event)">
+        <i class="fi fi-rr-marker" style="color: red; font-size: 35px;">
+          <span class="arrow-badge" [ngClass]="{'slide-up': isOffcanvasActive}"></span>
+        </i>
+      </a>
+  
+      <!-- Ícono de mensajes -->
+      <a class="nav-link" (click)="global.setRoute('messages')">
+        <i class="fi fi-rr-comment"></i>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Offcanvas -->
+  <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: -webkit-fill-available;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasBottomLabel">Urgencias veterinarias más cercanas</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeOffcanvas()">
+        <i class="icon feather icon-x"></i>
+      </button>
+    </div>
+    
+    <!-- Aquí insertamos la imagen -->
+    <div class="offcanvas-body">
+      <img src="https://camo.githubusercontent.com/31a9053416d6bac645cc137a2e71b9d9dc53f7d016f8ceb6ab10fc113b9aaf75/687474703a2f2f692e67697068792e636f6d2f336f3655426f50534c6c494b5132647637712e676966" alt="Imagen Offcanvas" class="offcanvas-image">
+    </div>
+  </div>
+  
+  

@@ -1,0 +1,38 @@
+.dz-authentication-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Esto asegura que el contenedor tome la altura completa de la pantalla */
+}
+
+.dz-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* Esto centra verticalmente las columnas */
+    max-width: 1200px; /* Ajusta esto según el ancho deseado */
+    width: 100%;
+    padding: 20px; /* Añade un poco de padding para un espacio extra */
+}
+
+/* Ajuste para dispositivos móviles */
+@media (max-width: 768px) {
+    .dz-content-wrapper {
+        flex-direction: column;
+        align-items: center; /* Centra el contenido en pantallas pequeñas */
+        padding: 10px;
+    }
+
+    .dz-left,
+    .dz-right {
+        width: 100%;
+        padding: 0;
+    }
+
+    .dz-left {
+        margin-bottom: 20px;
+    }
+}
+ .form-control {
+    width: 100%; /* Hace que los campos de entrada ocupen todo el ancho disponible */
+}
