@@ -1,20 +1,21 @@
 <div class="sidebar" id="sidebar">
-    <a  class="author-box">
+    <a class="author-box">
         <div class="dz-media" [hidden]="!auth.isLogin()">
             <img src="assets/images/avatar/chat/2.png" alt="author-image">
         </div>
         <div class="dz-info">
             <h5 class="name" [hidden]="!auth.isLogin()">{{configService.defaultConfig.appTitle}}</h5>
-            <img src="assets/images/app-logo/logo.png" alt="author-image" style="padding-bottom: 20px; " [hidden]="auth.isLogin()">
+            <img src="assets/images/app-logo/logo.png" alt="author-image" style="padding-bottom: 20px; "
+                [hidden]="auth.isLogin()">
 
-<app-authbox></app-authbox>
+            <app-authbox></app-authbox>
 
-                <span class="mail text-primary" [hidden]="!auth.isLogin()">example gmail.com</span>
+            <span class="mail text-primary" [hidden]="!auth.isLogin()">example gmail.com</span>
         </div>
     </a>
-    <ul class="nav navbar-nav" [hidden]="!auth.isLogin()">	
-        <li [hidden]="global.activeRoute=='home'">
-            <a class="nav-link" style="cursor: pointer;"  (click)="global.setRoute('home')" >
+    <ul class="nav navbar-nav" [hidden]="!auth.isLogin()">
+        <li (click)="goRoute('home')">
+            <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('home')">
                 <span class="dz-icon">
                     <i class="fi fi-rr-home"></i>
                 </span>
@@ -23,25 +24,25 @@
         </li>
 
         <li>
-            <a class="nav-link" >
+            <a class="nav-link" (click)="goRoute('favorites')">
                 <span class="dz-icon">
                     <i class="fi fi-rr-star"></i>
                 </span>
                 <span>Lista de favoritos</span>
             </a>
         </li>
-     
+
         <li>
-            <a class="nav-link"   (click)="global.setRoute('messages')" >
+            <a class="nav-link" (click)="goRoute('messages')">
                 <span class="dz-icon">
                     <i class="feather icon-message-circle"></i>
                 </span>
                 <span>Mensajes</span>
             </a>
         </li>
-   
-        <li [hidden]="global.activeRoute=='account'">
-            <a class="nav-link"  style="cursor: pointer;"  (click)="global.setRoute('account')" >
+
+        <li (click)="goRoute('account')">
+            <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('account')">
                 <span class="dz-icon">
                     <i class="fi fi-rr-user"></i>
                 </span>
@@ -58,15 +59,16 @@
         </li> -->
     </ul>
     <div class="sidebar-bottom" [hidden]="!auth.isLogin()">
-    
+
         <div class="app-info">
             <!-- <span>Cierra la sesión</span> -->
-            
-          
-            <ul class="nav navbar-nav" [hidden]="!auth.isLogin()">	
+
+
+            <ul class="nav navbar-nav" [hidden]="!auth.isLogin()">
                 <!-- (click)="global.setRoute('login')"   -->
-                <li style="cursor: pointer;"   data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="applyClasses()" >
-                    <a class="nav-link" >
+                <li style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                    (click)="applyClasses()">
+                    <a class="nav-link">
                         <span class="dz-icon">
                             <i class="feather icon-log-out"></i>
                         </span>
@@ -77,7 +79,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- <div class="modal-header">
@@ -86,10 +89,10 @@
             </div> -->
             <div class="modal-body">Confirma que deseas cerrar sesion?.</div>
             <div class="modal-footer">
-                
+
                 <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"
-                (click)="logout()"  >Si, cerrar sesión</button>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" (click)="logout()">Si,
+                    cerrar sesión</button>
             </div>
         </div>
     </div>
