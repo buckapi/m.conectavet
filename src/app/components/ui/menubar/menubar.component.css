@@ -54,3 +54,6 @@
     top: -35px; /* Ajusta la posición de la imagen hacia arriba */
   }
   
+  .bg-transparent {
+    background-color: transparent !important;
+}

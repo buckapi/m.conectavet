@@ -20,6 +20,7 @@ public auth:AuthPocketbaseService
   ){}
   goRoute(route:string){
     this,this.applyClasses();
+    this.global.option="";
     this.global.setRoute(route);
   
   }

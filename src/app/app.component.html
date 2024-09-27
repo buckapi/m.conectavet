@@ -11,7 +11,7 @@
 	<!-- Preloader end-->
 
 	<!-- Header -->
-	<app-header [hidden]="global.activeRoute=='login'||
+	<app-header [hidden]="global.activeRoute=='login'|| global.activeRoute=='account'|| 
 	global.activeRoute=='chat'|| global.activeRoute=='messages' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail'"></app-header>
 	<app-backheader [hidden]="global.activeRoute=='chat'||   global.activeRoute!='messages' && global.activeRoute!='login'  && global.activeRoute!='register' && global.activeRoute!='addpet' && global.activeRoute!='clinicdetail'"></app-backheader>
 	<!-- Header -->

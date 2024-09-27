@@ -14,6 +14,7 @@ export interface Clinic {
   providedIn: 'root',
 })
 export class GlobalService {
+  option: string = '';
   isScrollingDown = false;
   lastScrollTop = 0;
   scrollThreshold = 380;
