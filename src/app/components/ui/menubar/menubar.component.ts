@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
 import { CommonModule } from '@angular/common';
+import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 
 @Component({
   selector: 'app-menubar',
@@ -16,7 +17,9 @@ export class MenubarComponent {
   threshold: number = 50;  // Umbral de deslizamiento para activar el offcanvas
   isOffcanvasActive: boolean = false;
 
-  constructor(public global: GlobalService) {}
+  constructor(public global: GlobalService,
+    public auth: AuthPocketbaseService
+  ) {}
 
   // Método para prevenir el comportamiento del click en el ícono marker
   preventClick(event: MouseEvent) {
