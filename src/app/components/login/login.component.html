@@ -1,7 +1,6 @@
 <main class="page-content">
     <div class="container px-0 pt-0">
-        <div class="row dz-authentication-area " style="margin: 10px !important;" >
-            <!-- Columna izquierda (4 columnas de 12 en pantallas grandes) -->
+        <div class="row dz-authentication-area" style="margin: 10px !important;">
             <div class="col-lg-4 dz-left desktop-only">
                 <div class="dz-media">
                     <img src="assets/images/authentication/pic1.png" alt="">
@@ -9,42 +8,50 @@
             </div>
             <div class="col-lg-2 desktop-only">
             </div>
-            <!-- Columna derecha (8 columnas de 12 en pantallas grandes) -->
             <div class="col-lg-5 dz-right">
                 <div class="section-head">
                     <h3 class="title" style="text-align: center;">Hola</h3>
-                    <p class="sub" style="text-align: center;">Inicia sesion</p>
+                    <p class="sub" style="text-align: center;">Inicia sesión</p>
                 </div>
                 <div class="account-section">
-                    <form>
+                    <!-- Añadimos el manejador ngSubmit y enlazamos el formulario -->
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <div class="mb-3">
-                            <!-- <label class="form-label" for="email">Correo electrónico*</label> -->
-                            <input type="email" id="email" class="form-control" placeholder="Email">
+                            <input type="email" id="email" class="form-control" placeholder="Email" 
+                                   formControlName="email" 
+                                   [ngClass]="{'is-invalid': emailControl.invalid && emailControl.touched}">
+                            <div *ngIf="emailControl.invalid && emailControl.touched" class="invalid-feedback">
+                                <small *ngIf="emailControl.errors?.['required']">El email es requerido.</small>
+                                <small *ngIf="emailControl.errors?.['email']">Formato de email inválido.</small>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <!-- <label class="form-label" for="password">Contraseña*</label> -->
                             <div class="input-group input-group-icon mb-2">
-                                <input type="password" id="password" class="form-control dz-password" placeholder="Contraseña">
+                                <input type="password" id="password" class="form-control dz-password" placeholder="Contraseña" 
+                                       formControlName="password" 
+                                       [ngClass]="{'is-invalid': passwordControl.invalid && passwordControl.touched}">
                                 <span class="input-group-text show-pass">
                                     <i class="icon feather icon-eye-off eye-close"></i>
                                     <i class="icon feather icon-eye eye-open"></i>
                                 </span>
                             </div>
-                            <a href="forgot-password.html" class="btn-link text-end">¿Olvidaste tu contraseña?</a>
+                            <div *ngIf="passwordControl.invalid && passwordControl.touched" class="invalid-feedback">
+                                <small *ngIf="passwordControl.errors?.['required']">La contraseña es requerida.</small>
+                                <small *ngIf="passwordControl.errors?.['minlength']">Debe tener al menos 6 caracteres.</small>
+                            </div>
+                            <a class="btn-link text-end">¿Olvidaste tu contraseña?</a>
                         </div>
-                        <a  class="btn btn-lg w-100 btn-login">Ingresar</a>
-                        <!-- <div class="dz-saprate">
-                            <span>O inicia sesión con</span>
+                        <button type="submit" class="btn btn-lg w-100 btn-login" 
+                                [disabled]="loginForm.invalid">Ingresar</button>
+
+                        <div class="btn-link link-fixed">¿No tienes una cuenta? 
+                            <a (click)="global.setRoute('register')" style="cursor: pointer;" class="text-underline font-w600">Crea una cuenta</a>
                         </div>
-                        <div class="social-btn-group">
-                            <a href="javascript:void(0);" class="dz-icon icon-lg bg-light rounded-xl"><img
-                                    src="assets/images/svg/google.svg" alt=""></a>
-                            <a href="javascript:void(0);" class="dz-icon icon-lg bg-light rounded-xl"><img
-                                    src="assets/images/svg/apple.svg" alt=""></a>
-                        </div> -->
-                        <div class="btn-link link-fixed">¿No tienes una cuenta? <a (click)="global.setRoute('register')"
-                                style="cursor: pointer;" class="text-underline font-w600">Crea una cuenta</a></div>
                     </form>
+                    <!-- Mensaje de error general -->
+                    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+                        {{ errorMessage }}
+                    </div>
                 </div>
             </div>
         </div>

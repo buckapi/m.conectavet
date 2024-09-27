@@ -17,8 +17,8 @@
 	<!-- Header -->
 
 	<!-- Sidebar -->
-	<div class="dark-overlay"></div>
-	<app-sidebar></app-sidebar>
+	<div class="dark-overlay" id="overlay"></div>
+	<app-sidebar ></app-sidebar>
 	<!-- Sidebar End -->
 
 	<app-home [hidden]="global.activeRoute!='home'"></app-home>
@@ -28,13 +28,14 @@
 	<app-login [hidden]="global.activeRoute!='login'"></app-login>
 	<app-messages [hidden]="global.activeRoute!='messages'"></app-messages>
 	<app-chat [hidden]="global.activeRoute!='chat'"></app-chat>
+	<app-account [hidden]="global.activeRoute!='account'"></app-account>
 
 	<!-- Menubar -->
 	<app-menubar [hidden]="global.activeRoute=='login' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail'" ></app-menubar  >
 		
 	<!-- Menubar -->
 	<!-- PWA Offcanvas -->
-	<div class="offcanvas offcanvas-bottom pwa-offcanvas">
+	<!-- <div class="offcanvas offcanvas-bottom pwa-offcanvas">
 		<div class="container">
 			<div class="offcanvas-body">
 				<img class="logo dark" src="assets/images/app-logo/logo.png" alt="">
@@ -48,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="offcanvas-backdrop pwa-backdrop"></div>
+	<div class="offcanvas-backdrop pwa-backdrop"></div> -->
 	<!-- PWA Offcanvas End -->
 
 </div>

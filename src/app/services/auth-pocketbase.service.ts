@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '@app/interfaces/user-interface'; // Asegúrate de que la ruta sea correcta
 import { isPlatformBrowser } from '@angular/common';

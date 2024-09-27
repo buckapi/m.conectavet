@@ -1,58 +1,6 @@
 <main class="page-content space-top p-b60">
     <div class="container pt-20 pb-20">
-        <div class="dz-banner ">
-            <div class="swiper banner-swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="inner-banner">
-                            <div class="left-content">
-                                <h4 class="title" data-swiper-parallax="-300">Prioridad a tu bienestar, donde quiera que
-                                    estés.</h4>
-                                <p data-swiper-parallax="-100"><span class="text-success"></span> </p>
-                                <div class="input-group input-group-icon input-sm">
-                                    <span class="input-group-text">
-                                        <div class="input-icon">
-                                            <i class="feather icon-search opacity-100"></i>
-                                        </div>
-                                    </span>
-                                    <input type="search" class="form-control font-16"
-                                       placeholder="Buscar">
-                                </div>
-                            </div>
-                            <div class="right-content">
-                                <div class="dz-media">
-                                    <img src="assets/images/banner.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="inner-banner">
-                            <div class="left-content">
-                                <h4 class="title" data-swiper-parallax="-300">Prioridad a tu bienestar, donde quiera que
-                                    estés.</h4>
-                                <p data-swiper-parallax="-100"><span class="text-success"></span> </p>
-                                <div class="input-group input-group-icon input-sm">
-                                    <span class="input-group-text">
-                                        <div class="input-icon">
-                                            <i class="feather icon-search opacity-100"></i>
-                                        </div>
-                                    </span>
-                                    <input type="search" class="form-control font-16"
-                                       placeholder="Buscar">
-                                </div>
-                            </div>
-                            <div class="right-content">
-                                <div class="dz-media">
-                                    <img src="assets/images/banner3.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>       
+       <app-banner  ></app-banner>
         <!-- <app-reels style="padding: 25px 10px 10px;"></app-reels> -->
         <app-services [hidden]="configService.showServices"></app-services>
 
@@ -90,17 +38,18 @@
                   </ul>
                   
             </div>
-            <div class="row ">
+            <div class="row">
                 <div class="col-12 col-lg-3 m-b35" 
-                [ngClass]="{'col-12': isListView, 'col-6': !isListView}" 
-                *ngFor="let specialist of global.specialists"
-                (click)="global.viewClinic(specialist)">
-                    <div class="dz-card style-2">
+                    [ngClass]="{'col-12': isListView, 'col-6': !isListView}" 
+                    *ngFor="let specialist of global.specialists"
+                    (click)="global.viewClinic(specialist)">
+                    
+                    <div class="dz-card style-2 specialist-card">
                         <div class="dz-media">
-                            <a>
-                                <img src="{{specialist.images[0]}}" alt="image" class="responsive-image"
-                                    style="border-radius: 15px;">
+                            <a class="image-container">
+                                <img src="{{specialist.images[0]}}" alt="image" class="responsive-image image-square">
                             </a>
+                            
                         </div>
                         <div class="dz-content">
                             <h6 class="title"><a>{{specialist.full_name}}</a></h6>
@@ -112,6 +61,8 @@
                     </div>
                 </div>
             </div>
+            
+            
         </div>
     </div>
 </main>

@@ -20,10 +20,12 @@ import { BackheaderComponent } from './components/ui/backheader/backheader.compo
 import { MessagesComponent } from './components/messages/messages.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { RealtimeCategoriesService } from './services/realtime-catwgories.service';
+import { AccountComponent } from './components/account/account.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    AccountComponent,
     RouterOutlet,
     ServicesComponent,
     CommonModule,
