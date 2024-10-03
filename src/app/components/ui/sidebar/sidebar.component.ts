@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
 import { AuthboxComponent } from '@app/components/sections/authbox/authbox.component';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
@@ -9,6 +10,7 @@ import { catchError, tap } from 'rxjs/operators';
   selector: 'app-sidebar',
   standalone: true,
   imports: [
+    CommonModule,
     AuthboxComponent
   ],
   templateUrl: './sidebar.component.html',

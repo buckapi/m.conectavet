@@ -49,6 +49,15 @@
                 <span>Cuenta</span>
             </a>
         </li>
+
+        <li (click)="goRoute('settings')" *ngIf="auth.isLogin()">
+            <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('account')">
+                <span class="dz-icon">
+                    <i class="feather icon-settings"></i>
+                </span>
+                <span>Ajustes</span>
+            </a>
+        </li>
         <!-- <li>
             <a class="nav-link" >
                 <span class="dz-icon">
