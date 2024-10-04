@@ -7,6 +7,8 @@ import { GlobalService } from '@app/services/global.service';
 import { ReelsComponent } from '../reels/reels.component';
 import { BannerComponent } from '../sections/banner/banner.component';
 import { DeviceService } from '@app/services/device.service';
+import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
+import { FilterSpecialistsPipe } from '@app/pipes/filter-specialists.pipe';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ import { DeviceService } from '@app/services/device.service';
   imports: [
     BannerComponent,
     CommonModule,
+    FilterSpecialistsPipe,
     CategoriesComponent,
     ServicesComponent,
     ReelsComponent,
@@ -28,6 +31,7 @@ export class HomeComponent {
 
   constructor(
     public device:DeviceService,
+    public auth:AuthPocketbaseService,
     public global: GlobalService,
     public configService: ConfigService
   ) {}

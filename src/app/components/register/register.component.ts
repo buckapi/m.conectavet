@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   name: string = '';
   email: string = '';
   password: string = '';
+  address: string = ''; // Nueva propiedad para la dirección del usuario
   
   // Propiedades para el registro de clínica
   clinicName: string = '';
@@ -84,7 +85,7 @@ export class RegisterComponent implements OnInit {
 
   // Método para registrar usuario
   registerUser() {
-    this.auth.registerUser(this.email, this.password, 'tutor', this.name).subscribe(
+    this.auth.registerUser(this.email, this.password, 'tutor', this.name, this.address).subscribe(
       (response) => {
         console.log('Usuario registrado exitosamente', response);
         this.loginAfterRegistration(this.email, this.password);
@@ -97,7 +98,7 @@ export class RegisterComponent implements OnInit {
 
   // Método para registrar clínica
   registerClinic() {
-    this.auth.registerUser(this.clinicEmail, this.clinicPassword, 'clinica', this.clinicName).subscribe(
+    this.auth.registerUser(this.clinicEmail, this.clinicPassword, 'clinica', this.clinicName, this.clinicAddress).subscribe(
       (response) => {
         console.log('Clínica registrada exitosamente', response);
         // Aquí podrías agregar lógica adicional para guardar los datos específicos de la clínica

@@ -13543,7 +13543,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .form-control {
   height: 48px;
-  border: 1px solid var(--primary);
+  border: 1px solid #DDDDDD;
+  /* border: 1px solid var(--primary); */
   padding: 10px 15px;
   font-size: 16px;
   font-weight: 400;
@@ -13611,7 +13612,9 @@ textarea {
 .input-group .input-group-text {
   background-color: var(--bg-white) !important;
   border-width: 1px;
-  border-color: var(--primary);
+  
+  /* border-color: var(--primary); */
+  border-color: #DDDDDD;
   border-radius: var(--border-radius-sm);
   transition: all 0.3s ease-in-out;
   padding: 10px 15px; }

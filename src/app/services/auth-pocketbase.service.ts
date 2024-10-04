@@ -13,13 +13,13 @@ export class AuthPocketbaseService {
   private pb: PocketBase;
 
   constructor(public global: GlobalService) {
-    this.pb = new PocketBase('https://db.buckapi.com:8090');
+    this.pb = new PocketBase('https://db.conectavet.cl:8080');
   }
 
   async saveCategor(categoryData: any): Promise<any> {
     try {
       const record = await this.pb
-        .collection('camiwaCategories')
+        .collection('categories')
         .create(categoryData);
       console.log('Categoría guardada exitosamente:', record);
 
@@ -33,7 +33,7 @@ export class AuthPocketbaseService {
   async saveSpecialty(specialtyData: any): Promise<any> {
     try {
       const record = await this.pb
-        .collection('camiwaSpecialties')
+        .collection('specialties')
         .create(specialtyData);
       console.log('Especialidad guardada exitosamente:', record);
       // this.global.getSpecialties();
@@ -55,7 +55,8 @@ export class AuthPocketbaseService {
     email: string,
     password: string,
     type: string,
-    name: string
+    name: string,
+    address: string // Añadimos el parámetro address
   ): Observable<any> {
     const userData = {
       email: email,
@@ -66,21 +67,21 @@ export class AuthPocketbaseService {
       name: name,
     };
 
-    // Crear usuario y luego crear el registro en camiwaTravelers
+    // Crear usuario y luego crear el registro en clinics
     return from(
       this.pb
         .collection('users')
         .create(userData)
         .then((user) => {
           const data = {
-            name: name,
-            address: '', // Agrega los campos correspondientes aquí
+            full_name: name,
+            address: address, // Usamos el parámetro address aquí
             phone: '', // Agrega los campos correspondientes aquí
             userId: user.id, // Utiliza el ID del usuario recién creado
             status: 'pending', // Opcional, establece el estado del cliente
             images: {}, // Agrega los campos correspondientes aquí
           };
-          return this.pb.collection('camiwaTravelers').create(data);
+          return this.pb.collection('members').create(data);
         })
     );
   }
@@ -106,7 +107,7 @@ export class AuthPocketbaseService {
         .collection('users')
         .create(userData)
         .then((user) => {
-          // No se necesita crear ningún registro adicional en camiwaTravelers aquí
+          // No se necesita crear ningún registro adicional en clinics aquí
           return user; // Devolver los datos del usuario creado
         })
     );

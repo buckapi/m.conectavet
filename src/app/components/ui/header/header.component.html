@@ -60,7 +60,7 @@
             <ul class="dz-tab nav nav-pills light style-1 list">
                 <li class="nav-item">
                     <button class="nav-link" (click)="global.setModalType('filter')" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
+                        data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom3"><i
                             class="icon feather icon-list"></i></button>
                 </li>
             </ul>
@@ -68,9 +68,9 @@
     </div>
     <app-categories></app-categories>
 </header>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom3" aria-labelledby="offcanvasBottom3Label">
     <div class="offcanvas-header" [hidden]="global.modalType=='reel'">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel" [hidden]="global.modalType=='reel'">Búsquueda Avanzada</h5>
+        <h5 class="offcanvas-title" id="offcanvasBottom3Label" [hidden]="global.modalType=='reel'">Búsquueda Avanzada</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i
                 class="icon feather icon-x"></i></button>
     </div>
@@ -80,4 +80,169 @@
     </div>
     <app-reeldetail [hidden]="global.modalType=='filter'">
     </app-reeldetail>
+</div> -->
+
+<!-- <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom3" aria-labelledby="offcanvasBottomLabel3"> -->
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom3" aria-labelledby="offcanvasBottomLabel3">
+
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvasBottomLabel3">Búsqueda avanzada</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="icon feather icon-x"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="filter-inner-content">
+            <div class="title-bar">
+                <h5 class="title mb-0">Destacados</h5>
+                <a href="products.html">ver todas</a>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck1" checked="">
+                    <label class="form-check-label" for="filterCheck1">
+                        Royal Canine
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck2">
+                    <label class="form-check-label" for="filterCheck2">
+                        Purina
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck3">
+                    <label class="form-check-label" for="filterCheck3">
+                        Blue Buffalo
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck4">
+                    <label class="form-check-label" for="filterCheck4">
+                        Origin
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck5">
+                    <label class="form-check-label" for="filterCheck5">
+                        Nutra
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+        <div class="filter-inner-content">
+            <!-- <div class="title-bar">
+                <h5 class="title mb-0">Categorías:</h5>
+                <a href="products.html">ver todas</a>
+            </div> -->
+            <app-categories></app-categories>
+            <!-- <div class="d-flex flex-wrap gap-2">
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck6">
+                    <label class="form-check-label" for="filterCheck6">
+                        All
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck7" checked="">
+                    <label class="form-check-label" for="filterCheck7">
+                        Dogs
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck8" checked="">
+                    <label class="form-check-label" for="filterCheck8">
+                        Cats
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck9">
+                    <label class="form-check-label" for="filterCheck9">
+                        Birds
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck10">
+                    <label class="form-check-label" for="filterCheck10">
+                        Fish
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck11">
+                    <label class="form-check-label" for="filterCheck11">
+                        Reptiles
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck12">
+                    <label class="form-check-label" for="filterCheck12">
+                        Rodents
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck13">
+                    <label class="form-check-label" for="filterCheck13">
+                        Rabbits
+                    </label>
+                </div>
+            </div> -->
+        </div>
+        <div class="filter-inner-content">
+            <!-- <div class="title-bar">
+                <h5 class="title mb-0">Servicios:</h5>
+                <a href="products.html">ver todas</a>
+            </div> -->
+            <app-services></app-services>
+            <!-- <div class="d-flex flex-wrap gap-2">
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck14" checked="">
+                    <label class="form-check-label" for="filterCheck14">
+                        Small
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck15">
+                    <label class="form-check-label" for="filterCheck15">
+                        Medium
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck16" checked="">
+                    <label class="form-check-label" for="filterCheck16">
+                        Large
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck18">
+                    <label class="form-check-label" for="filterCheck18">
+                        XL
+                    </label>
+                </div>
+                <div class="form-check style-2">
+                    <input class="form-check-input" type="checkbox" name="filterCheck" id="filterCheck19">
+                    <label class="form-check-label" for="filterCheck19">
+                        2Xl
+                    </label>
+                </div>
+            </div> -->
+        </div>
+        <div class="filter-inner-content">
+            <div class="title-bar">
+                <h5 class="title mb-0">Price:</h5>
+            </div>
+            <div class="range-slider style-1">
+                <div class="mb-3 title font-w600 font-16">
+                    <span class="example-val title slider-margin-value-min"></span>
+                    <span class="example-val title slider-margin-value-max"></span>
+                </div>
+                <div id="slider-tooltips"></div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <a href="javascript:void(0);" class="btn btn-light font-w400 w-100">Reset</a>
+            <a href="javascript:void(0);" class="btn btn-primary font-w400 w-100">Apply</a>
+        </div>
+    </div>
 </div>
+

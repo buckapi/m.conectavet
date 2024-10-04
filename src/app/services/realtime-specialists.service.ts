@@ -24,8 +24,8 @@ export class RealtimeSpecialistsService implements OnDestroy {
       .collection('users')
       .authWithPassword('admin@email.com', 'admin1234');
 
-    // Suscribirse a cambios en cualquier registro de la colección 'conectavetMembers'
-    this.pb.collection('conectavetMembers').subscribe('*', (e) => {
+    // Suscribirse a cambios en cualquier registro de la colección 'members'
+    this.pb.collection('members').subscribe('*', (e) => {
       this.handleRealtimeEvent(e);
     });
 
@@ -45,7 +45,7 @@ export class RealtimeSpecialistsService implements OnDestroy {
   private async updateSpecialistsList() {
     // Obtener la lista actualizada de especialistas
     const records = await this.pb
-      .collection('conectavetMembers')
+      .collection('members')
       .getFullList(200 /* cantidad máxima de registros */, {
         sort: '-created', // Ordenar por fecha de creación
       });
@@ -54,6 +54,6 @@ export class RealtimeSpecialistsService implements OnDestroy {
 
   ngOnDestroy() {
     // Desuscribirse cuando el servicio se destruye
-    this.pb.collection('conectavetMembers').unsubscribe('*');
+    this.pb.collection('members').unsubscribe('*');
   }
 }

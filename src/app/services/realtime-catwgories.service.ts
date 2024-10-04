@@ -14,7 +14,7 @@ export class RealtimeCategoriesService implements OnDestroy {
     this.categoriesSubject.asObservable();
 
   constructor() {
-    this.pb = new PocketBase('https://db.buckapi.com:8090');
+    this.pb = new PocketBase('https://db.conectavet.cl:8080');
     this.subscribeToCategories();
   }
 
@@ -24,8 +24,8 @@ export class RealtimeCategoriesService implements OnDestroy {
       .collection('users')
       .authWithPassword('admin@email.com', 'admin1234');
 
-    // Suscribirse a cambios en cualquier registro de la colección 'camiwaSpecialists'
-    this.pb.collection('camiwaCategories').subscribe('*', (e) => {
+    // Suscribirse a cambios en cualquier registro de la colección 'categories'
+    this.pb.collection('categories').subscribe('*', (e) => {
       this.handleRealtimeEvent(e);
     });
 
@@ -45,7 +45,7 @@ export class RealtimeCategoriesService implements OnDestroy {
   private async updateCategoriesList() {
     // Obtener la lista actualizada de especialistas
     const records = await this.pb
-      .collection('camiwaCategories')
+      .collection('categories')
       .getFullList(200 /* cantidad máxima de registros */, {
         sort: '-created', // Ordenar por fecha de creación
       });
@@ -54,6 +54,6 @@ export class RealtimeCategoriesService implements OnDestroy {
 
   ngOnDestroy() {
     // Desuscribirse cuando el servicio se destruye
-    this.pb.collection('camiwaCategories').unsubscribe('*');
+    this.pb.collection('categories').unsubscribe('*');
   }
 }
