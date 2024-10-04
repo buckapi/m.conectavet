@@ -1,9 +1,10 @@
 import PocketBase from 'pocketbase';
 import { Injectable, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { UserInterface } from '@app/interfaces/user-interface'; // Asegúrate de que la ruta sea correcta
 import { isPlatformBrowser } from '@angular/common';
 import { GlobalService } from './global.service';
+import { Observable, from, tap, map } from 'rxjs';
+import { UserInterface } from '@app/interfaces/user-interface';
+import { RecordModel } from 'pocketbase';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,10 @@ export class AuthPocketbaseService {
     return localStorage.getItem('isLoggedin');
   }
 
+    isAdmin(){
+      const userType = localStorage.getItem('type');
+  return userType === '"admin"';
+    }
   registerUser(
     email: string,
     password: string,
@@ -108,7 +113,33 @@ export class AuthPocketbaseService {
   }
 
   loginUser(email: string, password: string): Observable<any> {
-    return from(this.pb.collection('users').authWithPassword(email, password));
+    return from(this.pb.collection('users').authWithPassword(email, password))
+      .pipe(
+        map((authData) => {
+          const pbUser = authData.record;
+          const user: UserInterface = {
+            id: pbUser.id,
+            email: pbUser['email'],
+            password: '', // No almacenamos la contraseña por seguridad
+            full_name: pbUser['name'],
+            images: pbUser['images'] || {},
+            type: pbUser['type'],
+            username: pbUser['username'],
+            created: pbUser['created'],
+            updated: pbUser['updated'],
+            avatar: pbUser['avatar'] || '',
+            status: pbUser['status'] || 'active',
+            // Añade aquí cualquier otro campo necesario
+          };
+          return { ...authData, user };
+        }),
+        tap((authData) => {
+          this.setUser(authData.user);
+          this.setToken(authData.token);
+          localStorage.setItem('isLoggedin', 'true');
+          localStorage.setItem('userId', authData.user.id);
+        })
+      );
   }
 
   logoutUser(): Observable<any> {

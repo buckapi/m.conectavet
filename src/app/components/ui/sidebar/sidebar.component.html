@@ -50,7 +50,7 @@
             </a>
         </li>
 
-        <li (click)="goRoute('settings')" *ngIf="auth.isLogin()">
+        <li (click)="goRoute('settings')" *ngIf="auth.isLogin() && auth.isAdmin()">
             <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('account')">
                 <span class="dz-icon">
                     <i class="feather icon-settings"></i>
