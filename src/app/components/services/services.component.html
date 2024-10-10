@@ -1,6 +1,7 @@
 <div class="dz-category style-2 border-bottom">
     <div class="title-bar mb-2 mt-2">
-        <h4 class="title">Servicios destacados {{config.getSelectedCategoryLabel()}}</h4>
+        <h4 class="title"  [hidden]="global.categoryFiltersAplcated">Destacado </h4>
+        <h4 class="title" [hidden]="!global.categoryFiltersAplcated">Mostrando servicios de la categoría "{{config.getSelectedCategoryLabel()}}"</h4>
         <!-- <a href="category.html">Ver todos</a> -->
     </div>
     <div class="swiper dz-category-swiper3 mb-3">

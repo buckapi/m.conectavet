@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ConfigService } from '@app/services/config.service';
+import { GlobalService } from '@app/services/global.service';
 
 @Component({
   selector: 'app-services',
@@ -13,7 +14,7 @@ export class ServicesComponent {
   services: any[] = [];
   selectedService: string = '';  // Almacena el nombre del servicio seleccionado
 
-constructor(  public config: ConfigService){
+constructor(  public config: ConfigService,public global:GlobalService){
   this.services = Object.values(this.config.getServicesByCategory('salud_general'));
 
 }

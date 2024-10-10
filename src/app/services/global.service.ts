@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
+import { Category } from '@app/interfaces/category.interface'; // Importar la interfaz
 export interface Clinic {
   id: number;
   name: string;
@@ -11,11 +12,14 @@ export interface Clinic {
   // Otros campos que sean necesarios
 }
 
+
 @Injectable({
   providedIn: 'root',
 })
 
+
 export class GlobalService {
+  categoryFiltersAplcated=false;
   adminOptionn:string='';
   formOption:string='';
   option: string = '';
@@ -24,6 +28,9 @@ export class GlobalService {
   scrollThreshold = 380;
   specialists: any[] = [];
   categories: any[] = [];
+  categorySelected: any = { // Cambiar 'category' a 'Category'
+   
+  }; 
   clinicSelected: Clinic = {
     id: 0,
     name: '',

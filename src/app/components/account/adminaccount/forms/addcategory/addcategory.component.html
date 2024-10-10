@@ -16,8 +16,10 @@
         <div class="title-bar">
             <h5 class="title mb-0"></h5>
         </div>
-        <!-- <label for="categoryDescription" class="form-label">Descripción de categoría</label> -->
-        <!-- <input id="categoryDescription" type="text" placeholder="Ingrese la descripción" class="form-control" [(ngModel)]="categoryDescription" /> Nuevo campo para la descripción -->
+        <div class="form-check form-switch">
+            <input class="form-check-input form-check-success" type="checkbox" id="carouselSwitch" [(ngModel)]="carouselActive">
+            <label class="form-check-label" for="carouselSwitch">Visible en el carousel principal?</label>
+        </div>
     </div>
     <div class="d-flex align-items-center gap-2">
         <a class="btn btn-light font-w400 w-100">Cancelar</a>

@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs'; // {{ edit_1 }}
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class RealtimeCategoriesService implements OnDestroy {
   public categories$: Observable<any[]> =
     this.categoriesSubject.asObservable();
 
-  constructor() {
+  constructor(private catwgoriesRealtime:RealtimeCategoriesService) { // {{ edit_2 }}
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
     this.subscribeToCategories();
   }

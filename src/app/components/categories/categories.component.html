@@ -1,20 +1,21 @@
-<div class="dz-box style-4">
+<div class="dz-box style-4" style="padding-top: 7%;">
     <div class="title-bar align-items-end mb-0">
         <div class="left">
-            <h4 class="title max-w200">Top services</h4>
+            <h4 class="title max-w200" [hidden]="!global.categoryFiltersAplcated">mostrando () servicios paras la categoría ({{global.categorySelected.name}})</h4>
+            <h4 class="title max-w200" [hidden]="global.categoryFiltersAplcated">Top services</h4>
         </div>
         <a >ver todas</a>
     </div>
     <div class="swiper dz-category-swiper3 mb-3">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let item of categories">
+            <div class="swiper-slide" *ngFor="let item of (realtimeCategories.categories$ | async)">
                 <a  
                    class="category-tag tag-lg"
                    style="cursor: pointer;"
 
-                   (click)="selectCategory(item[0])"
-                   [ngClass]="{'active': item[0] === config.categorySelected}">
-                  {{ item[1] }}
+                   (click)="selectCategory(item)"
+                   [ngClass]="{'active': item.name === global.categorySelected.name}">
+                  {{ item.name }}
                 </a>
               </div>
               

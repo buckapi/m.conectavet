@@ -13,6 +13,7 @@ export class AddcategoryComponent {
   @Output() categoryAdded = new EventEmitter<void>(); // Emitir evento al agregar categoría
   categoryName: string = '';
   categoryDescription: string = '';
+  carouselActive: boolean = false; // Inicializa la propiedad
   constructor(
     public global: GlobalService,
     private categoryService: CategoryService // Inyectar el servicio
@@ -20,7 +21,8 @@ export class AddcategoryComponent {
   async addCategory() { // Método para agregar una nueva categoría
     const newCategory = {
       name: this.categoryName, // Usar el nombre de la categoría del formulario
-      description: '', // Usar la descripción de la categoría del formulario
+      description: '',  
+      carousel: this.carouselActive, // Tomar el valor del switch
       status: 'activo',
       images: JSON.stringify([]) // Si no hay imágenes, puedes dejarlo vacío
     };

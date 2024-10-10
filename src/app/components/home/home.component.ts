@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '@app/services/config.service';
 import { CategoriesComponent } from '../categories/categories.component';
 import { ServicesComponent } from '../services/services.component';
@@ -9,6 +9,7 @@ import { BannerComponent } from '../sections/banner/banner.component';
 import { DeviceService } from '@app/services/device.service';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { FilterSpecialistsPipe } from '@app/pipes/filter-specialists.pipe';
+import { RealtimeCategoriesService } from 'src/app/services/realtime-catwgories.service'; // {{ edit_1 }}
 
 @Component({
   selector: 'app-home',
@@ -24,8 +25,9 @@ import { FilterSpecialistsPipe } from '@app/pipes/filter-specialists.pipe';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   specialists: any[] = [];
+  categories: any[] = []; // {{ edit_2 }}
 
   activeRoute = 'home';isListView: boolean = true;  // Por defecto, vista lista
 
@@ -33,8 +35,16 @@ export class HomeComponent {
     public device:DeviceService,
     public auth:AuthPocketbaseService,
     public global: GlobalService,
-    public configService: ConfigService
+    public configService: ConfigService,
+    private realtimeCategoriesService: RealtimeCategoriesService // {{ edit_1 }}
   ) {}
+
+  ngOnInit(): void {
+    this.realtimeCategoriesService.categories$.subscribe(categories => {
+      this.categories = categories; // {{ edit_3 }}
+    });
+  }
+
   toggleView(view: string): void {
     this.isListView = (view === 'list');
   }
