@@ -20,4 +20,22 @@ export class CategoryService {
       throw error; // Lanzar el error para manejarlo en el componente
     }
   }
+  async deleteCategory(categoryId: string) { // Método para eliminar una categoría
+    try {
+      const response = await this.pb.collection('categories').delete(categoryId); // Eliminar la categoría usando PocketBase
+      return response;
+    } catch (error) {
+      console.error('Error al eliminar la categoría:', error);
+      throw error; // Lanza el error para manejarlo en el componente
+    }
+  }
+  async updateCarouselValue(categoryId: string, newValue: any) { // Método para actualizar el valor del carrusel
+    try {
+      const updatedRecord = await this.pb.collection('categories').update(categoryId, { carousel: newValue }); // Actualizar el valor del carrusel
+      return updatedRecord; // Retornar el registro actualizado
+    } catch (error) {
+      console.error('Error al actualizar el valor del carrusel:', error);
+      throw error; // Lanzar el error para manejarlo en el componente
+    }
+  }
 }

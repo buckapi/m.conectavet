@@ -8,7 +8,7 @@
     </div>
     <div class="swiper dz-category-swiper3 mb-3">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let item of (realtimeCategories.categories$ | async)">
+            <div class="swiper-slide" *ngFor="let item of (realtimeCategories.categories$ | async)" [hidden]="!item.carousel">
                 <a  
                    class="category-tag tag-lg"
                    style="cursor: pointer;"

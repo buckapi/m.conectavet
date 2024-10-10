@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
 import { CategoryService } from '@app/services/category.service'; // Importar el servicio
+import { RealtimeCategoriesService } from '@app/services/realtime-catwgories.service';
+import Swal from 'sweetalert2'; // Importar Swal para los alertas
 
 @Component({
   selector: 'app-categoriesadministrator',
@@ -11,6 +13,8 @@ import { CategoryService } from '@app/services/category.service'; // Importar el
   styleUrl: './categoriesadministrator.component.css'
 })
 export class CategoriesadministratorComponent {
+  updating=false;
+  updatingCategoryId='';
   services: any[] = [
     { name: 'Medicina Preventiva', categoryKey: 'salud_general' },
     { name: 'Vacunación', categoryKey: 'salud_general' },
@@ -53,6 +57,7 @@ export class CategoriesadministratorComponent {
   }
   constructor(
     public global: GlobalService,
+    public realtimeCategories:RealtimeCategoriesService,
     private categoryService: CategoryService // Inyectar el servicio
   ) {}
 
@@ -71,6 +76,37 @@ export class CategoriesadministratorComponent {
       // Aquí puedes actualizar la lista de categorías si es necesario
     } catch (error) {
       console.error('Error al agregar la categoría:', error);
+    }
+  }
+  async deleteCategory(categoryId: string) {
+    try {
+      const response = await this.categoryService.deleteCategory(categoryId);
+      console.log('Categoría eliminada:', response);
+      // Aquí puedes actualizar la lista de categorías si es necesario
+      Swal.fire({
+        icon: 'success',
+        title: 'Categoría eliminada',
+        text: 'La categoría ha sido eliminada con éxito.'
+      });
+    } catch (error) {
+      console.error('Error al eliminar la categoría:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al eliminar',
+        text: 'Ocurrió un error al eliminar la categoría.'
+      });
+    }
+  }
+  async updateCarouselValue(categoryId: string, newValue: any) { // Método para actualizar el valor del carrusel
+    this.updating=true;
+this.updatingCategoryId=categoryId;
+    try {
+      const updatedCategory = await this.categoryService.updateCarouselValue(categoryId, newValue);
+      console.log('Categoría actualizada:', updatedCategory);
+      this.updating=false;
+      // Aquí puedes actualizar la lista de categorías si es necesario
+    } catch (error) {
+      console.error('Error al actualizar la categoría:', error);
     }
   }
   isMobile() {

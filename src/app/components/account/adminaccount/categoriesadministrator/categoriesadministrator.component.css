@@ -1,0 +1,10 @@
+/* Agrega este CSS en tu archivo de estilos */
+.delete-button {
+    border-radius: 50%;
+    display: none; /* Ocultar por defecto */
+}
+
+.col-6.col-lg-4:hover .delete-button {
+    border-radius: 50px;
+    display: inline-block; /* Mostrar al pasar el mouse */
+}

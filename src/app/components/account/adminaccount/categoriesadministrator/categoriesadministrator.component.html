@@ -10,10 +10,39 @@
 
 </div>
 
-<div class="content-box">
+<div class="content-box" *ngIf="realtimeCategories.categories$">
+    <div class="row ">
+        
+        <span class="card col-6 col-lg-4 position-relative" style="padding: 10px;" *ngFor="let category of realtimeCategories.categories$ | async">
+            <div [hidden]="!updating || updatingCategoryId !== category.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-8"></span>
+                
+                   
+                </p>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-3"></span>
+                
+                   
+                </p>
+            </div>
+            <div [hidden]="updating && updatingCategoryId === category.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
+            <button class="btn btn-xs btn-danger delete-button position-absolute"  (click)="deleteCategory(category.id)" style="top: 10px; right: 10px; ">
+                <i class="fi fi-rr-trash"></i> <!-- Botón de eliminar -->
+            </button>
+            <a>{{ category.name }}</a>
+            <div class="form-check form-switch">
+                <input class="form-check-input form-check-success"  type="checkbox" [checked]="category?.carousel" (change)="updateCarouselValue(category.id, !category?.carousel)">
+                <label class="form-check-label">Visible en el carousel</label>
+            </div>
+        </div>
+           
+        </span>
+    </div>
+</div>
+
+<div class="content-box" *ngIf="realtimeCategories.categories$ && (realtimeCategories.categories$ | async)?.length === 0">
     <ul class="row g-2">
-        <li class="col-6 col-lg-4 " *ngFor="let key of categories | keyvalue">
-            <a>{{ key.value }}</a>
-        </li>
+        <h2>No hay categorías que mostrar.</h2> <!-- Mensaje cuando no hay categorías -->
     </ul>
 </div>
