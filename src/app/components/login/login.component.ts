@@ -47,7 +47,13 @@ export class LoginComponent {
         next: (response) => {
           console.log('Inicio de sesión exitoso', response);
           localStorage.setItem('isLoggedin', 'true'); // Guardar el estado de login
-          this.global.setRoute('home'); // Redirigir al usuario a la ruta 'home'
+          const currentUser = this.authService.getCurrentUser();
+          this.authService.permision();
+          // if (currentUser.type === 'clinica' && (!currentUser.biography  || !currentUser.days)) {
+          //   this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
+          // } else {
+          //   this.global.setRoute('home'); // Redirigir al usuario a la ruta 'home'
+          // }
         },
         error: (error) => {
           console.error('Error en el inicio de sesión', error);

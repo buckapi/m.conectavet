@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
-import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
+
 @Component({
-  selector: 'app-memberaccount',
+  selector: 'app-servicesadministrator',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './memberaccount.component.html',
-  styleUrl: './memberaccount.component.css'
+  templateUrl: './servicesadministrator.component.html',
+  styleUrl: './servicesadministrator.component.css'
 })
-export class MemberaccountComponent {
-  optionSelected=false;
-  currentUser: UserInterface = {} as UserInterface;
+export class ServicesadministratorComponent {
   services: any[] = [
     { name: 'Medicina Preventiva', categoryKey: 'salud_general' },
     { name: 'Vacunación', categoryKey: 'salud_general' },
@@ -39,9 +36,10 @@ export class MemberaccountComponent {
     { name: 'Eutanasia', categoryKey: 'asistencia_final_vida' },
     { name: 'Servicios de Cremación', categoryKey: 'asistencia_final_vida' }
   ];
-   // Definir la propiedad 'services' como un arreglo
-  constructor(public auth: AuthPocketbaseService,public global:GlobalService) {
-
-    this.currentUser= this.auth.getCurrentUser();
+  constructor(
+    public global:GlobalService
+  ){}
+  isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }
 }

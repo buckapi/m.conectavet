@@ -11,6 +11,7 @@ import { RecordModel } from 'pocketbase';
 })
 export class AuthPocketbaseService {
   private pb: PocketBase;
+  complete:boolean=false;
 
   constructor(public global: GlobalService) {
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
@@ -49,8 +50,19 @@ export class AuthPocketbaseService {
 
     isAdmin(){
       const userType = localStorage.getItem('type');
-  return userType === '"admin"';
+      return userType === '"admin"';
     }
+
+    isTutor(){
+      const userType = localStorage.getItem('type');
+      return userType === '"tutor"';
+    }
+
+    isMember(){
+      const userType = localStorage.getItem('type');
+      return userType === '"clinica"';
+    }
+
   registerUser(
     email: string,
     password: string,
@@ -81,9 +93,18 @@ export class AuthPocketbaseService {
             status: 'pending', // Opcional, establece el estado del cliente
             images: {}, // Agrega los campos correspondientes aquí
           };
-          return this.pb.collection('members').create(data);
+          if (type === 'tutor') {
+            return this.pb.collection('tutors').create(data);
+          } else if (type === 'clinica') {
+            return this.pb.collection('members').create(data);
+          } else {
+            throw new Error('Tipo de usuario no válido');
+          }
         })
     );
+  }
+  profileStatus(){
+    return this.complete;
   }
 
   onlyRegisterUser(
@@ -123,13 +144,16 @@ export class AuthPocketbaseService {
             email: pbUser['email'],
             password: '', // No almacenamos la contraseña por seguridad
             full_name: pbUser['name'],
-            images: pbUser['images'] || {},
+            images: pbUser['  '] || {},
+            days: pbUser['days'] || {},
             type: pbUser['type'],
             username: pbUser['username'],
+            address: pbUser['address'],
             created: pbUser['created'],
             updated: pbUser['updated'],
             avatar: pbUser['avatar'] || '',
             status: pbUser['status'] || 'active',
+            biography: pbUser['biography'], 
             // Añade aquí cualquier otro campo necesario
           };
           return { ...authData, user };
@@ -165,11 +189,57 @@ export class AuthPocketbaseService {
   setToken(token: any): void {
     localStorage.setItem('accessToken', token);
   }
+permision(){
+  const currentUser = this.getCurrentUser();
+  if (!currentUser || !currentUser.type) {
+    this.global.setRoute('home'); // Redirigir al usuario a la ruta 'home' si no hay tipo definido
+    return;
+  }
 
+  // Llamar a la API para obtener información actualizada del usuario
+  this.pb.collection('users').getOne(currentUser.id).then(updatedUser => {
+    switch (updatedUser["type"]) { // Cambiado a acceso con corchetes
+      case 'clinica':
+        if (!updatedUser["biography"] || !updatedUser["days"]) { // Acceso a 'biography' usando corchetes
+          this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
+        } else {
+          this.global.setRoute('home');
+          this.complete = true; // Redirigir al usuario a la ruta 'home'
+        }
+        break;
+      case 'tutor':
+        if (!(updatedUser["images"]) || !(updatedUser["address"])) {
+          this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
+        } else {
+          this.global.setRoute('home');
+          this.complete = true; // Redirigir al usuario a la ruta 'home'
+        }
+        break;
+      default:
+        this.global.setRoute('account'); // Redirigir al usuario a la ruta 'account' si el tipo no es reconocido
+    }
+  }).catch(error => {
+    console.error('Error al obtener la información del usuario:', error);
+    this.global.setRoute('home'); // Redirigir a 'home' en caso de error
+  });
+}
   setUser(user: UserInterface): void {
     let user_string = JSON.stringify(user);
     let type = JSON.stringify(user.type);
     localStorage.setItem('currentUser', user_string);
     localStorage.setItem('type', type);
+  }
+  getCurrentUser(): UserInterface {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null; // Devuelve el usuario actual o null si no existe
+}
+
+  getFullName(): string {
+    const userString = localStorage.getItem('currentUser');
+    if (userString) {
+      const user = JSON.parse(userString);
+      return user.full_name || 'Usuario';
+    }
+    return 'Usuario';
   }
 }

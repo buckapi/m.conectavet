@@ -11,9 +11,9 @@
 	<!-- Preloader end-->
 
 	<!-- Header -->
-	<app-header [hidden]="global.activeRoute=='login'|| global.activeRoute=='account'|| 
-	global.activeRoute=='chat'|| global.activeRoute=='messages' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail'"></app-header>
-	<app-backheader [hidden]="global.activeRoute=='chat'||   global.activeRoute!='messages' && global.activeRoute!='login'  && global.activeRoute!='register' && global.activeRoute!='addpet' && global.activeRoute!='clinicdetail'"></app-backheader>
+	<app-header [hidden]="global.activeRoute=='login'||  
+	global.activeRoute=='chat'|| global.activeRoute=='messages' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail' "></app-header>
+	<app-backheader [hidden]="global.activeRoute=='chat'||    global.activeRoute!='messages' && global.activeRoute!='login'  && global.activeRoute!='register' && global.activeRoute!='addpet' && global.activeRoute!='clinicdetail' "></app-backheader>
 	<!-- Header -->
 
 	<!-- Sidebar -->
@@ -31,7 +31,7 @@
 	<app-account [hidden]="global.activeRoute!='account'"></app-account>
 
 	<!-- Menubar -->
-	<app-menubar [hidden]="global.activeRoute=='login' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail'" ></app-menubar  >
+	<app-menubar [hidden]="global.activeRoute=='login' ||global.activeRoute=='register' || global.activeRoute=='account'|| global.activeRoute=='addpet' || global.activeRoute=='clinicdetail'" ></app-menubar  >
 		
 	<!-- Menubar -->
 	<!-- PWA Offcanvas -->

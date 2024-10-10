@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.realtimeSpecialistsService.specialists$.subscribe((data) => {
       this.global.specialists = data;
     });

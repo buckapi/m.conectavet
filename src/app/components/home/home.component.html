@@ -47,10 +47,10 @@
                     'col-lg-2': auth.isAdmin()
                 }" 
                 *ngFor="let specialist of global.specialists | filterSpecialists:auth.isAdmin()"
-                (click)="global.viewClinic(specialist)">
+             >
                     
                     <div class="dz-card style-2 specialist-card">
-                        <div class="dz-media">
+                        <div class="dz-media"    (click)="global.viewClinic(specialist)">
                             <a class="image-container">
                                 <img [src]="specialist.images?.[0] ?? 'https://static.vecteezy.com/system/resources/previews/013/149/674/non_2x/unavailable-image-icon-in-trendy-flat-style-isolated-on-white-background-photo-gallery-symbol-for-web-and-mobile-apps-free-vector.jpg'" 
                                      alt="image" 
@@ -61,15 +61,19 @@
                         <div class="dz-content">
                             <h6 class="title"><a>{{specialist.full_name}}</a></h6>
                             <ul class="dz-meta">
-                                <li class="dz-price">$80<del>$95</del></li>
-                                <li class="dz-status"><span>Free delivery</span></li>
+                                <!-- <li class="dz-price">$80<del>$95</del></li> -->
+                                <!-- <li class="dz-status"><span>Free delivery</span></li> -->
                             </ul>
-                            <div *ngIf="auth.isAdmin() && specialist.status !== 'approved'" class="form-check form-switch">
-                                <input class="form-check-input" id="flexSwitchCheckDefault" type="checkbox">
+                            <div *ngIf="auth.isAdmin()" class="form-check form-switch">
+                                <input class="form-check-input form-check-success" 
+                                       id="flexSwitchCheckDefault" 
+                                       type="checkbox" 
+                                       [checked]="specialist.status === 'approved'"
+                                       (change)="global.toggleSpecialistStatus(specialist)">
                             </div>
-                            <div *ngIf="auth.isAdmin() && specialist.status === 'approved'" class="form-check form-switch">
-                                <input class="form-check-input form-check-success" id="successSwitch" type="checkbox" checked="">
-                            </div>
+                            <!-- <div *ngIf="auth.isAdmin() && specialist.status === 'approved'" class="form-check form-switch">
+                                <input class="form-check-input " id="successSwitch" type="checkbox" checked="">
+                            </div> -->
                         </div>
                     </div>
                 </div>

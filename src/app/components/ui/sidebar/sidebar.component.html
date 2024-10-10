@@ -4,17 +4,17 @@
             <img src="assets/images/avatar/chat/2.png" alt="author-image">
         </div>
         <div class="dz-info">
-            <h5 class="name" [hidden]="!auth.isLogin()">{{configService.defaultConfig.appTitle}}</h5>
+            <h5 class="name" *ngIf="auth.isLogin() && auth.getCurrentUser().full_name">{{auth.getCurrentUser().full_name}}</h5>
             <img src="assets/images/app-logo/logo.png" alt="author-image" style="padding-bottom: 20px; "
                 [hidden]="auth.isLogin()">
 
             <app-authbox></app-authbox>
 
-            <span class="mail text-primary" [hidden]="!auth.isLogin()">example gmail.com</span>
+            <span class="mail text-primary" *ngIf="auth.isLogin() && auth.getCurrentUser().email">{{auth.getCurrentUser().email}}</span>
         </div>
     </a>
-    <ul class="nav navbar-nav" [hidden]="!auth.isLogin()">
-        <li (click)="goRoute('home')">
+    <ul class="nav navbar-nav" [hidden]="!auth.isLogin() ">
+        <li (click)="goRoute('home')" [hidden]=" auth.isMember()">
             <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('home')">
                 <span class="dz-icon">
                     <i class="fi fi-rr-home"></i>
@@ -23,39 +23,39 @@
             </a>
         </li>
 
-        <li>
-            <a class="nav-link" (click)="goRoute('favorites')">
+        <li *ngIf="!auth.isAdmin()" [hidden]=" auth.isMember()">
+            <a class="nav-link" style="cursor: pointer;" (click)="goRoute('favorites')">
                 <span class="dz-icon">
-                    <i class="fi fi-rr-star"></i>
+                    <i class="fi fi-rr-heart"></i>
                 </span>
                 <span>Lista de favoritos</span>
             </a>
         </li>
 
-        <li>
-            <a class="nav-link" (click)="goRoute('messages')">
+        <li  *ngIf="auth.isLogin() && !auth.isAdmin() && auth.profileStatus() ">
+            <a class="nav-link" style="cursor: pointer;" (click)="goRoute('messages')">
                 <span class="dz-icon">
                     <i class="feather icon-message-circle"></i>
                 </span>
                 <span>Mensajes</span>
             </a>
         </li>
-
-        <li (click)="goRoute('account')">
+<!-- 
+        <li (click)="goRoute('account') " [hidden]="auth.isAdmin()">
             <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('account')">
                 <span class="dz-icon">
                     <i class="fi fi-rr-user"></i>
                 </span>
                 <span>Cuenta</span>
             </a>
-        </li>
+        </li> -->
 
-        <li (click)="goRoute('settings')" *ngIf="auth.isLogin() && auth.isAdmin()">
-            <a class="nav-link" style="cursor: pointer;" (click)="global.setRoute('account')">
+        <li (click)="goRoute('account')" *ngIf="auth.isLogin()">
+            <a class="nav-link" style="cursor: pointer;" >
                 <span class="dz-icon">
-                    <i class="feather icon-settings"></i>
+                    <i [class]="auth.isAdmin() ? 'feather icon-settings' : 'fi fi-rr-user'"></i>
                 </span>
-                <span>Ajustes</span>
+                <span>{{ auth.isAdmin() ? 'Ajustes de aplicación' : 'Cuenta' }}</span>
             </a>
         </li>
         <!-- <li>

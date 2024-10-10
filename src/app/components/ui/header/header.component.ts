@@ -27,7 +27,9 @@ export class HeaderComponent implements OnInit{
     public device:DeviceService,
     public global: GlobalService,
     public auth: AuthPocketbaseService
-  ) {}
+  ) {
+    this.auth.permision();
+  }
   // Detectamos el evento de scroll
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {

@@ -60,7 +60,7 @@
                 </div>
             
                 <div class="account-section" [hidden]="global.option!='tutor'">
-                    <form (ngSubmit)="registerUser()">
+                    <form (ngSubmit)="registerTutor()">
                         <div class="mb-3">
                             <label class="form-label" for="name">Nombre*</label>
                             <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" required>

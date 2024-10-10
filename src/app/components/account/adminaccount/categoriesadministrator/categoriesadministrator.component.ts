@@ -1,18 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
-import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
+import { CategoryService } from '@app/services/category.service'; // Importar el servicio
+
 @Component({
-  selector: 'app-memberaccount',
+  selector: 'app-categoriesadministrator',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './memberaccount.component.html',
-  styleUrl: './memberaccount.component.css'
+  templateUrl: './categoriesadministrator.component.html',
+  styleUrl: './categoriesadministrator.component.css'
 })
-export class MemberaccountComponent {
-  optionSelected=false;
-  currentUser: UserInterface = {} as UserInterface;
+export class CategoriesadministratorComponent {
   services: any[] = [
     { name: 'Medicina Preventiva', categoryKey: 'salud_general' },
     { name: 'Vacunación', categoryKey: 'salud_general' },
@@ -39,9 +37,43 @@ export class MemberaccountComponent {
     { name: 'Eutanasia', categoryKey: 'asistencia_final_vida' },
     { name: 'Servicios de Cremación', categoryKey: 'asistencia_final_vida' }
   ];
-   // Definir la propiedad 'services' como un arreglo
-  constructor(public auth: AuthPocketbaseService,public global:GlobalService) {
+  categories:any= {
+    salud_general: 'Consultas Generales',
+    urgencias: 'Urgencias Veterinarias',
+    cirugias: 'Cirugía Veterinaria',
+    presupuesto: 'Agenda Presupuesto',
+    especialidades_veterinaria: 'Especialidades Veterinarias',
+    hospitalizacion: 'Hospitalización',
+    diagnostico_imagen: 'Diagnóstico por Imagen',
+    laboratorio_clinico: 'Laboratorio Clínico',
+    rehabilitacion: 'Terapia Física y Rehabilitación',
+    hotel_guarderia: 'Hotel y Guardería',
+    estetica: 'Peluquería y Estética',
+    asistencia_final_vida: 'Servicios y Asistencia en la Etapa Final de la Vida'
+  }
+  constructor(
+    public global: GlobalService,
+    private categoryService: CategoryService // Inyectar el servicio
+  ) {}
 
-    this.currentUser= this.auth.getCurrentUser();
+  async addCategory() { // Método para agregar una nueva categoría
+    const newCategory = {
+      name: 'Nueva Categoría', // Cambia esto según sea necesario
+      description: 'Descripción de la nueva categoría',
+      idTag: 'tag123',
+      status: 'activo',
+      images: JSON.stringify([]) // Si no hay imágenes, puedes dejarlo vacío
+    };
+
+    try {
+      const createdCategory = await this.categoryService.createCategory(newCategory);
+      console.log('Categoría creada:', createdCategory);
+      // Aquí puedes actualizar la lista de categorías si es necesario
+    } catch (error) {
+      console.error('Error al agregar la categoría:', error);
+    }
+  }
+  isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }
 }

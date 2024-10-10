@@ -1,0 +1,19 @@
+<div class="title-bar">
+    <button *ngIf="global.adminOptionn!='' && isMobile()"  (click)="global.resetAdminOption()" class="btn btn-secondary" style="margin-right: 10px;">
+        <i class="fi fi-rr-arrow-left"></i> <!-- Botón de retroceso -->
+    </button>
+    <h4 class="title mb-0 font-w500 capitalize-first">Categorías </h4>
+    <i (click)="global.setFormOption('category')" class="fi fi-rr-add" style="font-size: 40px !important; border-radius: 50%; cursor: pointer; color: #3ba5a8;  transition: all 0.3s;" 
+       data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom9" aria-controls="offcanvasBottom9"
+       onmouseover="this.style.color='black'; this.style.transform='scale(1.2)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'; "
+       onmouseout="this.style.color='#3ba5a8'; this.style.transform='scale(1)'; this.style.boxShadow='none';"></i>
+
+</div>
+
+<div class="content-box">
+    <ul class="row g-2">
+        <li class="col-6 col-lg-4 " *ngFor="let key of categories | keyvalue">
+            <a>{{ key.value }}</a>
+        </li>
+    </ul>
+</div>

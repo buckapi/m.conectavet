@@ -110,6 +110,23 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+   // Método para registrar tutor
+   registerTutor() {
+     if (this.name && this.email && this.password) {
+       this.auth.registerUser(this.email, this.password, 'tutor', this.name,'').subscribe(
+         (response) => {
+           console.log('Tutor registrado exitosamente', response);
+           this.loginAfterRegistration(this.email, this.password);
+         },
+         (error) => {
+           console.error('Error al registrar tutor', error);
+         }
+       );
+     } else {
+       console.error('Por favor, complete todos los campos requeridos');
+     }
+   }
+
   // Método para iniciar sesión después del registro
   loginAfterRegistration(email: string, password: string) {
     this.auth.loginUser(email, password).subscribe(

@@ -6,6 +6,7 @@ import { ConfigService } from '@app/services/config.service';
 import { GlobalService } from '@app/services/global.service';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { UserInterface } from '@app/interfaces/user-interface';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -15,18 +16,23 @@ import { catchError, tap } from 'rxjs/operators';
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
-})
+}) 
+
 export class SidebarComponent {
+  currentUser: UserInterface = {} as UserInterface;
   constructor(
     public configService: ConfigService,
     private renderer: Renderer2,
     public auth:AuthPocketbaseService,  
     public global: GlobalService
-  ) {}
+  ) {
+
+    this.currentUser = this.auth.getCurrentUser();
+  }
 
 
 goRoute(route:string){
-  this,this.applyClasses();
+  this.applyClasses();
   this.global.setRoute(route);
 
 }
