@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
+import { RealtimeServicesService } from '@app/services/realtime-services.service';
 
 @Component({
   selector: 'app-servicesadministrator',
@@ -37,7 +38,8 @@ export class ServicesadministratorComponent {
     { name: 'Servicios de Cremación', categoryKey: 'asistencia_final_vida' }
   ];
   constructor(
-    public global:GlobalService
+    public global:GlobalService,
+    public realtimeServicesService: RealtimeServicesService
   ){}
   isMobile() {
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades

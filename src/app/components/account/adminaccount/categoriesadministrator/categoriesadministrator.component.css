@@ -8,3 +8,11 @@
     border-radius: 50px;
     display: inline-block; /* Mostrar al pasar el mouse */
 }
+/* Añadir este CSS en el archivo de estilos correspondiente */
+card.delete-hover {
+    display: none; /* Ocultar por defecto */
+}
+
+.form-check:hover .delete-hover {
+    display: inline; /* Mostrar al pasar el mouse sobre el contenedor */
+}

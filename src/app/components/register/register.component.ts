@@ -4,7 +4,9 @@ import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { DeviceService } from '@app/services/device.service';
 import { GlobalService } from '@app/services/global.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2'; // Asegúrate de importar SweetAlert2
 
+  
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -98,14 +100,27 @@ export class RegisterComponent implements OnInit {
 
   // Método para registrar clínica
   registerClinic() {
-    this.auth.registerUser(this.clinicEmail, this.clinicPassword, 'clinica', this.clinicName, this.clinicAddress).subscribe(
+    const clinicUsername = this.clinicEmail.split('@')[0]; // Obtener la parte antes del arroba
+    
+    // Mostrar mensaje de carga
+    Swal.fire({
+      title: 'Registrando clínica...',
+      text: 'Por favor, espere.',
+      allowOutsideClick: false, // Asegúrate de que esta propiedad sea válida
+      // {{ edit_1 }} 
+    });
+
+    this.auth.registerUser(this.clinicEmail, this.clinicPassword, 'clinica', clinicUsername, this.clinicAddress).subscribe(
       (response) => {
+        Swal.close(); // Cerrar el mensaje de carga
         console.log('Clínica registrada exitosamente', response);
-        // Aquí podrías agregar lógica adicional para guardar los datos específicos de la clínica
+        Swal.fire('Éxito', 'Clínica registrada exitosamente', 'success'); // Mensaje de éxito
         this.loginAfterRegistration(this.clinicEmail, this.clinicPassword);
       },
       (error) => {
+        Swal.close(); // Cerrar el mensaje de carga
         console.error('Error al registrar clínica', error);
+        Swal.fire('Error', 'Error al registrar clínica', 'error'); // Mensaje de error
       }
     );
   }

@@ -79,22 +79,34 @@ export class CategoriesadministratorComponent {
     }
   }
   async deleteCategory(categoryId: string) {
-    try {
-      const response = await this.categoryService.deleteCategory(categoryId);
-      console.log('Categoría eliminada:', response);
-      // Aquí puedes actualizar la lista de categorías si es necesario
-      Swal.fire({
-        icon: 'success',
-        title: 'Categoría eliminada',
-        text: 'La categoría ha sido eliminada con éxito.'
-      });
-    } catch (error) {
-      console.error('Error al eliminar la categoría:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al eliminar',
-        text: 'Ocurrió un error al eliminar la categoría.'
-      });
+    // Mensaje de confirmación antes de eliminar la categoría
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) { // Si el usuario confirma la eliminación
+      try {
+        const response = await this.categoryService.deleteCategory(categoryId);
+        console.log('Categoría eliminada:', response);
+        // Aquí puedes actualizar la lista de categorías si es necesario
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría eliminada',
+          text: 'La categoría ha sido eliminada con éxito.'
+        });
+      } catch (error) {
+        console.error('Error al eliminar la categoría:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al eliminar',
+          text: 'Ocurrió un error al eliminar la categoría.'
+        });
+      }
     }
   }
   async updateCarouselValue(categoryId: string, newValue: any) { // Método para actualizar el valor del carrusel

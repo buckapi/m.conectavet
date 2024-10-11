@@ -13,7 +13,7 @@
 <div class="content-box" *ngIf="realtimeCategories.categories$">
     <div class="row ">
         
-        <span class="card col-6 col-lg-4 position-relative" style="padding: 10px;" *ngFor="let category of realtimeCategories.categories$ | async">
+        <div class="card col-12 col-lg-4 position-relative" style="padding: 10px;" *ngFor="let category of realtimeCategories.categories$ | async">
             <div [hidden]="!updating || updatingCategoryId !== category.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
                 <p class="card-text placeholder-glow">
                     <span class="placeholder col-8"></span>
@@ -27,18 +27,16 @@
                 </p>
             </div>
             <div [hidden]="updating && updatingCategoryId === category.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
-            <button class="btn btn-xs btn-danger delete-button position-absolute"  (click)="deleteCategory(category.id)" style="top: 10px; right: 10px; ">
-                <i class="fi fi-rr-trash"></i> <!-- Botón de eliminar -->
-            </button>
-            <a>{{ category.name }}</a>
+            <h5>{{ category.name }}</h5>
             <div class="form-check form-switch">
                 <input class="form-check-input form-check-success"  type="checkbox" [checked]="category?.carousel" (change)="updateCarouselValue(category.id, !category?.carousel)">
-                <label class="form-check-label">Visible en el carousel</label>
+                <label >Visible en el carousel</label>
             </div>
         </div>
-           
-        </span>
+        <p></p>
+        <span class="text-danger" (click)="deleteCategory(category.id)" style="cursor: pointer; position: absolute; bottom: 10px; right: 10px; ">Borrar</span> <!-- Cambiado para alinear a la derecha y ser visible al pasar el mouse -->
     </div>
+</div>
 </div>
 
 <div class="content-box" *ngIf="realtimeCategories.categories$ && (realtimeCategories.categories$ | async)?.length === 0">
