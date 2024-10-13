@@ -1,20 +1,33 @@
 <div class="offcanvas-body">
       
     <div class="filter-inner-content">
-        <div class="title-bar">
-            <h5 class="title mb-0">Nombre de servicio</h5>
-        </div>
-        <div class="range-slider style-1">
-            <div class="mb-3 title font-w600 font-16">
-                <span class="example-val title slider-margin-value-min"></span>
-                <span class="example-val title slider-margin-value-max"></span>
-            </div>
-            <div id="slider-tooltips"></div>
-        </div>
-        <input type="text" placeholder="Ingrese el nombre de servicio" class="form-control" />
+        
+<div class="add-service-form">
+  <h2 class="card-title">Agregar Servicio</h2>
+  <form (ngSubmit)="addService()">
+    <div class="mb-2">
+      <label for="serviceName" class="form-label">Nombre del Servicio:</label>
+      <input type="text" id="serviceName" class="form-control" [(ngModel)]="serviceName" name="serviceName" required>
     </div>
-    <div class="d-flex align-items-center gap-2">
-        <a href="javascript:void(0);" class="btn btn-light font-w400 w-100">Cancelar</a>
-        <a href="javascript:void(0);" class="btn btn-primary font-w400 w-100">Agregar</a>
+    <div class="mb-2">
+      <label for="serviceDescription" class="form-label">Descripción del Servicio:</label>
+      <textarea id="serviceDescription" class="form-control" [(ngModel)]="serviceDescription" name="serviceDescription" required></textarea>
     </div>
+    <div class="mb-2">
+      <label for="idCategory" class="form-label">Categoría: 
+        <!-- <span *ngFor="let category of global.categories">{{category.name}}</span> -->
+      </label>
+      <select id="idCategory" class="form-control" [(ngModel)]="idCategory" name="idCategory" required>
+        <option *ngFor="let category of global.categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+    </div>
+    <div class="mb-2">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="carouselActive"> Activar Carrusel
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Servicio</button>
+  </form>
+</div>
+</div>
 </div>
