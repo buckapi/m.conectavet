@@ -11,10 +11,31 @@
 
 </div>
 
-<div class="content-box">
-    <ul class="row g-2">
-        <li class="col-4" *ngFor="let service of services">
-            <a>{{ service.name }}</a>
-        </li>
-    </ul>
+<div class="content-box" *ngIf="realtimeServices.services$">
+    <div class="row ">
+        
+        <div class="card col-12 col-lg-4 position-relative" style="padding: 10px;" *ngFor="let service of realtimeServices.services$ | async">
+            <div [hidden]="!updating || updatingServiceId !== service.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-8"></span>
+                
+                   
+                </p>
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-3"></span>
+                
+                   
+                </p>
+            </div>
+            <div [hidden]="updating && updatingServiceId === service.id"> <!-- Cambiado para aplicar solo al elemento que se está actualizando -->
+            <h5>{{ service.name }}</h5>
+            <div class="form-check form-switch">
+                <input class="form-check-input form-check-success"  type="checkbox" [checked]="service?.carousel" (change)="updateCarouselValue(service.id, !service?.carousel)">
+                <label >Visible en el carousel</label>
+            </div>
+        </div>
+        <p></p>
+        <span class="text-danger" (click)="deleteService(service.id)" style="cursor: pointer; position: absolute; bottom: 10px; right: 10px; ">Borrar</span> <!-- Cambiado para alinear a la derecha y ser visible al pasar el mouse -->
+    </div>
+</div>
 </div>
