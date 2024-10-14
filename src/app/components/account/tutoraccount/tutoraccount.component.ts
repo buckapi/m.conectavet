@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { UserInterface } from '@app/interfaces/user-interface';
+import { GlobalService } from '@app/services/global.service';
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -24,7 +25,9 @@ export class TutoraccountComponent {
   ];
   currentUser: UserInterface = {} as UserInterface;
 
-  constructor(public auth: AuthPocketbaseService) {
+  constructor(
+    public global:GlobalService,
+    public auth: AuthPocketbaseService) {
     this.currentUser = this.auth.getCurrentUser();
   }
 

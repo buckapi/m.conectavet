@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { UserInterface } from '@app/interfaces/user-interface';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { ServicesadministratorComponent } from "./servicesadministrator/servicesadministrator.component";
@@ -7,6 +7,8 @@ import { GlobalService } from '@app/services/global.service';
 import { AddserviceComponent } from './forms/addservice/addservice.component';
 import { AddcategoryComponent } from './forms/addcategory/addcategory.component';
 import { CategoriesadministratorComponent } from "./categoriesadministrator/categoriesadministrator.component";
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-adminaccount',
@@ -51,10 +53,47 @@ export class AdminaccountComponent {
     { name: 'Eutanasia', categoryKey: 'asistencia_final_vida' },
     { name: 'Servicios de Cremación', categoryKey: 'asistencia_final_vida' }
   ];
-  constructor(public auth: AuthPocketbaseService,public global:GlobalService) {
+  constructor(
+    private renderer: Renderer2,
+    
+    public auth: AuthPocketbaseService,public global:GlobalService) {
     this.currentUser= this.auth.getCurrentUser();
   }
+  applyClasses() {
+    // Añadir la clase "dark-overlay" al elemento con id "overlay"
+    const overlay = this.renderer.selectRootElement('#overlay', true);
+    this.renderer.removeClass(overlay, 'active');
+    this.renderer.addClass(overlay, 'dark-overlay');
 
+    // Añadir la clase "sidebar" al elemento con id "sidebar"
+    const sidebar = this.renderer.selectRootElement('#sidebar', true);
+    this.renderer.removeClass(sidebar, 'show');
+    this.renderer.addClass(sidebar, 'sidebar');
+
+  }
+  logout() {
+    this.auth.logoutUser().pipe(
+      tap(() => {
+        // Acciones que ocurren al finalizar el logout con éxito
+        const overlay = this.renderer.selectRootElement('#overlay', true);
+        this.renderer.removeClass(overlay, 'active');
+        this.renderer.removeClass(overlay, 'dark-overlay');
+        this.renderer.addClass(overlay, 'dark-overlay');
+        
+        // Redirigir al usuario, limpiar el estado de la app, etc.
+      }),
+      catchError(error => {
+        console.error('Error al cerrar sesión:', error);
+        const overlay = this.renderer.selectRootElement('#overlay', true);
+        this.renderer.removeClass(overlay, 'active');
+        this.renderer.removeClass(overlay, 'dark-overlay');
+        this.renderer.addClass(overlay, 'dark-overlay');
+    
+        // Muestra una alerta o maneja el error de alguna manera
+        return of(null); // Continúa el flujo devolviendo un observable vacío
+      })
+    ).subscribe();
+  }
   isMobile() {
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }

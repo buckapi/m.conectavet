@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
+import { RealtimeServicesService } from '@app/services/realtime-services.service';
+import { RealtimeCategoriesService } from '@app/services/realtime-catwgories.service';
 @Component({
   selector: 'app-memberaccount',
   standalone: true,
@@ -12,36 +14,48 @@ import { GlobalService } from '@app/services/global.service';
 })
 export class MemberaccountComponent {
   optionSelected=false;
+  
   currentUser: UserInterface = {} as UserInterface;
-  services: any[] = [
-    { name: 'Medicina Preventiva', categoryKey: 'salud_general' },
-    { name: 'Vacunación', categoryKey: 'salud_general' },
-    { name: 'Desparasitación', categoryKey: 'salud_general' },
-    { name: 'Emergencia', categoryKey: 'urgencias' },
-    { name: 'Cirugía Veterinaria', categoryKey: 'cirugias' },
-    { name: 'Tipo de Procedimientos', categoryKey: 'presupuesto' },
-    { name: 'Endocrinología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Oftalmología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Cardiología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Neurología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Nefrología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Odontología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Nutricionista', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Etología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Oncología', categoryKey: 'especialidades_veterinaria' },
-    { name: 'Hospitalización', categoryKey: 'hospitalizacion' },
-    { name: 'Radiología', categoryKey: 'diagnostico_imagen' },
-    { name: 'Ecografía', categoryKey: 'diagnostico_imagen' },
-    { name: 'Listado de Exámenes', categoryKey: 'laboratorio_clinico' },
-    { name: 'Terapia Física y Rehabilitación', categoryKey: 'rehabilitacion' },
-    { name: 'Hotel y Guardería', categoryKey: 'hotel_guarderia' },
-    { name: 'Peluquería y Spa', categoryKey: 'estetica' },
-    { name: 'Eutanasia', categoryKey: 'asistencia_final_vida' },
-    { name: 'Servicios de Cremación', categoryKey: 'asistencia_final_vida' }
-  ];
+  services: any[] = [];
    // Definir la propiedad 'services' como un arreglo
-  constructor(public auth: AuthPocketbaseService,public global:GlobalService) {
+  serviceCount: number = 0; // Agregar esta línea
+  serviceCountByCategory: { [key: string]: number } = {}; // Agregar esta línea
 
-    this.currentUser= this.auth.getCurrentUser();
+  getCategory(serviceName: string) {
+    // Lógica para obtener la categoría
+    const category = this.services.find(service => service.name === serviceName); // Ejemplo de búsqueda
+    if (!category) {
+      console.warn(`Categoría no encontrada para el servicio: ${serviceName}`); // Mensaje de advertencia
+    }
+    return category ? { id: category.categoryKey } : { id: null }; // Retorna la categoría encontrada o null
+  }
+
+  constructor(
+    public realtimeServices: RealtimeServicesService,
+    public realtimeCategories: RealtimeCategoriesService,
+    public auth: AuthPocketbaseService,
+    public global: GlobalService
+  ) {
+    this.currentUser = this.auth.getCurrentUser();
+    
+    // Suscribirse a los servicios para calcular el conteo
+    this.realtimeServices.services$.subscribe(services => {
+        this.services = services; // Asignar los servicios de realtimeServices
+        
+        // Obtener todas las categorías
+        this.realtimeCategories.categories$.subscribe(categories => {
+            categories.forEach(category => {
+                const count = services.filter(service => service.idCategory === category.id).length; 
+                this.serviceCountByCategory[category.id] = count; // Almacenar el conteo por categoría
+                console.log(`Conteo de servicios en la categoría ${category.id}: ${count}`); // Mensaje en consola por cada categoría
+            });
+        });
+    });
+    
+    
+    // Suscribirse a las categorías para asegurarse de que se carguen
+    this.realtimeCategories.categories$.subscribe(categories => {
+        // Aquí puedes manejar las categorías si es necesario
+    });
   }
 }

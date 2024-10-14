@@ -47,7 +47,7 @@ export class RealtimeCategoriesService implements OnDestroy {
     const records = await this.pb
       .collection('categories')
       .getFullList(200 /* cantidad máxima de registros */, {
-        sort: '-created', // Ordenar por fecha de creación
+        sort: 'created', // Ordenar por fecha de creación (invertido)
       });
     this.categoriesSubject.next(records);
   }

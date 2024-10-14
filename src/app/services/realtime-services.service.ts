@@ -49,9 +49,12 @@ export class RealtimeServicesService implements OnDestroy {
       .getFullList(200 /* cantidad máxima de registros */, {
         sort: '-created', // Ordenar por fecha de creación
       });
-    this.servicesSubject.next(records);
+    
+    // Invertir el orden de los registros
+    const reversedRecords = records.reverse(); // {{ edit_1 }}
+    
+    this.servicesSubject.next(reversedRecords); // {{ edit_2 }}
   }
-
   ngOnDestroy() {
     // Desuscribirse cuando el servicio se destruye
     this.pb.collection('services').unsubscribe('*');

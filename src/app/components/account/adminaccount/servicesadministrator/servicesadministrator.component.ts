@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
+import { RealtimeCategoriesService } from '@app/services/realtime-catwgories.service';
 import { RealtimeServicesService } from '@app/services/realtime-services.service';
 import { ServiceService } from '@app/services/service.service'; // Importar el servicio de Service
 import Swal from 'sweetalert2'; // Importar SweetAlert2
@@ -44,7 +45,10 @@ export class ServicesadministratorComponent {
   constructor(
     public global:GlobalService,
     public realtimeServices: RealtimeServicesService,
-    private serviceService: ServiceService // Inyectar el servicio de Service
+    private serviceService: ServiceService ,
+    public realtimeCategories:RealtimeCategoriesService
+    
+    // Inyectar el servicio de Service
   ){}
   async deleteService(serviceId: string) { // Método para eliminar un servicio
     const result = await Swal.fire({
