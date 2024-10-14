@@ -46,7 +46,7 @@
                     <li>
                         <a href="review.html" class="item-content item-link">
                             <div class="list-icon">
-                                <i class="fi  fi-rr-star"></i>
+                                <i class="fi  fi-rr-calendar"></i>
                             </div>
                             <div class="dz-inner">
                                 <span class="title">Agenda</span>
@@ -122,15 +122,16 @@
         </div>
         <div class="content-box">
             <ul class="row g-2">
-                <div *ngFor="let category of realtimeCategories.categories$ | async">
+                <div class="row" *ngFor="let category of realtimeCategories.categories$ | async">
                     <span style="font-size: 15px; color: grey;">
-                        {{ category.name }} ({{ serviceCountByCategory[category.id] || 0 }}) <!-- Mostrar el conteo -->
+                        <!-- {{ category.name }} ({{ serviceCount }}) -->
+                    <br/>
                     </span>
-                    <div *ngFor="let service of realtimeServices.services$ | async">
-                        <li class="col-4" *ngIf="category.id == service.idCategory">
+                    <!-- <div > -->
+                        <li *ngFor="let service of realtimeServices.services$ | async" class="col-4" [hidden]="category.id != service.idCategory">
                             <a>{{ service.name }}</a>
                         </li>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </ul>
         </div>

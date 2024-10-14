@@ -72,16 +72,18 @@
              
             </ul>
         </div>
+     
         <div class="title-bar">
             <h4 class="title mb-0 font-w500"></h4>
         </div>
         <div class="dz-list style-1">
             <ul>
                 <li>
-                    <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="cursor: pointer;" (click)="global.setAdminOption('security')"  class="item-content item-link">
-                        <div class="list-icon" >
-                            <i class="fi fi-rr-lock"></i>
-                        </div>
+                    <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="cursor: pointer;"
+                        (click)="global.setAdminOption('security')" class="item-content item-link">
+                        <!-- <div class="list-icon" >
+                        <i class="fi fi-rr-lock"></i>
+                    </div> -->
                         <span class="dz-icon">
                             <i class="feather icon-log-out"></i>
                         </span>
@@ -90,7 +92,6 @@
                         </div>
                     </a>
                 </li>
-             
             </ul>
         </div>
 
@@ -127,23 +128,4 @@
     </div>
     <app-addservice *ngIf="global.formOption=='service'"></app-addservice>
     <app-addcategory *ngIf="global.formOption=='category'"></app-addcategory>
-</div>
-
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> -->
-            <div class="modal-body">Confirma que deseas cerrar sesion?.</div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" (click)="logout()">Si,
-                    cerrar sesión</button>
-            </div>
-        </div>
-    </div>
 </div>

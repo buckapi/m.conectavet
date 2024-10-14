@@ -12,3 +12,8 @@
     color: #3ba5a8 !important;
 
 }
+.scrollable-area {
+    max-height: 600px; /* Ajusta este valor según sea necesario */
+    overflow-y: auto;
+    display: block; /* Asegúrate de que el contenedor sea un bloque */
+}   

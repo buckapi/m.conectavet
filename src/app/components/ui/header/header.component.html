@@ -1,6 +1,6 @@
 <header class="header header-fixed style-2 " [hidden]="global.isScrollingDown">
     <div class="header-content" [hidden]="global.isScrollingDown">
-        <div class="left-content" [hidden]="global.activeRoute=='account' || !auth.isLogin()">
+        <div class="left-content" [hidden]="global.activeRoute!='account' || !auth.isLogin()">
             <a href="javascript:void(0);" class="menu-toggler bg-white pe-2 rounded-xl">
                 <div class="media">
                     <div class="media-35 m-r10">
@@ -10,7 +10,7 @@
                 </div>
             </a>
         </div>
-        <div class="left-content" [hidden]="auth.isLogin() && global.activeRoute!=='account' ">
+        <div class="left-content" [hidden]="auth.isLogin() && global.activeRoute==='account' ">
             <a href="javascript:void(0);" class="menu-toggler  pe-2 ">
                 <div class="">
                     <div class="">

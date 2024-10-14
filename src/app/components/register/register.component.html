@@ -1,5 +1,6 @@
 <main class="page-content">
     <div class="container px-0 pt-0">
+        <h1>Creemos tu cuenta</h1>
         <div class="row dz-authentication-area" style="padding-top: 0px !important;">
             <div class="col-lg-4 dz-left" [hidden]="isMobile">
                 <div class="dz-media" [hidden]="isMobile">
@@ -31,32 +32,35 @@
                 <h1 [hidden]="global.option!='clinica'" class="text-center mb-4">Datos de la clínica</h1>
 
                 <div class="row g-3 mb-3" [hidden]="global.option!=''">
-                    <div class="col-6 d-flex ">
-                        <div class="dz-card">
+                    <div class="col-6  ">
+                        <div class="">
                             <div class="" style="padding: 0 0 50px 0 !important; margin: 0 !important;">
                                 <a  (click)="setOption('tutor')">
                                     <img src="assets/images/tutorPets.png" style="max-width: 50%;" alt="image">
                                 </a>
             
                                 <a (click)="setOption('tutor')"
-                                    class="btn fixed-btn btn-primary font-16 btn-sm w-50 gap-1"> <b>Tutor</b>
+                                    class="btn fixed-btn btn-primary font-16 btn-sm w-50 gap-1" > <span style="font-weight: bold; font-size: 20px;">Tutor</span>
                                     </a>
+                                </div>
+                            <h5>Únite e inscribe a tu mascota</h5>
+
                             </div>
-                        </div>
                     </div>
-                    <div class="col-6 d-flex justify-content-center">
-                        <div class="dz-card">
+                    <div class="col-6  justify-content-center">
+                        <div class="">
                             <div class="" style="padding: 0 0 50px 0 !important; margin: 0 !important;">
                                 <a (click)="setOption('clinica')">
                                     <img src="assets/images/clinic.png"  style="max-width: 50%;" alt="image">
                                 </a>
-            
+                                
                                 <a (click)="setOption('clinica')"
-                                    class="btn fixed-btn btn-primary font-16 btn-sm w-50 gap-1"><b>Clínica</b>
-                                    </a>
-                            </div>
+                                class="btn fixed-btn btn-primary font-16 btn-sm w-50 gap-1"><span style="font-weight: bold; font-size: 20px;">Clínica</span>
+                            </a>
                         </div>
+                        <h5>Registra tu centro médico para ser parte de nuestra comunidad</h5>
                     </div>
+                </div>
                 </div>
             
                 <div class="account-section" [hidden]="global.option!='tutor'">
