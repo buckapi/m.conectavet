@@ -233,6 +233,10 @@ permision(){
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null; // Devuelve el usuario actual o null si no existe
 }
+getUserId(): string {
+  const userId = localStorage.getItem('userId');
+  return userId ? userId: ''; // Devuelve el usuario actual o null si no existe
+}
 
   getFullName(): string {
     const userString = localStorage.getItem('currentUser');

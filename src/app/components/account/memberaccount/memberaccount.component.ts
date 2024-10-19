@@ -5,10 +5,14 @@ import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
 import { RealtimeServicesService } from '@app/services/realtime-services.service';
 import { RealtimeCategoriesService } from '@app/services/realtime-catwgories.service';
+import { ActiveservicesComponent } from './activeservices/activeservices.component';
+import { ProfessionalsComponent } from './professionals/professionals.component';
+import { AddprofessionalComponent } from "./forms/addprofessional/addprofessional.component";
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-memberaccount',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ActiveservicesComponent, ProfessionalsComponent, AddprofessionalComponent,FormsModule],
   templateUrl: './memberaccount.component.html',
   styleUrl: './memberaccount.component.css'
 })

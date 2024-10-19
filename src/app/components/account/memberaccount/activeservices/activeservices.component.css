@@ -1,0 +1,29 @@
+.specialist-card {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    background-color: white !important;
+
+}
+
+.specialist-card:hover {
+    background-color: white !important;
+    transform: translateY(-2px); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+}
+
+/* Reflejo utilizando pseudo-elemento */
+.specialist-card::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: white;
+    opacity: 0.3;
+    transform: scaleY(1); /* Invierte el reflejo */
+    border-radius: inherit;
+    z-index: -1; /* El reflejo está por debajo */
+    pointer-events: none; /* El reflejo no interfiere con los clicks */
+}

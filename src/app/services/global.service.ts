@@ -21,6 +21,8 @@ export interface Clinic {
 export class GlobalService {
   categoryFiltersAplcated=false;
   adminOptionn:string='';
+  memberOptionn:string='';
+
   formOption:string='';
   option: string = '';
   isScrollingDown = false;
@@ -69,14 +71,21 @@ export class GlobalService {
     this.adminOptionn='';
 
   }
+  setAdminOption(option:string){
+    this.adminOptionn=option;
+  }
+    resetMemberOption(){
+    this.memberOptionn='';
+
+  }
+  setMemberOption(option:string){
+    this.memberOptionn=option;
+  }
   setFormOption(option:string){
 this.formOption=option;
   }
   setRoute(route: string) {
     this.activeRoute = route;
-  }
-  setAdminOption(option:string){
-    this.adminOptionn=option;
   }
   setModalType(modalType: string) {
     this.modalType = modalType;
