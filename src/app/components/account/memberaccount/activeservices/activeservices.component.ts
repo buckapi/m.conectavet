@@ -86,7 +86,7 @@ export class ActiveservicesComponent  implements OnInit{
         console.log('servc' + JSON.stringify(memberRecord['services']));
         this.newServices = memberRecord['services'];
         this.record = memberRecord as Member; 
-        console.log('Detalle de clinica:', this.record);
+        console.log('Detalle de clinica 6565656:', this.record);
         let services = memberRecord['services'] || [];
         console.log('Servicios:' + services); 
         this.newServices.push({
@@ -125,7 +125,135 @@ export class ActiveservicesComponent  implements OnInit{
       console.log(`Precio ingresado para ${service.name}: ${price}`);
     }
   }
- 
+  async updatePrice(service: Service) {
+    try {
+      // Cargar el registro del miembro
+      const memberRecord = await pb.collection('members').getOne(this.memberId);
+      console.log('Servicios del miembro:', JSON.stringify(memberRecord['services']));
+      
+      const memberServices: Service[] = memberRecord["services"] || []; // Asegúrate de que sea un array de Service
+      const existingService = memberServices.find((s: Service) => s.id === service.id);
+  
+      if (existingService) {
+        // Solicitar al usuario que ingrese un nuevo precio
+        const { value: newPrice } = await Swal.fire({
+          title: `Actualizar precio para ${service.name}`,
+          input: 'text',
+          inputLabel: 'Ingresa el nuevo precio',
+          inputPlaceholder: 'Escribe el nuevo precio aquí',
+          showCancelButton: true,
+          confirmButtonText: 'Actualizar',
+          cancelButtonText: 'Cancelar',
+          preConfirm: (inputValue) => {
+            if (!inputValue || isNaN(parseFloat(inputValue))) {
+              Swal.showValidationMessage('Debes ingresar un precio válido');
+              return false;
+            }
+            return parseFloat(inputValue);
+          },
+        });
+  
+        if (newPrice) {
+          // Actualizar el precio del servicio en el array
+          existingService.price = newPrice;
+  
+          // Enviar la actualización al servidor
+          try {
+            const updatedRecord = await pb.collection('members').update(this.memberId, {
+              services: memberServices,
+            });
+  
+            Swal.fire(
+              'Éxito',
+              'El precio se ha actualizado correctamente.',
+              'success'
+            );
+  
+            console.log('Registro actualizado:', updatedRecord);
+          } catch (error) {
+            Swal.fire(
+              'Error',
+              `No se pudo actualizar el precio. Detalles: ${error}`,
+              'error'
+            );
+            console.error('Error al actualizar el registro:', error);
+          }
+        }
+      } else {
+        Swal.fire(
+          'Error',
+          'El servicio no está registrado en tu cuenta.',
+          'error'
+        );
+      }
+    } catch (error) {
+      console.error('Error al cargar el registro del miembro:', error);
+      Swal.fire(
+        'Error',
+        'No se pudo cargar el registro del miembro.',
+        'error'
+      );
+    }
+  }
+  
+  // updatePrice(service: Service) {
+  //   alert("hola");
+  //   const memberServices: Service[] = this.memberRecord.services || []; /
+  //   const existingService = memberServices.find((s: Service) => s.id === service.id);
+  
+  //   if (existingService) {
+  //     Swal.fire({
+  //       title: `Actualizar precio para ${service.name}`,
+  //       input: 'text',
+  //       inputLabel: 'Ingresa el nuevo precio',
+  //       inputPlaceholder: 'Escribe el nuevo precio aquí',
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Actualizar',
+  //       cancelButtonText: 'Cancelar',
+  //       preConfirm: (inputValue) => {
+  //         if (!inputValue || isNaN(parseFloat(inputValue))) {
+  //           Swal.showValidationMessage('Debes ingresar un precio válido');
+  //           return false;
+  //         }
+  //         return parseFloat(inputValue);
+  //       },
+  //     }).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         const newPrice = result.value;
+  
+  //         existingService.price = newPrice;
+  
+  //         try {
+  //           const updatedRecord = await pb.collection('members').update(this.memberId, {
+  //             services: memberServices,
+  //           });
+  
+  //           Swal.fire(
+  //             'Éxito',
+  //             'El precio se ha actualizado correctamente.',
+  //             'success'
+  //           );
+  
+  //           console.log('Registro actualizado:', updatedRecord);
+  //         } catch (error) {
+  //           Swal.fire(
+  //             'Error',
+  //             `No se pudo actualizar el precio. Detalles: ${error}`,
+  //             'error'
+  //           );
+  //           console.error('Error al actualizar el registro:', error);
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     Swal.fire(
+  //       'Error',
+  //       'El servicio no está registrado en tu cuenta.',
+  //       'error'
+  //     );
+  //   }
+  // }
+  
   async loadMemberRecord() {
     try {
       this.memberRecord = await pb.collection('members').getOne(this.memberId);

@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
           this.global.myServicesAct = [...this.global.myServicesAct, ...missingServices];
         });
       } else {
-        console.log('No specialist found for the current user ID.');
+        console.log('PANG! No specialist found for the current user ID .');
       }
     });
   }

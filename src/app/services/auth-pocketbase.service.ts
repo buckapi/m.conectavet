@@ -87,6 +87,7 @@ export class AuthPocketbaseService {
         .then((user) => {
           const data = {
             full_name: name,
+            services:[{"id":"","name":"","price":0}],
             address: address, // Usamos el parámetro address aquí
             phone: '', // Agrega los campos correspondientes aquí
             userId: user.id, // Utiliza el ID del usuario recién creado
@@ -177,6 +178,9 @@ export class AuthPocketbaseService {
     localStorage.removeItem('type');
     localStorage.removeItem('clientCard');
     localStorage.removeItem('clientFicha');
+    localStorage.removeItem('memberId');
+    localStorage.removeItem('status');
+
     this.pb.authStore.clear();
     this.global.setRoute('home');
     // this.virtualRouter.routerActive = "home";

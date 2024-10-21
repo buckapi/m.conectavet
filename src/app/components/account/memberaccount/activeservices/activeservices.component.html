@@ -1,25 +1,32 @@
 <div class="title-bar">
     <h4 class="title mb-0 font-w500 capitalize-first">Servicios activos</h4>
-    <i class="fi fi-rr-pencil"></i>
+    <!-- <i class="fi fi-rr-pencil"></i> -->
 </div>
 <div class="content-box">
     <ul class="row g-2">
         <ng-container *ngFor="let service of services">
             <li class="col-4" style="cursor: pointer; padding: 10px;"
-                (click)="!isServiceRegistered(service.id) ? showPriceAlert(service) : null">
-                <a [ngClass]="{'specialist-card': isServiceRegistered(service.id), 'disabled': !isServiceRegistered(service.id)}"
-                [ngStyle]="{ 'color': isServiceRegistered(service.id) ? '#3ba5a8' : 'inherit' }">
-                <div>
-                    <span>{{ service.name }}</span>
-                    <p></p>
-                    <span *ngIf="isServiceRegistered(service.id)" style="color: black; font-weight: 900; font-size: 20px;">P.: </span>
-                    <span *ngIf="isServiceRegistered(service.id)" style="color: #3ba5a8; font-weight: 900; font-size: 20px;">
-                        {{ getServicePrice(service.id) }}
-                    </span>
-                </div>
-             </a>
-             
+                (click)="isServiceRegistered(service.id) ? updatePrice(service) : showPriceAlert(service)">
+                <a [ngClass]="{'selected': isServiceRegistered(service.id), 'specialist-card': !isServiceRegistered(service.id)}"
+                   [ngStyle]="{ 'color': isServiceRegistered(service.id) ? '#3ba5a8' : 'inherit' }">
+                    <div>
+                        <span>{{ service.name }}
+
+                            <span>
+
+                                <img *ngIf="isServiceRegistered(service.id)"  src="https://www.iconpacks.net/icons/2/free-check-icon-3278-thumb.png" alt="Check Icon" style="width: 16px; height: 16px; margin-left: 5px;">
+
+                            </span>
+                        </span>
+                        <p></p>
+                        <span *ngIf="isServiceRegistered(service.id)" style="color: black; font-weight: 900; font-size: 20px;">CLP.: </span>
+                        <span *ngIf="isServiceRegistered(service.id)" style="color: #3ba5a8; font-weight: 900; font-size: 20px;">
+                            {{ getServicePrice(service.id) }}
+                        </span>
+                    </div>
+                </a>
             </li>
         </ng-container>
+        
     </ul>
 </div>
