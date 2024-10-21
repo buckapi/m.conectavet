@@ -5,6 +5,7 @@ import PocketBase from 'pocketbase';
   providedIn: 'root'
 })
 export class ServiceService {
+   services: any[] = []; // Aquí almacenaremos los servicios
   private pb: PocketBase;
 
   constructor() {
@@ -20,6 +21,15 @@ export class ServiceService {
 //       throw error; // Lanzar el error para manejarlo en el componente
 //     }
 //   }
+async getAllServices() {
+  try {
+    const records = await this.pb.collection('services').getFullList(); // Obtiene todos los registros de la colección "services"
+    return records; // Retornar la lista de servicios
+  } catch (error) {
+    console.error('Error al obtener todos los servicios:', error);
+    throw error; // Lanzar el error para manejarlo en el componente
+  }
+}
 
   async deleteService(serviceId: string) { // Método para eliminar un servicio
     try {

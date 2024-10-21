@@ -9,6 +9,7 @@ import { ActiveservicesComponent } from './activeservices/activeservices.compone
 import { ProfessionalsComponent } from './professionals/professionals.component';
 import { AddprofessionalComponent } from "./forms/addprofessional/addprofessional.component";
 import { FormsModule } from '@angular/forms';
+import { CheckService } from '@app/services/check-service.service';
 @Component({
   selector: 'app-memberaccount',
   standalone: true,
@@ -38,7 +39,8 @@ export class MemberaccountComponent {
     public realtimeServices: RealtimeServicesService,
     public realtimeCategories: RealtimeCategoriesService,
     public auth: AuthPocketbaseService,
-    public global: GlobalService
+    public global: GlobalService,
+    public check:CheckService,
   ) {
     this.currentUser = this.auth.getCurrentUser();
     

@@ -1,9 +1,6 @@
 <div class="profile-area row" style="padding-top: 10%;">
     <div class="col-md-4">
         <div class="main-profile">
-
-
-            
             <div class="media">
                 <div class=""  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'https://inkitt.zendesk.com/hc/article_attachments/21016240898450' }}"
@@ -116,32 +113,12 @@
         </div>
     </div>
     <div class="col-md-8">
-                
         <app-activeservices [hidden]="global.memberOptionn!='activeservices'"></app-activeservices>
         <app-professionals [hidden]="global.memberOptionn!='professionals'"></app-professionals>
-            
-        
     </div>
-</div>
-<!-- <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom9" aria-labelledby="offcanvasBottomLabel9">
-
-    <div class="offcanvas-header">
-        <h4 class="offcanvas-title" id="offcanvasBottomLabel3">Agregar profesional
-
-
-        </h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
-            <i class="icon feather icon-x"></i>
-        </button>
-    </div>
-    <app-addprofessional ></app-addprofessional>
-</div> -->
-
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom9" aria-labelledby="offcanvasBottomLabel9">
     <div class="offcanvas-header">
         <h4 class="offcanvas-title" id="offcanvasBottomLabel3">Agregar profesional
-
-
         </h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="icon feather icon-x"></i></button>
     </div>

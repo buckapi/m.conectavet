@@ -21,6 +21,8 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { RealtimeCategoriesService } from './services/realtime-catwgories.service';
 import { AccountComponent } from './components/account/account.component';
+import { AuthPocketbaseService } from './services/auth-pocketbase.service';
+import { RealtimeServicesService } from './services/realtime-services.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -48,14 +50,16 @@ export class AppComponent implements OnInit {
   // categories: [string, string][] = [];  // Almacena las categorías como tuplas
   specialists: any[] = [];
   title = 'pets';
+  memberId=";"
   menuState: string = 'close'; // Valor inicial del menú
   get categories() {
     return Object.entries(this.configService.defaultConfig.categories);
   }
   constructor(
-    private realtimeSpecialistsService: RealtimeSpecialistsService,
+    private realtimeSpecialists: RealtimeSpecialistsService,
     private realtimeCategoriesService: RealtimeCategoriesService,
-
+    public realtimeServices:RealtimeServicesService,
+    public auth:AuthPocketbaseService,
     public global: GlobalService,
     public scriptLoader: ScriptLoaderService,
     private loadStyleService: LoadStyleService,
@@ -67,10 +71,32 @@ export class AppComponent implements OnInit {
     this.configService.categorySelected = categoryKey;
     console.log('Categoría seleccionada:', this.configService.categorySelected);
   }
-
+  getMemberId() {
+    this.realtimeSpecialists.specialists$.subscribe((Specialists) => {
+      const specialist = Specialists.find(
+        (prof) => prof.userId === this.auth.getUserId()
+      );
+      if (specialist) {
+        console.log(`Encontrado ID: ${specialist.id}`);
+        this.memberId = specialist.id;
+        localStorage.setItem('memberId',this.memberId ); 
+        this.global.myServices = specialist.services;
+        this.realtimeServices.services$.subscribe((allServices) => {
+          const missingServices = allServices.filter(
+            (service) => !this.global.myServices.some(
+              (myService) => myService.id === service.id
+            )
+          );
+          this.global.myServicesAct = [...this.global.myServicesAct, ...missingServices];
+        });
+      } else {
+        console.log('No specialist found for the current user ID.');
+      }
+    });
+  }
   ngOnInit(): void {
-    
-    this.realtimeSpecialistsService.specialists$.subscribe((data) => {
+    this.getMemberId()
+    this.realtimeSpecialists.specialists$.subscribe((data) => {
       this.global.specialists = data;
     });
     this.realtimeCategoriesService.categories$.subscribe((data) => {

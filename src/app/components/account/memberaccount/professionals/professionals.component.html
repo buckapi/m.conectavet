@@ -22,8 +22,19 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <span *ngIf="professional.gender=='femenino'">Dra.</span>
-                        <span *ngIf="professional.gender=='masculino'">Dr.</span>
+                        <span *ngIf="professional.gender=='femenino'">
+                            <h4>
+
+                                Dra.
+                            </h4>
+                        </span>
+                        <span *ngIf="professional.gender=='masculino'">
+                            <h4>
+
+                                Dr.
+                            </h4>
+
+                        </span>
                         {{ professional.name }} 
                     </div>
                     <div id="detalles" class="details">

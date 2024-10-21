@@ -3,13 +3,19 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 15px;
     background-color: white !important;
-
 }
 
 .specialist-card:hover {
     background-color: white !important;
-    transform: translateY(-2px); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.disabled {
+    opacity: 0.5; /* Ajusta la opacidad para simular que está deshabilitado */
+    pointer-events: none; /* Evita que el usuario pueda hacer clic */
+    background-color: white !important; /* Asegúrate de que el fondo sea blanco */
+    box-shadow: none; /* Sin sombra para el estado deshabilitado */
 }
 
 /* Reflejo utilizando pseudo-elemento */
