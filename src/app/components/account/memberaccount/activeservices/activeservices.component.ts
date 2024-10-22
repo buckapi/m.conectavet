@@ -330,4 +330,7 @@ export class ActiveservicesComponent  implements OnInit{
       }
     });
   }
+  isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
+  }
 }

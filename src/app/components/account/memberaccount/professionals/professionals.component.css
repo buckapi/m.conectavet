@@ -49,3 +49,32 @@
 .professional-card:hover .details {
     display: block; /* Show details when hovering over the card */
 }
+.professional-card {
+    position: relative;
+}
+
+.trash-btn {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    display: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.professional-card:hover .trash-btn {
+    display: block;
+}
+
+.avt {
+    transition: transform 0.2s;
+}
+
+.professional-card:hover .avt {
+    transform: scale(1.05);
+}
+.padding-right-mobile {
+    padding-right: 32px !important;
+  }

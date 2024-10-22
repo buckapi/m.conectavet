@@ -63,5 +63,7 @@ export class MemberaccountComponent {
     this.realtimeCategories.categories$.subscribe(categories => {
         // Aquí puedes manejar las categorías si es necesario
     });
+  }isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }
 }

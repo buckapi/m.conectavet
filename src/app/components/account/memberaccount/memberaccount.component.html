@@ -11,7 +11,7 @@
                         class="greetings">Hola,</span> {{auth.getCurrentUser().full_name}}.</h3>
             </div>
         </div>
-        <div [hidden]="optionSelected">
+        <div [hidden]="!global.showMemberMenu && isMobile()">
             <div class="title-bar">
                 <h4 class="title mb-0 font-w500 capitalize-first">Mi Conectavet</h4>
             </div>
@@ -52,13 +52,13 @@
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <a (click)="global.setMemberOption('mensajes')" style="cursor: pointer;"  class="item-content item-link">
-                            <div class="list-icon">
+                    <li class="text-light">
+                        <a (click)="global.setMemberOption('mensajestext-light')"  class="item-content item-link">
+                            <div class="list-icon text-light">
                                 <i class="fi fi-rr-comment"></i>
                             </div>
-                            <div class="dz-inner">
-                                <span class="title">Mensajes</span>
+                            <div class="dz-inner ">
+                                <span class="title text-light">Mensajes</span>
                             </div>
                         </a>
                     </li>
@@ -80,12 +80,12 @@
                         </a>
                     </li>
                     <li>
-                        <a (click)="global.setMemberOption('')" style="cursor: pointer;"  class="item-content item-link">
-                            <div class="list-icon">
+                        <a (click)="global.setMemberOption('')"   class="item-content item-link">
+                            <div class="list-icon text-light">
                                 <i class="fi fi-rr-bell"></i>
                             </div>
                             <div class="dz-inner me-2">
-                                <span class="title">Notifications Settings</span>
+                                <span class="title text-light">Ajustes de notificaciones</span>
                             </div>
                         </a>
                     </li>

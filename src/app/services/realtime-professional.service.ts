@@ -8,6 +8,7 @@ export interface Service {
     status?: string; 
 }
 export interface Professional {
+  id:string;
   name: string; 
   gender:string;
     images?: string; // JSON array or object

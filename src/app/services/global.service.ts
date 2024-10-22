@@ -24,7 +24,7 @@ export class GlobalService {
   categoryFiltersAplcated=false;
   adminOptionn:string='';
   memberOptionn:string='';
-showServices:boolean=false;
+showMemberMenu:boolean=true;
   formOption:string='';
   option: string = '';
   isScrollingDown = false;
@@ -83,6 +83,7 @@ showServices:boolean=false;
   }
     resetMemberOption(){
     this.memberOptionn='';
+    this.showMemberMenu=true;
     
   }
   id(){
@@ -156,7 +157,7 @@ showServices:boolean=false;
   this.id()
   }
   setMemberOption(option:string){
-    this.showServices=true;
+    this.showMemberMenu=false;
     this.memberOptionn=option;
     // this.getMemberRecord();
   }
