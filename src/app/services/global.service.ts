@@ -24,7 +24,9 @@ export class GlobalService {
   categoryFiltersAplcated=false;
   adminOptionn:string='';
   memberOption:string='profile';
-showMemberMenu:boolean=false;
+  tutorOption:string='profile';
+  showMemberMenu:boolean=false;
+  showTutorMenu:boolean=false;
   formOption:string='';
   option: string = '';
   isScrollingDown = false;
@@ -87,6 +89,11 @@ showMemberMenu:boolean=false;
     resetMemberOption(){
     this.memberOption='';
     this.showMemberMenu=true;
+    
+  }
+  resetTutorOption(){
+    this.tutorOption='';
+    this.showTutorMenu=true;
     
   }
   id(){
@@ -162,6 +169,11 @@ showMemberMenu:boolean=false;
   setMemberOption(option:string){
     this.showMemberMenu=false;
     this.memberOption=option;
+    // this.getMemberRecord();
+  }
+  setTutorOption(option:string){
+    this.showTutorMenu=false;
+    this.tutorOption=option;
     // this.getMemberRecord();
   }
   setFormOption(option:string){

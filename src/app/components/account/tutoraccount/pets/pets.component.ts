@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
-import { PetsComponent } from './pets/pets.component';
-import { ProfileComponent } from './profile/profile.component';
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -13,13 +11,13 @@ interface PetInterface {
   // ... otras propiedades ...
 }
 @Component({
-  selector: 'app-tutoraccount',
+  selector: 'app-pets',
   standalone: true,
-  imports: [CommonModule,PetsComponent,ProfileComponent],
-  templateUrl: './tutoraccount.component.html',
-  styleUrl: './tutoraccount.component.css'
+  imports: [CommonModule],
+  templateUrl: './pets.component.html',
+  styleUrl: './pets.component.css'
 })
-export class TutoraccountComponent {
+export class PetsComponent {
 
   pets: PetInterface[] = [
     { name: 'Firulais', age: 5, images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMPbYDdEN_MKg-CsvMaImLwx1cItO6IH7Vw&s'] },

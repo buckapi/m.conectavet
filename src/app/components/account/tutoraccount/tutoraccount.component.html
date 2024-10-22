@@ -2,128 +2,117 @@
     <div class="col-md-4">
         <div class="main-profile">
             <div class="media">
-                <div class="" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                    <img  src="{{ currentUser.images[0] ? currentUser.images[0] : 'assets/images/default.jpeg' }}" alt="profile-image" style="min-width: 200px !important; min-height: 200px !important; max-width: 200px !important; max-height: 200px !important; border-radius: 50%;">
+                <div class="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+                    aria-controls="offcanvasBottom">
+                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'assets/images/default.jpeg' }}"
+                        alt="profile-image"
+                        style="min-width: 200px !important; min-height: 200px !important; max-width: 200px !important; max-height: 200px !important; border-radius: 50%;">
                 </div>
-                <h3 class="name mb-0 " style="margin-top: 10px !important; margin-left: 10px !important;" ><span class="greetings">Hola,</span> {{ auth.getFullName() }}</h3>
+                <h3 class="name mb-0 " style="margin-top: 10px !important; margin-left: 10px !important;"><span
+                        class="greetings">Hola,</span> {{ auth.getFullName() }}</h3>
             </div>
         </div>
-        <div class="title-bar">
-            <h4 class="title mb-0 font-w500">Mi conectavet</h4>
-        </div>
-        <div class="dz-list style-1 m-b20">
-            <ul>
-                <li>
-                    <a  class="item-content item-link">
-                        <div class="list-icon">
-                            <i class="fi  fi-rr-apps-add"></i>
-                        </div>
-                        <div class="dz-inner">
-                            <span class="title">Mis mascotas</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="item-content item-link">
-                        <div class="list-icon">
-                            <i class="fi  fi-rr-heart"></i>
-                        </div>
-                        <div class="dz-inner">
-                            <span class="title">Lista de favoriitos</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a  class="item-content item-link">
-                        <div class="list-icon">
-                            <i class="fi fi-rr-comment text-light"></i>
-                        </div>
-                        <div class="dz-inner">
-                            <span class="title text-light">Mensajes</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="title-bar">
-            <h4 class="title mb-0 font-w500 capitalize-first">Ajustes de cuenta</h4>
-        </div>
-        <div class="dz-list style-1 ">
-            <ul>
-                <li>
-                    <a  class="item-content item-link">
-                        <div class="list-icon">
-                            <i class="fi fi-rr-user"></i>
-                        </div>
-                        <div class="dz-inner">
-                            <span class="title">Mi perfil</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a  class="item-content item-link">
-                        <div class="list-icon">
-                            <i class="fi fi-rr-bell text-light"></i>
-                        </div>
-                        <div class="dz-inner me-2">
-                            <span class="title text-light">Notificaciones</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-     
-
-
-        <div class="title-bar">
-            <h4 class="title mb-0 font-w500"></h4>
-        </div>
-        <div class="dz-list style-1">
-            <ul>
-                <li>
-                    <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="cursor: pointer;" (click)="global.setAdminOption('security')"  class="item-content item-link">
-                        <!-- <div class="list-icon" >
+        <div [hidden]="!global.showTutorMenu && isMobile()">
+            <div class="title-bar">
+                <h4 class="title mb-0 font-w500">Mi conectavet</h4>
+            </div>
+            <div class="dz-list style-1 m-b20">
+                <ul>
+                    <li>
+                        <a (click)="global.setTutorOption('pets')" class="item-content item-link"
+                            style="cursor: pointer;">
+                            <div class="list-icon">
+                                <i class="fi  fi-rr-apps-add"></i>
+                            </div>
+                            <div class="dz-inner">
+                                <span class="title" [ngClass]="{'menuOption':  global.tutorOption === 'pets'}">Mis
+                                    mascotas</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="item-content item-link">
+                            <div class="list-icon">
+                                <i class="fi  fi-rr-heart"></i>
+                            </div>
+                            <div class="dz-inner">
+                                <span class="title"
+                                    [ngClass]="{'menuOption':  global.tutorOption === 'favorites'}">Lista de
+                                    favoriitos</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="item-content item-link">
+                            <div class="list-icon">
+                                <i class="fi fi-rr-comment text-light"></i>
+                            </div>
+                            <div class="dz-inner">
+                                <span class="title text-light"
+                                    [ngClass]="{'menuOption':  global.tutorOption === 'messajes'}">Mensajes</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="title-bar">
+                <h4 class="title mb-0 font-w500 capitalize-first">Ajustes de cuenta</h4>
+            </div>
+            <div class="dz-list style-1 ">
+                <ul>
+                    <li>
+                        <a class="item-content item-link" (click)="global.setTutorOption('profile')"
+                            class="item-content item-link" style="cursor: pointer;">
+                            <div class="list-icon">
+                                <i class="fi fi-rr-user"></i>
+                            </div>
+                            <div class="dz-inner">
+                                <span class="title" [ngClass]="{'menuOption':  global.tutorOption === 'profile'}">Mi
+                                    perfil</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="item-content item-link">
+                            <div class="list-icon">
+                                <i class="fi fi-rr-bell text-light"></i>
+                            </div>
+                            <div class="dz-inner me-2">
+                                <span class="title text-light">Notificaciones</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="title-bar">
+                <h4 class="title mb-0 font-w500"></h4>
+            </div>
+            <div class="dz-list style-1">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="cursor: pointer;"
+                            (click)="global.setAdminOption('security')" class="item-content item-link">
+                            <!-- <div class="list-icon" >
                             <i class="fi fi-rr-lock"></i>
                         </div> -->
-                        <span class="dz-icon">
-                            <i class="feather icon-log-out"></i>
-                        </span>
-                        <div class="dz-inner">
-                            <span class="title">Salir</span>
-                        </div>
-                    </a>
-                </li>
-             
-            </ul>
-        </div>
+                            <span class="dz-icon">
+                                <i class="feather icon-log-out"></i>
+                            </span>
+                            <div class="dz-inner">
+                                <span class="title">Salir</span>
+                            </div>
+                        </a>
+                    </li>
 
+                </ul>
+            </div>
+        </div>
 
     </div>
 
-    
+
     <div class="col-md-8">
-        <div class="title-bar">
-            <h4 class="title mb-0 font-w500">Mis mascotas</h4>
-        </div>
-        <div class="content-box">
-            <ul class="row g-2">
-                <li class="col-6 col-lg-4">							
-                    <a >
-                        <div class="profile-image">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyw6GwqzXA9ynEQIGC-7lfybiS69P83S0Mz-SdsShXqMx3UWXIsX90MFo4knKpLOr5t3A" alt="Imagen de perfil" style="width: 150px; height: 150px;">
-                        </div>
-                </a>
-                </li>
-                <li class="col-6 col-lg-4" *ngFor="let pet of pets">							
-                    <a >
-                        <div class="profile-image">
-                            <img src="{{pet.images[0]}}" alt="Imagen de perfil" style="width: 150px; height: 150px;">
-                        </div>
-                    </a>
-                </li>
-               
-            </ul>
-        </div>
+        <app-pets [hidden]="global.tutorOption!='pets'"></app-pets>
+        <app-profile [hidden]="global.tutorOption!='profile'"></app-profile>
     </div>
 </div>

@@ -151,7 +151,7 @@ export class ActiveservicesComponent  implements OnInit{
             }
             return parseFloat(inputValue);
           },
-          html: '<div><span style="color: gray; font-size: medium;">o si prefieres, lo puedes <span style="color:red;">borrar</span>.</span></div>',
+          html: '<div><span style="color: gray; font-size: medium;">o si prefieres, lo puedes <span style="color:red; cursor:pointer;">borrar</span>.</span></div>',
         });
   
         if (newPrice) {
