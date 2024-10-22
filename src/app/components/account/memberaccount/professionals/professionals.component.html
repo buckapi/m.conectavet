@@ -1,5 +1,5 @@
 <div class="title-bar">
-    <button *ngIf="global.memberOptionn!='' && isMobile" (click)="global.resetMemberOption()" class="btn btn-light"
+    <button *ngIf="global.memberOption!='' && isMobile" (click)="global.resetMemberOption()" class="btn btn-light"
         style="margin-right: 10px;">
         <i class="icon feather icon-chevron-left"></i> <!-- Botón de retroceso -->
     </button>
@@ -27,8 +27,11 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
         </svg>
-        <strong></strong> A continuación ingrese nombre, sexo y servicio o especialidad del personal que labora en su
-        clínica veterinaria.
+        <span class="personalizedAlerts">
+
+            <strong></strong> A continuación ingrese nombre, sexo y servicio o especialidad del personal que labora en su
+            clínica veterinaria.
+        </span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
             <span><i class="icon feather icon-x"></i></span>
         </button>

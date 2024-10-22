@@ -8,8 +8,8 @@
 
 .specialist-card:hover {
     background-color: white !important;
-    transform: translateY(-2px); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Reflejo utilizando pseudo-elemento */
@@ -22,33 +22,44 @@
     height: 80px;
     background: white;
     opacity: 0.3;
-    transform: scaleY(1); /* Invierte el reflejo */
+    transform: scaleY(1);
+    /* Invierte el reflejo */
     border-radius: inherit;
-    z-index: -1; /* El reflejo está por debajo */
-    pointer-events: none; /* El reflejo no interfiere con los clicks */
+    z-index: -1;
+    /* El reflejo está por debajo */
+    pointer-events: none;
+    /* El reflejo no interfiere con los clicks */
 }
+
 .avt {
     border-radius: 50%;
     cursor: pointer;
     border: 5px solid #3ba5a8;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Shadow effect */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /* Smooth transition */
 }
 
 .avt:hover {
-    transform: translateY(4px) scale(1.05); /* Move down and enlarge */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reduced shadow when pressed */
+    transform: translateY(4px) scale(1.05);
+    /* Move down and enlarge */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Reduced shadow when pressed */
 }
 
 
 
 .details {
-    display: none; /* Initially hide the details */
+    display: none;
+    /* Initially hide the details */
 }
 
 .professional-card:hover .details {
-    display: block; /* Show details when hovering over the card */
+    display: block;
+    /* Show details when hovering over the card */
 }
+
 .professional-card {
     position: relative;
 }
@@ -75,6 +86,11 @@
 .professional-card:hover .avt {
     transform: scale(1.05);
 }
+
 .padding-right-mobile {
     padding-right: 32px !important;
-  }
+}
+
+.personalizedAlerts {
+    font-size: 20px !important;
+}

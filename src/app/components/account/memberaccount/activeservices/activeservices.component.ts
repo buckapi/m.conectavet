@@ -139,9 +139,9 @@ export class ActiveservicesComponent  implements OnInit{
         const { value: newPrice } = await Swal.fire({
           title: `Actualizar precio para ${service.name}`,
           input: 'text',
-          inputLabel: 'Ingresa el nuevo precio',
+          inputLabel: '',
           inputPlaceholder: 'Escribe el nuevo precio aquí',
-          showCancelButton: true,
+          showCancelButton: false,
           confirmButtonText: 'Actualizar',
           cancelButtonText: 'Cancelar',
           preConfirm: (inputValue) => {
@@ -151,6 +151,7 @@ export class ActiveservicesComponent  implements OnInit{
             }
             return parseFloat(inputValue);
           },
+          html: '<div><span style="color: gray; font-size: medium;">o si prefieres, lo puedes <span style="color:red;">borrar</span>.</span></div>',
         });
   
         if (newPrice) {

@@ -23,8 +23,8 @@ export class GlobalService {
   idS:string="";
   categoryFiltersAplcated=false;
   adminOptionn:string='';
-  memberOptionn:string='';
-showMemberMenu:boolean=true;
+  memberOption:string='profile';
+showMemberMenu:boolean=false;
   formOption:string='';
   option: string = '';
   isScrollingDown = false;
@@ -51,7 +51,10 @@ showMemberMenu:boolean=true;
   modalType = 'filter';
   constructor(
     public realtimeSpecialists:RealtimeSpecialistsService
-  ) {}
+  ) {
+    this.showMemberMenu = !this.isMobile();
+
+  }
   async acept(clinica: any) {
     if (clinica && clinica.id) {
       try {
@@ -82,7 +85,7 @@ showMemberMenu:boolean=true;
     this.adminOptionn=option;
   }
     resetMemberOption(){
-    this.memberOptionn='';
+    this.memberOption='';
     this.showMemberMenu=true;
     
   }
@@ -158,7 +161,7 @@ showMemberMenu:boolean=true;
   }
   setMemberOption(option:string){
     this.showMemberMenu=false;
-    this.memberOptionn=option;
+    this.memberOption=option;
     // this.getMemberRecord();
   }
   setFormOption(option:string){
@@ -174,7 +177,9 @@ this.formOption=option;
     this.clinicSelected = clinic;
     this.activeRoute = 'clinicdetail';
   }
-
+  isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
+  }
   async toggleSpecialistStatus(specialist: any) {
     if (specialist && specialist.id) {
       try {

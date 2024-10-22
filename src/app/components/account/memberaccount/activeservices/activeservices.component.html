@@ -1,5 +1,5 @@
 <div class="title-bar" style="justify-content: flex-start !important;">
-    <button *ngIf="global.memberOptionn!='' && isMobile()" (click)="global.resetMemberOption()" class="btn btn-light"
+    <button *ngIf="global.memberOption!='' && isMobile()" (click)="global.resetMemberOption()" class="btn btn-light"
     style="margin-right: 10px;">
     <i class="icon feather icon-chevron-left"></i> <!-- Botón de retroceso -->
 </button>
@@ -9,7 +9,10 @@
 <div class="content-box">
     <div class="alert alert-info alert-dismissible fade show"[hidden]="global.myServices.length>1"> 
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-        <strong></strong> Presione sobre uno de los servicios disponibles, proporcione el precio que su clinica cobra y activelo en su perfil.
+      <span class="personalizedAlerts">
+
+          <strong></strong> Presione sobre uno de los servicios disponibles, proporcione el precio que su clinica cobra y activelo en su perfil.
+      </span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
         </button>
     </div>

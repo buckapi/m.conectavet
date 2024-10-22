@@ -1,14 +1,13 @@
 <div class="profile-area row" style="padding-top: 10%;">
     <div class="col-md-4">
         <div class="main-profile">
-            <div class="media">
+            <div class="media" style="justify-content: center !important;">
                 <div class=""  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'https://inkitt.zendesk.com/hc/article_attachments/21016240898450' }}"
+                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'assets/images/default.jpeg' }}"
                         alt="profile-image"
                         style="min-width: 200px !important; min-height: 200px !important; max-width: 200px !important; max-height: 200px !important; border-radius: 50%;">
                 </div>
-                <h3 class="name mb-0" style="padding-left: 20px;" *ngIf="auth.getCurrentUser().full_name"><span
-                        class="greetings">Hola,</span> {{auth.getCurrentUser().full_name}}.</h3>
+             
             </div>
         </div>
         <div [hidden]="!global.showMemberMenu && isMobile()">
@@ -17,16 +16,19 @@
             </div>
             <div class="dz-list style-1 m-b20">
                 <ul>
-                    <li>
-                        <a  class="item-content item-link" (click)="global.setMemberOption('professionals')" style="cursor: pointer;" >
-                            <div class="list-icon">
-                                <i class="fi fi-rr-diamond"></i>
-                            </div>
-                            <div class="dz-inner">
-                                <span class="title">Profesionales</span>
-                            </div>
-                        </a>
-                    </li>
+                        <li>
+                            <a  class="item-content item-link" (click)="global.setMemberOption('professionals')" style="cursor: pointer;" >
+                                <div class="list-icon">
+                                    <i class="fi fi-rr-diamond"></i>
+                                </div>
+                                <div class="dz-inner">
+                                    <span class="title"
+                                    [ngClass]="{'menuOption':  global.memberOption === 'professionals'}"
+ 
+                                    >Profesionales</span>
+                                </div>
+                            </a>
+                        </li>
                     <li>
                         <a (click)="global.setMemberOption('activeservices')" style="cursor: pointer;"  class="item-content item-link" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasLang" aria-controls="offcanvasLang">
@@ -38,7 +40,8 @@
                                 </svg>
                             </div>
                             <div class="dz-inner">
-                                <span class="title select-lang">Servicios activos</span>
+                                <span class="title select-lang" [ngClass]="{'menuOption':  global.memberOption === 'activeservices'}"
+                                >Servicios activos</span>
                             </div>
                         </a>
                     </li>
@@ -70,12 +73,15 @@
             <div class="dz-list style-1">
                 <ul>
                     <li>
-                        <a (click)="global.setMemberOption('')" style="cursor: pointer;"  class="item-content item-link">
+                        <a (click)="global.setMemberOption('profile')" style="cursor: pointer;"  class="item-content item-link">
                             <div class="list-icon">
                                 <i class="fi fi-rr-user"></i>
                             </div>
                             <div class="dz-inner">
-                                <span class="title">Editar perfil</span>
+                                <span class="title"
+                                [ngClass]="{'menuOption':  global.memberOption === 'profile'}"
+                                
+                                >Mi perfil</span>
                             </div>
                         </a>
                     </li>
@@ -113,8 +119,9 @@
         </div>
     </div>
     <div class="col-md-8">
-        <app-activeservices [hidden]="global.memberOptionn!='activeservices'"></app-activeservices>
-        <app-professionals [hidden]="global.memberOptionn!='professionals'"></app-professionals>
+        <app-activeservices [hidden]="global.memberOption!='activeservices'"></app-activeservices>
+        <app-professionals [hidden]="global.memberOption!='professionals'"></app-professionals>
+        <app-profile [hidden]="global.memberOption!='profile'"></app-profile>
     </div>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom9" aria-labelledby="offcanvasBottomLabel9">
     <div class="offcanvas-header">
