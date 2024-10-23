@@ -145,8 +145,8 @@ export class AuthPocketbaseService {
             email: pbUser['email'],
             password: '', // No almacenamos la contraseña por seguridad
             full_name: pbUser['name'],
-            images: pbUser['  '] || {},
             days: pbUser['days'] || {},
+            images: pbUser['images'] || {},
             type: pbUser['type'],
             username: pbUser['username'],
             address: pbUser['address'],

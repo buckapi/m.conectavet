@@ -13,7 +13,6 @@ import { MenubarComponent } from './components/ui/menubar/menubar.component';
 import { HomeComponent } from './components/home/home.component';
 import { GlobalService } from './services/global.service';
 import { ClinicdetailComponent } from './components/clinicdetail/clinicdetail.component';
-import { AddpetComponent } from './components/addpet/addpet.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { BackheaderComponent } from './components/ui/backheader/backheader.component';
@@ -36,7 +35,7 @@ import { RealtimeServicesService } from './services/realtime-services.service';
     SidebarComponent,
     HomeComponent,
     CategoriesComponent,
-    ClinicdetailComponent,AddpetComponent,
+    ClinicdetailComponent,
     RegisterComponent,
     LoginComponent,
     BackheaderComponent,

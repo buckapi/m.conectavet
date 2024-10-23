@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
+import { HistoryComponent } from '../history/history.component';
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -13,12 +14,12 @@ interface PetInterface {
 @Component({
   selector: 'app-pets',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,HistoryComponent],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.css'
 })
 export class PetsComponent {
-
+showHistory=false;
   pets: PetInterface[] = [
     { name: 'Firulais', age: 5, images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMPbYDdEN_MKg-CsvMaImLwx1cItO6IH7Vw&s'] },
     { name: 'Rex', age: 3, images: [ 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReJo3Jf0aKnF1vc6GQVeT4iKIMITIorQdBbQ&s' ] }
@@ -44,5 +45,8 @@ export class PetsComponent {
   }
   isMobile() {
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
+  }
+  showHistoryF(){
+    this.showHistory=true;
   }
 }

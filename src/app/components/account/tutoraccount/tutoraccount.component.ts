@@ -5,6 +5,8 @@ import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
 import { PetsComponent } from './pets/pets.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddpetComponent } from './forms/addpet/addpet.component';
+
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -15,7 +17,7 @@ interface PetInterface {
 @Component({
   selector: 'app-tutoraccount',
   standalone: true,
-  imports: [CommonModule,PetsComponent,ProfileComponent],
+  imports: [CommonModule,PetsComponent,ProfileComponent,AddpetComponent],
   templateUrl: './tutoraccount.component.html',
   styleUrl: './tutoraccount.component.css'
 })

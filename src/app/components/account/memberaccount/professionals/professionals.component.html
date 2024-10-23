@@ -69,11 +69,11 @@
                         {{ professional.name }}
                     </div>
                     <div id="detalles" class="details">
-                        <ol *ngIf="professional.services && professional.services.length > 0">
-                            <li *ngFor="let service of professional.services">
+                        <dl class="list-icons"*ngIf="professional.services && professional.services.length > 0">
+                            <dt *ngFor="let service of professional.services">
                                 <a>{{ service.name }}</a>
-                            </li>
-                        </ol>
+                            </dt>
+                        </dl>
                     </div>
                 </div>
             </span>

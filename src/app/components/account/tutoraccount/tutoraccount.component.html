@@ -2,12 +2,19 @@
     <div class="col-md-4">
         <div class="main-profile">
             <div class="media">
-                <div class="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
-                    aria-controls="offcanvasBottom">
-                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'assets/images/default.jpeg' }}"
-                        alt="profile-image"
-                        style="min-width: 200px !important; min-height: 200px !important; max-width: 200px !important; max-height: 200px !important; border-radius: 50%;">
+                <div class="profile-container">
+                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg' }}"
+                         alt="profile-image"
+                         class="profile-image">
+                    <div class="edit">
+                        <input type="file" class="form-control d-none" id="imageUpload" accept=".png, .jpg, .jpeg">
+                        <label for="imageUpload">
+                            <i class="fi fi-rr-upload"></i>
+                        </label>
+                    </div>
                 </div>
+                
+                   
                 <h3 class="name mb-0 " style="margin-top: 10px !important; margin-left: 10px !important;"><span
                         class="greetings">Hola,</span> {{ auth.getFullName() }}</h3>
             </div>
@@ -30,14 +37,15 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <li>                        
                         <a class="item-content item-link">
                             <div class="list-icon">
-                                <i class="fi  fi-rr-heart"></i>
+                                <i class="fi  fi-rr-heart text-light"></i>
                             </div>
                             <div class="dz-inner">
-                                <span class="title"
-                                    [ngClass]="{'menuOption':  global.tutorOption === 'favorites'}">Lista de
+                                <span class="title text-light"
+                                    [ngClass]="{'menuOption':  global.tutorOption === ' '}"
+                                    >Lista de
                                     favoriitos</span>
                             </div>
                         </a>
@@ -115,4 +123,52 @@
         <app-pets [hidden]="global.tutorOption!='pets'"></app-pets>
         <app-profile [hidden]="global.tutorOption!='profile'"></app-profile>
     </div>
+</div>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom9" aria-labelledby="offcanvasBottomLabel9">
+
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvasBottomLabel3">Agregar mascota
+
+
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="icon feather icon-x"></i>
+        </button>
+    </div><div class="col-12">
+        <div class="card">
+            <div class="card-header d-block">
+                <h5 class="card-title">Custom Content</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="ui-list-group.html#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">List group item heading</h6>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small>And some small print.</small>
+                    </a>
+                    <a href="ui-list-group.html#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">List group item heading</h6>
+                            <small class="text-body-secondary">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small class="text-body-secondary">And some muted small print.</small>
+                    </a> 
+                    <a href="ui-list-group.html#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h6 class="mb-1">List group item heading</h6>
+                          <small class="text-body-secondary">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small class="text-body-secondary">And some muted small print.</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-addpet ></app-addpet>
 </div>

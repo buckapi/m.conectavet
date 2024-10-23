@@ -1,1 +1,52 @@
-<p>addpet works!</p>
+<div class="offcanvas-body">
+    <div class="filter-inner-content card-body">
+        <div class="custom-file-upload">
+            <div  class="image-preview">
+                <img  alt="Selected Image" class="img-thumbnail"
+                    style=" border-radius: 50%;
+                cursor: pointer;
+                border: 5px solid #3ba5a8;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
+                transition: box-shadow 0.3s ease, transform 0.3s ease; max-width: 150px; max-height: 150px; /* Smooth transition */" />
+            </div>
+            <input #imageUpload id="imageUpload" type="file"class="form-control"
+                accept="image/*" style="display: none;" />
+            <label for="imageUpload" class="btn mb-2 me-2 btn-success"><i class="fa-solid fa-search me-2"></i>Foto de la mascota</label>
+            <div  class="text-danger">* Por favor, suba una imagen de la mascota.</div>
+        </div>
+        <div class="range-slider style-1 mb-4">
+            <div class="mb-3 title font-w600 font-16">
+                <span class="example-val title slider-margin-value-min"></span>
+                <span class="example-val title slider-margin-value-max"></span>
+            </div>
+            <div id="slider-tooltips"></div>
+        </div>
+        <label for="categoryName" class="form-label">Nombre de la mascota</label>
+        <div  class="text-danger">* Por favor, ingrese el nombre de la mascota.</div>
+        <input id="categoryName" type="text" placeholder="Ingrese el nombre del profesional" class="form-control"
+            />
+        <!-- <label for="services" class="form-label">Servicios</label>
+        <div  class="text-danger">* Por favor, seleccione al
+            menos un servicio.</div> -->
+
+        <div class="title-bar mb-3">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tipo de mascota</label>
+            <div  class="text-danger">* Por favor, seleccione el tipo de mascota.</div>
+            <div class="">
+                <input class="radio circle-radio" type="radio" id="genderMale" name="gender" value="masculino"
+                     />
+                <label for="genderMale" class="radio-label">Perro</label>
+                <br><br />
+                <input class="radio circle-radio" type="radio" id="genderFemale" name="gender" value="femenino"
+                     /><span class="checkmark"></span>
+                <label for="genderFemale" class="radio-label">Gato</label>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center gap-2 mt-4">
+        <a class="btn btn-light font-w400 w-100">Cancelar</a>
+        <a class="btn btn-primary font-w400 w-100" >Agregar</a>
+    </div>
+</div>

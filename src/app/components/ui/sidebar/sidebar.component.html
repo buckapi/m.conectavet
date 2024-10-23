@@ -1,7 +1,8 @@
 <div class="sidebar" id="sidebar">
     <a class="author-box">
         <div class="dz-media" [hidden]="!auth.isLogin()">
-            <img src="assets/images/avatar/chat/2.png" alt="author-image">
+            <img *ngIf="auth.getCurrentUser()" src="{{ auth.getCurrentUser().images[0] ? auth.getCurrentUser().images[0] : 'assets/images/default.jpeg' }}" alt="">
+            <!-- <img src="assets/images/avatar/chat/2.png" alt="author-image"> -->
         </div>
         <div class="dz-info">
             <h5 class="name" *ngIf="auth.isLogin() && auth.getCurrentUser().full_name">{{auth.getCurrentUser().full_name}}</h5>

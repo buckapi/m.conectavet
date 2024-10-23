@@ -4,7 +4,7 @@
             <a href="javascript:void(0);" class="menu-toggler bg-white pe-2 rounded-xl">
                 <div class="media">
                     <div class="media-35 m-r10">
-                        <img class="rounded-xl" src="assets/images/avatar/1.png" alt="">
+                        <img *ngIf="auth.getCurrentUser()" class="rounded-xl"src="{{ auth.getCurrentUser().images[0] ? auth.getCurrentUser().images[0] : 'assets/images/default.jpeg' }}" alt="">
                     </div>
                     <h6 class="mb-0 font-13" *ngIf="auth.getCurrentUser()?.full_name">Hola {{auth.getCurrentUser().full_name}}</h6>
                 </div>
