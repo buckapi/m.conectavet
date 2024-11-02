@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
 import { Category } from '@app/interfaces/category.interface'; // Importar la interfaz
 import { RealtimeSpecialistsService } from './realtime-specialists.service';
+import { RealtimeProfessionalsService } from './realtime-professional.service';
 export interface Clinic {
-  id: number;
+  id: string;
   name: string;
   full_name: string;
   address: string;
+  userId: string;
   phoneNumber: string;
   images: string[]; // O el tipo adecuado para las imágenes
   services: string[]; // O el tipo adecuado para los servicios
@@ -20,6 +22,8 @@ export interface Clinic {
 
 
 export class GlobalService {
+
+  professionalsCount: number = 0;
   idS:string="";
   categoryFiltersAplcated=false;
   adminOptionn:string='';
@@ -41,7 +45,8 @@ export class GlobalService {
    
   }; 
   clinicSelected: Clinic = {
-    id: 0,
+    id: '',
+    userId:'',
     name: '',
     full_name: '',
     address: '',
@@ -52,7 +57,9 @@ export class GlobalService {
   activeRoute = 'home';
   modalType = 'filter';
   constructor(
-    public realtimeSpecialists:RealtimeSpecialistsService
+    public realtimeSpecialists:RealtimeSpecialistsService,
+    public realtimeProfessionals:RealtimeProfessionalsService
+
   ) {
     this.showMemberMenu = !this.isMobile();
 
@@ -83,6 +90,11 @@ export class GlobalService {
     this.adminOptionn='';
 
   }
+  conteo(){
+    this.realtimeProfessionals.professionals$.subscribe((professionals: any[]) => {
+      this.professionalsCount = professionals.filter(profesional => profesional.images && profesional.IdMember === this.clinicSelected.userId).length;
+    });
+  }
   setAdminOption(option:string){
     this.adminOptionn=option;
   }
@@ -91,6 +103,7 @@ export class GlobalService {
     this.showMemberMenu=true;
     
   }
+  
   resetTutorOption(){
     this.tutorOption='';
     this.showTutorMenu=true;
@@ -188,6 +201,7 @@ this.formOption=option;
   viewClinic(clinic: any) {
     this.clinicSelected = clinic;
     this.activeRoute = 'clinicdetail';
+    this.conteo();
   }
   isMobile() {
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades

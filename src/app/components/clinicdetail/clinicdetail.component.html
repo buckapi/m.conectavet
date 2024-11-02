@@ -18,15 +18,26 @@
                     <div class="swiper-pagination style-3"></div>
                 </div>
             </div>
+            <div class="item-wrapper" style="padding-top: 20px !important;">
+              
+                <div class="dz-meta-items">
+                    <div class="dz-price m-r60">
+                        <h6 class="title font-w600">Dirección:</h6>
+                        <span class="text-light">{{global.clinicSelected.address}}</span>
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        <div class="dz-product-detail col-12 col-lg-8 m-b35"
+        <div class="row dz-product-detail col-12 col-lg-8 m-b35"
         [ngClass]="{'col-12': isMobile, 'col-8': !isMobile}">
+        <div class="col-12 col-md-8" >
             <div class="detail-content">
                 <ul class="dz-top-meta mb-2">
                     <span class="brand-tag">
-                        <h4 class="title">{{global.clinicSelected.full_name}}</h4>
+                        <h4 class="title uppercase">{{global.clinicSelected.full_name}}</h4>
                     </span>
-                    <li class="dz-review"><i class="feather icon-star-on"></i><span class="r-rating">4.5</span> <span
+                    <li class="dz-review"><i class="feather icon-star-on"></i><span class="r-rating " >4.5</span> <span
                             class="r-status">(470)</span></li>
                 </ul>
             </div>
@@ -36,15 +47,21 @@
                     <p class="text-light">There are many variations of passages of Lorem Ipsum available, but the
                         majority have suffered alteration in some form, by injected humor.</p>
                 </div>
-                <div class="dz-meta-items">
+                <!-- <div class="description">
+                    <h6 class="title font-w600">Description:</h6>
+                    <p class="text-light">There are many variations of passages of Lorem Ipsum available, but the
+                        majority have suffered alteration in some form, by injected humor.</p>
+                </div> -->
+                <!-- <div class="dz-meta-items">
                     <div class="dz-price m-r60">
-                        <h6 class="dz-name">Precio de consulta:</h6>
-                        <span class="price">$270<del>$310</del></span>
+                        <h6 class="title font-w600">Dirección:</h6>
+                        <span class="text-light">{{global.clinicSelected.address}}</span>
                     </div>
-                </div>
-                <div class="product-size">
-                    <h6 class="dz-name">Dias que labora:</h6>
-                    <div class="dz-select-btn">
+                </div> -->
+                <div *ngIf="isMobile">
+                    <div id="diasSection" class="product-size " >
+                      <h6 class="title font-w600">Días que labora:</h6>
+                      <div class="dz-select-btn">
                         <input type="radio" class="btn-check" name="btnradio1" id="btnradio4">
                         <label class="btn" for="btnradio4">L</label>
                         <input type="radio" class="btn-check" name="btnradio1" id="btnradio5" checked>
@@ -59,11 +76,85 @@
                         <label class="btn" for="btnradio8">S</label>
                         <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
                         <label class="btn" for="btnradio8">D</label>
+                      </div>
                     </div>
-                </div>
+                  
+                    <div id="profesionalesSection" class="product-size" style="padding-top: 20px;">
+                      <h6 class="title font-w600">Profesionales</h6>
+                      <span *ngIf="global.professionalsCount<1" class="text-light">Sin profesionales registra2.</span>
+
+                      <div class="dz-select-btn2 row">
+                        <div class="row">
+                          <div *ngFor="let profesional of realtimeProfessionals.professionals$ | async" class="col-6 col-md-3">
+                            <div class="media" *ngIf="profesional.images && profesional.IdMember === global.clinicSelected.userId">
+                              <img class="avatar-profesional" [src]="profesional.images[0]" alt="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="!isMobile">
+                    <div id="profesionalesSection" class="product-size" >
+                      <h6 class="title font-w600">Profesionales</h6>
+                      <span *ngIf="global.professionalsCount<1" class="text-light">Sin profesionales registrados.</span>
+
+                      <div class="dz-select-btn2 row " >
+                        <div class="row">
+                            <ng-container *ngFor="let profesional of realtimeProfessionals.professionals$ | async">
+                                <div class="media col-6 col-md-4" *ngIf="profesional.images && profesional.IdMember === global.clinicSelected.userId">
+                                  <img class="avatar-profesional" [src]="profesional.images[0]" alt="">
+                                    <h6 class="text-light">{{profesional.name}}</h6>
+                                </div>
+                              </ng-container>
+                              
+                        </div>
+                      </div>
+                    </div>
+                  
+                  
+                  </div>
+                 
+                
+                
                 <div class="color-filter">
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-4" >
+            <div id="diasSection" class="product-size " >
+                <h6 class="title font-w600">Días que labora:</h6>
+                <div class="dz-select-btn">
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio4">
+                  <label class="btn" for="btnradio4">L</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio5" checked>
+                  <label class="btn" for="btnradio5">M</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio6">
+                  <label class="btn" for="btnradio6">M</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio7">
+                  <label class="btn" for="btnradio7">J</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
+                  <label class="btn" for="btnradio8">V</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
+                  <label class="btn" for="btnradio8">S</label>
+                  <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
+                  <label class="btn" for="btnradio8">D</label>
+                </div>
+              </div>
+            <div class="dz-meta-items" style="padding-top: 20px !important;">
+                <div class="dz-price m-r60">
+                    <h6 class="title font-w600">Horario de atención:</h6>
+                    <span class="text-light">8:00 am - 4:00 pm.</span>
+                </div>
+            </div>
+            <modern-calendar [language]="'es'" [selectedDates]="selectedDates"></modern-calendar>
+
+        </div>
+         
+        </div>
+
+        
+
     </div>
 </main>

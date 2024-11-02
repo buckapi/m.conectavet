@@ -49,7 +49,7 @@
                 *ngFor="let specialist of global.specialists | filterSpecialists:auth.isAdmin()"
              >
                     
-                    <div class="dz-card style-2 specialist-card">
+                    <div class="dz-card style-2 specialist-card" style="cursor: pointer;">
                         <div class="dz-media"    (click)="global.viewClinic(specialist)">
                             <a class="image-container">
                                 <img [src]="specialist.images?.[0] ?? 'https://static.vecteezy.com/system/resources/previews/013/149/674/non_2x/unavailable-image-icon-in-trendy-flat-style-isolated-on-white-background-photo-gallery-symbol-for-web-and-mobile-apps-free-vector.jpg'" 
@@ -59,11 +59,21 @@
                             
                         </div>
                         <div class="dz-content">
-                            <h6 class="title"><a>{{specialist.full_name}}</a></h6>
-                            <ul class="dz-meta">
-                                <!-- <li class="dz-price">$80<del>$95</del></li> -->
-                                <!-- <li class="dz-status"><span>Free delivery</span></li> -->
+
+                            
+                            <ul class="dz-top-meta mb-2 particular">
+                                <span class="brand-tag">
+                                    <h4 class="title uppercase">{{specialist.full_name}}</h4>
+                                </span>
+                                <li class="dz-review">
+                                    <i class="feather icon-star-on star"></i>
+                                    <span class="r-rating">4.5</span> 
+                                    <span class="r-status">(470)</span>
+                                </li>
                             </ul>
+                            
+                           
+                          
                             <div *ngIf="auth.isAdmin()" class="form-check form-switch">
                                 <input class="form-check-input form-check-success" 
                                        id="flexSwitchCheckDefault" 

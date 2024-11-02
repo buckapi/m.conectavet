@@ -1,4 +1,37 @@
-.padding-top-20 {
-    padding-top: 20px;
-  }
-  
+.avatar-profesional {
+  border-radius: 50%; /* Para que la imagen sea circular */
+  border: 2px solid #3ba5a8;
+  margin: 10px;
+  object-fit: cover; /* Asegura que la imagen ocupe todo el contenedor sin distorsión */
+}
+
+.dz-select-btn2 {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las imágenes pasen a la siguiente línea si no hay espacio */
+  gap: 10px; /* Espacio entre las imágenes */
+  justify-content: center; /* Centra las imágenes horizontalmente */
+  align-items: center; /* Centra las imágenes verticalmente */
+}
+
+.media {
+  display: flex;
+  flex-direction: column; /* Coloca la imagen y el nombre en columna */
+  justify-content: center;
+  align-items: center;
+}
+
+.media img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto; /* Mantiene la relación de aspecto en cualquier contenedor */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen ocupe todo el contenedor sin distorsionarse */
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.r-rating {
+  font-size: 25px;
+}
