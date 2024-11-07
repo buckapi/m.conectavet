@@ -4,6 +4,7 @@ import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
 import { HistoryComponent } from '../history/history.component';
+import { Pet, RealtimePetsService } from '@app/services/realtime-pet.service';
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -19,19 +20,25 @@ interface PetInterface {
   styleUrl: './pets.component.css'
 })
 export class PetsComponent {
+  
 showHistory=false;
-  pets: PetInterface[] = [
-    { name: 'Firulais', age: 5, images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMPbYDdEN_MKg-CsvMaImLwx1cItO6IH7Vw&s'] },
-    { name: 'Rex', age: 3, images: [ 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReJo3Jf0aKnF1vc6GQVeT4iKIMITIorQdBbQ&s' ] }
-  ];
+pets: any[] = [];
+filteredPets: any[] = [];
   currentUser: UserInterface = {} as UserInterface;
 
   constructor(
     public global:GlobalService,
-    public auth: AuthPocketbaseService) {
+    public auth: AuthPocketbaseService,
+    public realtimePets:RealtimePetsService
+  
+  ) {
+    this.realtimePets.pets$;
+
     this.currentUser = this.auth.getCurrentUser();
   }
-
+  filterPets() {
+    this.filteredPets = this.pets.filter(pet => pet.idTutor === this.auth.getUserId());
+  }
   onMouseOver(event: MouseEvent) {
     // Cambiar el estilo del elemento al pasar el mouse
     const target = event.currentTarget as HTMLElement;
@@ -46,7 +53,8 @@ showHistory=false;
   isMobile() {
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }
-  showHistoryF(){
+  showHistoryF(pet:Pet){
     this.showHistory=true;
+    this.global.petSelected=pet;
   }
 }

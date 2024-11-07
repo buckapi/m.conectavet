@@ -1,3 +1,5 @@
+
+
 <div class="col-12">
     <div class="">
         <!-- <div class="card-header d-block" >
@@ -45,7 +47,10 @@
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="home1" role="tabpanel">
                                 <div  style="display: flex; align-items: center;">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMPbYDdEN_MKg-CsvMaImLwx1cItO6IH7Vw&s" alt="Imagen de perfil" style="width: 150px; height: 150px; margin-right: 20px;">
+                                    <img 
+                                    
+                                    *ngIf="global.petSelected.images && global.petSelected.images.length > 0"
+                                    src="{{global.petSelected.images[0]}}" alt="Imagen de perfil" style="width: 150px; height: 150px; margin-right: 20px;">
                                     <div class="pt-4">
                                         <h6>Manny</h6>
                                         <h6>3 años</h6>

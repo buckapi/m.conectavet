@@ -42,7 +42,7 @@
                 <div class="col-12 m-b35" 
                 [ngClass]="{
                     'col-12': isListView, 
-                    'col-2': !isListView && !auth.isAdmin(), 
+                    'col-6': !isListView && !auth.isAdmin(), 
                     'col-lg-3': !auth.isAdmin(),
                     'col-lg-2': auth.isAdmin()
                 }" 

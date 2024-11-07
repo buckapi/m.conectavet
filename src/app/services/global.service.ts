@@ -3,6 +3,7 @@ import PocketBase from 'pocketbase';
 import { Category } from '@app/interfaces/category.interface'; // Importar la interfaz
 import { RealtimeSpecialistsService } from './realtime-specialists.service';
 import { RealtimeProfessionalsService } from './realtime-professional.service';
+import { Pet } from './realtime-pet.service';
 export interface Clinic {
   id: string;
   name: string;
@@ -44,6 +45,15 @@ export class GlobalService {
   categorySelected: any = { // Cambiar 'category' a 'Category'
    
   }; 
+  petSelected:Pet={
+    id: '',
+    name: '',
+    species: '',
+    breed: '',
+    images: [], // JSON array
+    birthDate: '',
+    IdMember: '',
+    status: '',};
   clinicSelected: Clinic = {
     id: '',
     userId:'',

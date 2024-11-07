@@ -12,10 +12,13 @@
 </div>
 <div class="content-box">
     <ul class="row g-2" *ngIf="!showHistory">
-        <li class="col-6 col-lg-4" *ngFor="let pet of pets" (click)="showHistoryF()" style="cursor: pointer;">							
+        <li class="col-6 col-lg-4" *ngFor="let pet of (realtimePets.pets$ | async)"  (click)="showHistoryF(pet)" style="cursor: pointer;">							
             <a >
                 <div class="profile-image">
-                    <img src="{{pet.images[0]}}" alt="Imagen de perfil" style="width: 150px; height: 150px;">
+                
+                    <img *ngIf="pet.images && pet.images.length > 0"
+                    [src]="pet.images[0]" class="avt" alt="Imagen de perfil" style="width: 150px; height: 150px;">
+                   
                 </div>
             </a>
         </li>

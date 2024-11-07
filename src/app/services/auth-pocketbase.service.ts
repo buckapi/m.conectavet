@@ -11,12 +11,11 @@ import { RecordModel } from 'pocketbase';
 })
 export class AuthPocketbaseService {
   private pb: PocketBase;
-  complete:boolean=false;
+  complete: boolean = false;
 
   constructor(public global: GlobalService) {
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
   }
-
   async saveCategor(categoryData: any): Promise<any> {
     try {
       const record = await this.pb
@@ -48,27 +47,22 @@ export class AuthPocketbaseService {
     return localStorage.getItem('isLoggedin');
   }
 
-    isAdmin(){
-      const userType = localStorage.getItem('type');
-      return userType === '"admin"';
-    }
+  isAdmin() {
+    const userType = localStorage.getItem('type');
+    return userType === '"admin"';
+  }
 
-    isTutor(){
-      const userType = localStorage.getItem('type');
-      return userType === '"tutor"';
-    }
+  isTutor() {
+    const userType = localStorage.getItem('type');
+    return userType === '"tutor"';
+  }
 
-    isMember(){
-      const userType = localStorage.getItem('type');
-      return userType === '"clinica"';
-    }
+  isMember() {
+    const userType = localStorage.getItem('type');
+    return userType === '"clinica"';
+  }
 
-  registerUser(
-    email: string,
-    password: string,
-    type: string,
-    name: string,
-    address: string // Añadimos el parámetro address
+  registerUser(email: string, password: string, type: string, name: string, address: string // Añadimos el parámetro address
   ): Observable<any> {
     const userData = {
       email: email,
@@ -87,7 +81,7 @@ export class AuthPocketbaseService {
         .then((user) => {
           const data = {
             full_name: name,
-            services:[{"id":"","name":"","price":0}],
+            services: [{ "id": "", "name": "", "price": 0 }],
             address: address, // Usamos el parámetro address aquí
             phone: '', // Agrega los campos correspondientes aquí
             userId: user.id, // Utiliza el ID del usuario recién creado
@@ -104,7 +98,8 @@ export class AuthPocketbaseService {
         })
     );
   }
-  profileStatus(){
+
+  profileStatus() {
     return this.complete;
   }
 
@@ -154,7 +149,7 @@ export class AuthPocketbaseService {
             updated: pbUser['updated'],
             avatar: pbUser['avatar'] || '',
             status: pbUser['status'] || 'active',
-            biography: pbUser['biography'], 
+            biography: pbUser['biography'],
             // Añade aquí cualquier otro campo necesario
           };
           return { ...authData, user };
@@ -193,40 +188,39 @@ export class AuthPocketbaseService {
   setToken(token: any): void {
     localStorage.setItem('accessToken', token);
   }
-permision(){
-  const currentUser = this.getCurrentUser();
-  if (!currentUser || !currentUser.type) {
-    this.global.setRoute('home'); // Redirigir al usuario a la ruta 'home' si no hay tipo definido
-    return;
-  }
-
-  // Llamar a la API para obtener información actualizada del usuario
-  this.pb.collection('users').getOne(currentUser.id).then(updatedUser => {
-    switch (updatedUser["type"]) { // Cambiado a acceso con corchetes
-      case 'clinica':
-        if (!updatedUser["biography"] || !updatedUser["days"]) { // Acceso a 'biography' usando corchetes
-          this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
-        } else {
-          this.global.setRoute('home');
-          this.complete = true; // Redirigir al usuario a la ruta 'home'
-        }
-        break;
-      case 'tutor':
-        if (!(updatedUser["images"]) || !(updatedUser["address"])) {
-          this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
-        } else {
-          this.global.setRoute('home');
-          this.complete = true; // Redirigir al usuario a la ruta 'home'
-        }
-        break;
-      default:
-        this.global.setRoute('account'); // Redirigir al usuario a la ruta 'account' si el tipo no es reconocido
+  permision() {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !currentUser.type) {
+      this.global.setRoute('home'); // Redirigir al usuario a la ruta 'home' si no hay tipo definido
+      return;
     }
-  }).catch(error => {
-    console.error('Error al obtener la información del usuario:', error);
-    this.global.setRoute('home'); // Redirigir a 'home' en caso de error
-  });
-}
+    // Llamar a la API para obtener información actualizada del usuario
+    this.pb.collection('users').getOne(currentUser.id).then(updatedUser => {
+      switch (updatedUser["type"]) { // Cambiado a acceso con corchetes
+        case 'clinica':
+          if (!updatedUser["biography"] || !updatedUser["days"]) { // Acceso a 'biography' usando corchetes
+            this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
+          } else {
+            this.global.setRoute('home');
+            this.complete = true; // Redirigir al usuario a la ruta 'home'
+          }
+          break;
+        case 'tutor':
+          if (!(updatedUser["images"]) || !(updatedUser["address"])) {
+            this.global.setRoute('account'); // Redirigir al usuario a la ruta 'complete-profile'
+          } else {
+            this.global.setRoute('home');
+            this.complete = true; // Redirigir al usuario a la ruta 'home'
+          }
+          break;
+        default:
+          this.global.setRoute('account'); // Redirigir al usuario a la ruta 'account' si el tipo no es reconocido
+      }
+    }).catch(error => {
+      console.error('Error al obtener la información del usuario:', error);
+      this.global.setRoute('home'); // Redirigir a 'home' en caso de error
+    });
+  }
   setUser(user: UserInterface): void {
     let user_string = JSON.stringify(user);
     let type = JSON.stringify(user.type);
@@ -236,12 +230,11 @@ permision(){
   getCurrentUser(): UserInterface {
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null; // Devuelve el usuario actual o null si no existe
-}
-getUserId(): string {
-  const userId = localStorage.getItem('userId');
-  return userId ? userId: ''; // Devuelve el usuario actual o null si no existe
-}
-
+  }
+  getUserId(): string {
+    const userId = localStorage.getItem('userId');
+    return userId ? userId : ''; // Devuelve el usuario actual o null si no existe
+  }
   getFullName(): string {
     const userString = localStorage.getItem('currentUser');
     if (userString) {
