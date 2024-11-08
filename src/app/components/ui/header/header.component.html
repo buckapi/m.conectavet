@@ -21,12 +21,17 @@
         </div>
         <div class="mid-content"></div>
         <div class="right-content d-flex align-items-center gap-3"  >
-            <a class="notification-badge font-20" [hidden]="!auth.isLogin() || global.activeRoute=='account'">
+            <a class="notification-badge font-20" 
+            [hidden]="!auth.isLogin() || global.activeRoute=='account'"
+            >
                 <i class="icon feather icon-bell"></i>
                 <span class="badge badge-danger">14</span>
             </a>
             <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>
-            <a (click)="toggleScroll()" class="icon font-20" [hidden]="global.activeRoute=='account' && auth.isAdmin()">
+            <a (click)="toggleScroll()" class="icon font-20" 
+            
+            [hidden]="!auth.isLogin() || global.activeRoute=='account' || (global.activeRoute=='account' && auth.isAdmin())"
+            >
                 <i class="icon feather icon-search"></i>
             </a>
         </div>
@@ -46,7 +51,9 @@
                 </div>
             </a>
         </div>
-        <div class="mid-content px-2">
+        <div class="mid-content px-2"
+        [hidden]="global.activeRoute=='account' "
+        >
             <div class="input-group input-group-icon input-sm">
                 <span class="input-group-text">
                     <div class="input-icon">
@@ -56,17 +63,25 @@
                 <input type="search" class="form-control font-16" placeholder="Que estas buscando?">
             </div>
         </div>
-        <div class="right-content d-flex align-items-center gap-3 lh-1 ps-2">
+        <div
+        
+        [hidden]="global.activeRoute=='account' "
+        class="right-content d-flex align-items-center gap-3 lh-1 ps-2">
             <ul class="dz-tab nav nav-pills light style-1 list">
                 <li class="nav-item">
-                    <button class="nav-link" (click)="global.setModalType('filter')" data-bs-toggle="offcanvas"
+                    <button
+                    [hidden]="global.activeRoute=='account' "
+                    class="nav-link" (click)="global.setModalType('filter')" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasBottom3" aria-controls="offcanvasBottom3"><i
                             class="icon feather icon-list"></i></button>
                 </li>
             </ul>
         </div>
     </div>
-    <app-categories></app-categories>
+    <app-categories 
+    
+    [hidden]="global.activeRoute=='account' "
+    ></app-categories>
 </header>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
     <div class="offcanvas-header" [hidden]="global.modalType=='reel'">
