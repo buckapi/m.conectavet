@@ -1,4 +1,10 @@
-<div class="profile-area row" *ngIf="auth.getCurrentUser()">
+<!-- <div class="profile-area row" style="padding-top: 10%;" *ngIf="auth.getCurrentUser()"> -->
+    <div
+  class="profile-area row"
+  [ngClass]="{'mobile-padding': !isMobile()}"
+  *ngIf="auth.getCurrentUser()">
+  <!-- Contenido de tu div -->
+<!-- </div> -->
     <div class="col-md-4" 
     [hidden]="global.tutorOption=='pets' && isMobile()"
     >
@@ -52,7 +58,7 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="item-content item-link">
                             <div class="list-icon">
                                 <i class="fi fi-rr-comment text-light"></i>
@@ -62,7 +68,20 @@
                                     [ngClass]="{'menuOption':  global.tutorOption === 'messajes'}">Mensajes</span>
                             </div>
                         </a>
+                    </li> -->
+
+                    <li>
+                        <a class="item-content item-link">
+                            <div class="list-icon">
+                                <i class="fi fi-rr-list-timeline text-light"></i>
+                            </div>
+                            <div class="dz-inner">
+                                <span class="title text-light"
+                                    [ngClass]="{'menuOption':  global.tutorOption === 'agenda'}">Historico de visitas</span>
+                            </div>
+                        </a>
                     </li>
+
                 </ul>
             </div>
             <div class="title-bar">

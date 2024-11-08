@@ -51,7 +51,7 @@ export class AddpetComponent {
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
   }
 
-  onImageChange(event: any): void {
+  onImageChangeR(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
@@ -62,6 +62,20 @@ export class AddpetComponent {
       reader.readAsDataURL(file);
     }
   }
+
+  onImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImagePrev = e.target.result; // Para la vista previa
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
+
 
   async addPet() {
     if (!this.validateForm()) {
@@ -133,8 +147,11 @@ export class AddpetComponent {
       console.error('Error al agregar la mascota:', error);
     }
   }
-
   validateForm(): boolean {
+    console.log('selectedImage:', this.selectedImage); // Para ver si la imagen está definida
+    console.log('petName:', this.petName); // Para ver el nombre
+    console.log('petType:', this.petType); // Para ver el tipo
+    
     if (!this.selectedImage) {
       Swal.fire({
         title: 'Error!',
@@ -144,7 +161,7 @@ export class AddpetComponent {
       });
       return false;
     }
-
+  
     if (!this.petName) {
       Swal.fire({
         title: 'Error!',
@@ -154,7 +171,7 @@ export class AddpetComponent {
       });
       return false;
     }
-
+  
     if (!this.petType) {
       Swal.fire({
         title: 'Error!',
@@ -164,9 +181,43 @@ export class AddpetComponent {
       });
       return false;
     }
-
+  
     return true;
   }
+  
+  // validateForm(): boolean {
+  //   if (!this.selectedImage) {
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Por favor, suba una imagen de la mascota.',
+  //       icon: 'warning',
+  //       confirmButtonText: 'Aceptar',
+  //     });
+  //     return false;
+  //   }
+
+  //   if (!this.petName) {
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Por favor, ingrese el nombre de la mascota.',
+  //       icon: 'warning',
+  //       confirmButtonText: 'Aceptar',
+  //     });
+  //     return false;
+  //   }
+
+  //   if (!this.petType) {
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Por favor, seleccione el tipo de mascota.',
+  //       icon: 'warning',
+  //       confirmButtonText: 'Aceptar',
+  //     });
+  //     return false;
+  //   }
+
+  //   return true;
+  // }
 
   private resetForm(): void {
     this.images = [];

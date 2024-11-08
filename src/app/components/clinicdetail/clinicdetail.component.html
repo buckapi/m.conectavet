@@ -115,9 +115,18 @@
                     <div>
                       <h6 class="title font-w600">Servicios:</h6>
                       <span *ngIf="!global.clinicSelected?.services?.length" class="text-light">Sin servicios registrados.</span>
-                      <ng-container *ngFor="let service of global.clinicSelected?.services">
-                        <h6 class="text-light">{{service?.name}}</h6>
-                      </ng-container>
+                      <div class="dz-select-btn2 row">
+                        <div class="row">
+                          <ng-container *ngFor="let service of global.clinicSelected?.services">
+                            <div class="col-12 col-md-6" style="cursor: pointer; padding: 10px;">
+                                <span class="service-card">
+                                    <span class="service-name">{{service?.name}}</span>
+                                    <span class="service-price">CLP {{service?.price}}</span>
+                                </span>
+                            </div>
+                        </ng-container>
+                        </div>
+                      </div>
                     </div>
                   
                   </div>

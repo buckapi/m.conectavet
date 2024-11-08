@@ -17,6 +17,7 @@ export interface Clinic {
 }
 interface Service {
   name: string;
+  price: number;
 } 
 
 

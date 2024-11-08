@@ -35,3 +35,37 @@
 .r-rating {
   font-size: 25px;
 }
+.service-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 200px; /* Ajusta según necesites */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+.service-card:hover {
+  color: white !important;
+  background-color: #3ba5a8 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambia el color del precio a blanco cuando se hace hover en la tarjeta */
+.service-card:hover .service-price {
+  color: white;
+}
+
+.service-name {
+  font-weight: 500;
+}
+
+.service-price {
+  color: #3ba5a8;
+  font-weight: 900;
+  font-size: 20px;
+  transition: color 0.3s ease; /* Transición suave en el cambio de color */
+}

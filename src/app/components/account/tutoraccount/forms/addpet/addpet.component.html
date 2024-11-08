@@ -12,7 +12,7 @@
             <input #imageUpload2 id="imageUpload2" type="file" (change)="onImageChange($event)" class="form-control"
             accept="image/*" style="display: none;" />
                 <label for="imageUpload2" class="btn mb-2 me-2 btn-success"><i class="fa-solid fa-search me-2"></i>Foto de la mascota</label>
-            <div  class="text-danger">* Por favor, suba una imagen de la mascota.</div>
+            <div *ngIf="!selectedImage"  class="text-danger" >* Por favor, suba una imagen de la mascota.</div>
         </div>
         <div class="range-slider style-1 mb-4">
             <div class="mb-3 title font-w600 font-16">
@@ -22,18 +22,16 @@
             <div id="slider-tooltips"></div>
         </div>
         <label for="categoryName" class="form-label">Nombre de la mascota</label>
-        <div  class="text-danger">* Por favor, ingrese el nombre de la mascota.</div>
-        <input id="categoryName" type="text" [(ngModel)]="petName" placeholder="Ingrese el nombre del profesional" class="form-control"
+        <div  *ngIf="!petName" class="text-danger">* Por favor, ingrese el nombre de la mascota.</div>
+        <input id="categoryName" type="text" [(ngModel)]="petName" placeholder="Ingrese el nombre de la mascota" class="form-control"
             />
-        <!-- <label for="services" class="form-label">Servicios</label>
-        <div  class="text-danger">* Por favor, seleccione al
-            menos un servicio.</div> -->
+
 
         <div class="title-bar mb-3">
         </div>
         <div class="mb-3">
             <label class="form-label">Tipo de mascota</label>
-            <div  class="text-danger">* Por favor, seleccione el tipo de mascota.</div>
+            <div   *ngIf="!petType" class="text-danger">* Por favor, seleccione el tipo de mascota.</div>
             <div class="">
                 <input class="radio circle-radio" type="radio" id="genderMale" name="petType" 
                     value="perro" [(ngModel)]="petType" />

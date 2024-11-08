@@ -5,6 +5,8 @@ import { UserInterface } from '@app/interfaces/user-interface';
 import { GlobalService } from '@app/services/global.service';
 import { HistoryComponent } from '../history/history.component';
 import { Pet, RealtimePetsService } from '@app/services/realtime-pet.service';
+import { PetService } from '@app/services/pet.service';
+import Swal from 'sweetalert2';
 interface PetInterface {
   // Define las propiedades de PetInterface aquí
   name: string;
@@ -27,6 +29,7 @@ filteredPets: any[] = [];
   currentUser: UserInterface = {} as UserInterface;
 
   constructor(
+    private petService: PetService,
     public global:GlobalService,
     public auth: AuthPocketbaseService,
     public realtimePets:RealtimePetsService
@@ -36,6 +39,39 @@ filteredPets: any[] = [];
 
     this.currentUser = this.auth.getCurrentUser();
   }
+
+  async deletePet(petId: string, event: Event) {
+    event.stopPropagation(); // Detiene la propagación del evento de clic
+
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await this.petService.deletePet(petId);
+        Swal.fire(
+          'Eliminado!',
+          'La mascota ha sido eliminada.',
+          'success'
+        );
+        // Aquí puedes actualizar la lista de mascotas si es necesario
+      } catch (error) {
+        Swal.fire(
+          'Error!',
+          'Hubo un problema al eliminar la mascota.',
+          'error'
+        );
+      }
+    }
+  }
+
   filterPets() {
     this.filteredPets = this.pets.filter(pet => pet.idTutor === this.auth.getUserId());
   }
