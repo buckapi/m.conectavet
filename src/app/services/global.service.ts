@@ -120,7 +120,7 @@ export class GlobalService {
   }
   setTutorOptionToPets() {
     this.tutorOption = 'pets';
-    this.showTutorMenu = true;
+    // this.showTutorMenu = true;
     this.petSelected={
       id: '',
       name: '',
