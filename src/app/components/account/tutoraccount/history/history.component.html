@@ -26,7 +26,7 @@
                     <div class="custom-tab-1">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" data-bs-toggle="tab" href="ui-tab.html#home1"
+                                <a class="nav-link active navTitle" data-bs-toggle="tab" href="ui-tab.html#home1"
                                     aria-selected="false" role="tab">
                                     <svg style="margin-right: 5px !important;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.025 8.37748C9.47804 7.85949 8.75336 7.5708 8.00002 7.5708C7.24669 7.5708 6.52201 7.85949 5.97502 8.37748L3.53252 10.6875C2.13252 11.96 3.14252 14.3925 5.03252 14.2975C6.05752 14.27 6.89002 13.745 7.99752 13.765C9.14502 13.745 9.99753 14.2075 11.0275 14.2975C12.885 14.34 13.845 11.935 12.465 10.6875L10.025 8.37748Z" fill="black"></path>
@@ -52,11 +52,10 @@
                                     *ngIf="global.petSelected.images && global.petSelected.images.length > 0"
                                     src="{{global.petSelected.images[0]}}" alt="Imagen de perfil" style="width: 150px; height: 150px; margin-right: 20px;">
                                     <div class="pt-4">
-                                        <h6>Manny</h6>
-                                        <h6>3 años</h6>
-                                        <h6>4 Kg</h6>
-                                        <h6>Criollo</h6>
-                                        <h6>Gato</h6>
+                                        <h6>{{global.petSelected.name}}</h6>
+                                        <h6>Fecha de Nacimiento: {{ global.petSelected?.birthDate | date: 'dd \'de\' MMM \'de\' yyyy' }} ({{ age }})</h6>
+                                        <h6>Raza: {{global.petSelected.breed}}</h6>
+                                        <h6>Especie: {{global.petSelected.species}}</h6>
                                     </div>
 
                                 </div>

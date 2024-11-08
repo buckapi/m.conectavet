@@ -1,17 +1,37 @@
-<div class="title-bar" style="justify-content: space-between;">
-    <button *ngIf="global.memberOption!='' && isMobile()" (click)="global.resetTutorOption()" class="btn btn-light"
+<div class="title-bar" style="justify-content: space-between;"
+
+>
+<button 
+*ngIf="global.tutorOption!='' && !global.showHistory" 
+(click)="global.resetTutorOption()" 
+class="btn btn-light"
+style="margin-right: 10px;">
+<i class="icon feather icon-chevron-left"></i> 
+</button>
+    <button 
+    *ngIf="global.tutorOption!='' && global.showHistory" 
+    (click)="global.setTutorOptionToPets()" 
+    class="btn btn-light"
     style="margin-right: 10px;">
     <i class="icon feather icon-chevron-left"></i> 
 </button>
-    <h4 class="title mb-0 font-w500">Mis mascotas</h4>
-    <i (click)="global.setFormOption('category')" class="fi fi-rr-add"
+    <h4
+   *ngIf="!global.showHistory"
+    
+    class="title mb-0 font-w500">Mis mascotas</h4>
+    <i 
+    (click)="global.setFormOption('category')" 
+   *ngIf="!global.showHistory"
+    class="fi fi-rr-add"
     style="font-size: 40px !important; border-radius: 50%; cursor: pointer; color: #3ba5a8;  transition: all 0.3s;"
-    data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom9" aria-controls="offcanvasBottom9"
+    data-bs-toggle="offcanvas" 
+    data-bs-target="#offcanvasBottom9" 
+    aria-controls="offcanvasBottom9"
     onmouseover="this.style.color='black'; this.style.transform='scale(1.2)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'; "
     onmouseout="this.style.color='#3ba5a8'; this.style.transform='scale(1)'; this.style.boxShadow='none';"></i>
 </div>
 <div class="content-box">
-    <ul class="row g-2" *ngIf="!showHistory">
+    <ul class="row g-2" *ngIf="!global.showHistory">
         <li class="col-6 col-lg-4" *ngFor="let pet of (realtimePets.pets$ | async)"  (click)="showHistoryF(pet)" style="cursor: pointer;">							
             <a >
                 <div class="profile-image">
@@ -24,5 +44,5 @@
         </li>
        
     </ul>
-    <app-history *ngIf="showHistory"></app-history>
+    <app-history *ngIf="global.showHistory"></app-history>
 </div>

@@ -14,7 +14,7 @@ export interface Pet {
     species: string;
     breed?: string;
     images?: string[]; // JSON array
-    birthDate?: string;
+    birthDate?: Date;
     IdMember?: string;
     status?: string;
   }

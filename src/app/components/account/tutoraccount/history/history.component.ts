@@ -218,6 +218,42 @@ constructor(  public config: ConfigService,public global:GlobalService,
     this.services = data; });
 
 }
+
+get age(): string {
+    const today = new Date();
+    if (!this.global.petSelected?.birthDate) {
+        return 'Edad no disponible';
+    }
+    const birthDate = new Date(this.global.petSelected.birthDate);
+    
+    // Calcular diferencias
+    let ageYears = today.getFullYear() - birthDate.getFullYear();
+    let monthDiff = today.getMonth() - birthDate.getMonth();
+    let dayDiff = today.getDate() - birthDate.getDate();
+
+    // Ajustar si el cumpleaños de este año aún no ha ocurrido
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        ageYears--;
+        monthDiff += 12;
+    }
+    
+    // Si la edad es menor a un año, calcular en meses y días
+    if (ageYears < 1) {
+        if (monthDiff === 0) {
+            // Si es menor a un mes, mostrar en días
+            const days = dayDiff < 0 ? new Date(today.getFullYear(), today.getMonth(), 0).getDate() + dayDiff : dayDiff;
+            return `${days} día${days !== 1 ? 's' : ''}`;
+        } else {
+            // Mostrar en meses
+            return `${monthDiff} mes${monthDiff !== 1 ? 'es' : ''}`;
+        }
+    }
+
+    // Si tiene un año o más, mostrar en años
+    return `${ageYears} año${ageYears !== 1 ? 's' : ''}`;
+}
+
+
 showServiceAlert(serviceName: string) {
   this.selectedService = serviceName;  // Actualiza el servicio seleccionado
   alert(`Servicio seleccionado: ${serviceName}`);

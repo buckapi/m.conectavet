@@ -23,16 +23,16 @@ export interface Clinic {
 
 
 export class GlobalService {
-
+  showHistory=false;
   professionalsCount: number = 0;
-  idS:string="";
-  categoryFiltersAplcated=false;
-  adminOptionn:string='';
-  memberOption:string='profile';
-  tutorOption:string='profile';
-  showMemberMenu:boolean=false;
-  showTutorMenu:boolean=false;
-  formOption:string='';
+  idS: string = "";
+  categoryFiltersAplcated = false;
+  adminOptionn: string = '';
+  memberOption: string = 'profile';
+  tutorOption: string = 'profile';
+  showMemberMenu: boolean = false;
+  showTutorMenu: boolean = false;
+  formOption: string = '';
   option: string = '';
   isScrollingDown = false;
   lastScrollTop = 0;
@@ -40,23 +40,22 @@ export class GlobalService {
   specialists: any[] = [];
   myServices: any[] = [];
   myServicesAct: any[] = [];
-
   categories: any[] = [];
   categorySelected: any = { // Cambiar 'category' a 'Category'
-   
-  }; 
-  petSelected:Pet={
+  };
+  petSelected: Pet = {
     id: '',
     name: '',
     species: '',
+    birthDate: new Date(),
     breed: '',
     images: [], // JSON array
-    birthDate: '',
     IdMember: '',
-    status: '',};
+    status: '',
+  };
   clinicSelected: Clinic = {
     id: '',
-    userId:'',
+    userId: '',
     name: '',
     full_name: '',
     address: '',
@@ -67,8 +66,8 @@ export class GlobalService {
   activeRoute = 'home';
   modalType = 'filter';
   constructor(
-    public realtimeSpecialists:RealtimeSpecialistsService,
-    public realtimeProfessionals:RealtimeProfessionalsService
+    public realtimeSpecialists: RealtimeSpecialistsService,
+    public realtimeProfessionals: RealtimeProfessionalsService
 
   ) {
     this.showMemberMenu = !this.isMobile();
@@ -78,13 +77,13 @@ export class GlobalService {
     if (clinica && clinica.id) {
       try {
         const pb = new PocketBase('https://db.conectavet.cl:8080');
-        
+
         const data = {
           status: 'approved'
         };
 
         const record = await pb.collection('members').update(clinica.id, data);
-        
+
         console.log('Estado de la clínica actualizado a: approved', record);
         return record;
       } catch (error) {
@@ -96,31 +95,47 @@ export class GlobalService {
       throw new Error('Clínica no válida');
     }
   }
-  resetAdminOption(){
-    this.adminOptionn='';
+  resetAdminOption() {
+    this.adminOptionn = '';
 
   }
-  conteo(){
+  conteo() {
     this.realtimeProfessionals.professionals$.subscribe((professionals: any[]) => {
       this.professionalsCount = professionals.filter(profesional => profesional.images && profesional.IdMember === this.clinicSelected.userId).length;
     });
   }
-  setAdminOption(option:string){
-    this.adminOptionn=option;
+  setAdminOption(option: string) {
+    this.adminOptionn = option;
   }
-    resetMemberOption(){
-    this.memberOption='';
-    this.showMemberMenu=true;
-    
+  resetMemberOption() {
+    this.memberOption = '';
+    this.showMemberMenu = true;
+
   }
-  
-  resetTutorOption(){
-    this.tutorOption='';
-    this.showTutorMenu=true;
-    
+
+  resetTutorOption() {
+    this.tutorOption = '';
+    this.showTutorMenu = true;
+
   }
-  id(){
-  const userId = localStorage.getItem('userId');
+  setTutorOptionToPets() {
+    this.tutorOption = 'pets';
+    this.showTutorMenu = true;
+    this.petSelected={
+      id: '',
+      name: '',
+      species: '',
+      breed: '',
+      images: [], // JSON array
+      birthDate: new Date(),
+      IdMember: '',
+      status: '',
+    }
+    this.showHistory=false;
+
+  }
+  id() {
+    const userId = localStorage.getItem('userId');
 
     this.selectId(userId);
   }
@@ -130,24 +145,24 @@ export class GlobalService {
       console.log('No user ID found in local storage.');
       return;
     }
-  
+
     // Fetch member records using userId
     try {
       const pb = new PocketBase('https://db.conectavet.cl:8080');
       const memberRecords = await pb.collection('members').getFullList(200, { filter: `userId = "${userId}"` });
-      
+
       if (memberRecords.length > 0) {
         const memberRecord = memberRecords[0]; // Assuming userId is unique
-        
+
         // Check if services exist and handle accordingly
         if (memberRecord["services"]) {
           console.log('Member services:', memberRecord["services"]);
         }
-  
+
         // Now, proceed to find the specialist
         this.realtimeSpecialists.specialists$.subscribe(Specialists => {
           const specialist = Specialists.find(prof => prof.userId === userId);
-          
+
           if (specialist) {
             console.log(`Found specialist ID: ${specialist.id}`);
             this.idS = specialist.id;
@@ -164,20 +179,20 @@ export class GlobalService {
       // Swal.fire('Error', 'Ocurrió un error al obtener los datos del miembro.', 'error');
     }
   }
-  
-  async getMemberRecord(id:string) {
+
+  async getMemberRecord(id: string) {
     try {
       // Fetch the member record using this.idS
       console.log("bsucando")
       const pb = new PocketBase('https://db.conectavet.cl:8080');
 
       let memberRecord = await pb.collection('members').getOne(id);
-      
+
       // Log or use the member record as needed
       console.log('Member la info:', memberRecord);
       let services = memberRecord["services"] || [];
 
-      this.myServices=services;
+      this.myServices = services;
       // Additional logic can go here
     } catch (error) {
       console.error('Error fetching member record:', error);
@@ -185,22 +200,22 @@ export class GlobalService {
     }
   }
   async check(service: any) {
- 
-  
-  this.id()
+
+
+    this.id()
   }
-  setMemberOption(option:string){
-    this.showMemberMenu=false;
-    this.memberOption=option;
+  setMemberOption(option: string) {
+    this.showMemberMenu = false;
+    this.memberOption = option;
     // this.getMemberRecord();
   }
-  setTutorOption(option:string){
-    this.showTutorMenu=false;
-    this.tutorOption=option;
+  setTutorOption(option: string) {
+    this.showTutorMenu = false;
+    this.tutorOption = option;
     // this.getMemberRecord();
   }
-  setFormOption(option:string){
-this.formOption=option;
+  setFormOption(option: string) {
+    this.formOption = option;
   }
   setRoute(route: string) {
     this.activeRoute = route;
@@ -220,16 +235,16 @@ this.formOption=option;
     if (specialist && specialist.id) {
       try {
         const pb = new PocketBase('https://db.conectavet.cl:8080');
-        
+
         const newStatus = specialist.status === 'approved' ? 'pending' : 'approved';
         const data = {
           status: newStatus
         };
 
         const record = await pb.collection('members').update(specialist.id, data);
-        
+
         console.log(`Estado del especialista actualizado a: ${newStatus}`, record);
-        
+
         // Actualiza el estado del especialista en la lista local
         const index = this.specialists.findIndex(s => s.id === specialist.id);
         if (index !== -1) {

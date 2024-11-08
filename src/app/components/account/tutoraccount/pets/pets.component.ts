@@ -21,7 +21,7 @@ interface PetInterface {
 })
 export class PetsComponent {
   
-showHistory=false;
+
 pets: any[] = [];
 filteredPets: any[] = [];
   currentUser: UserInterface = {} as UserInterface;
@@ -54,7 +54,7 @@ filteredPets: any[] = [];
     return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
   }
   showHistoryF(pet:Pet){
-    this.showHistory=true;
+    this.global.showHistory=true;
     this.global.petSelected=pet;
   }
 }
