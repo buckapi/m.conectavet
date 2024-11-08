@@ -12,9 +12,12 @@ export interface Clinic {
   userId: string;
   phoneNumber: string;
   images: string[]; // O el tipo adecuado para las imágenes
-  services: string[]; // O el tipo adecuado para los servicios
+  services: Service[]; // O el tipo adecuado para los servicios
   // Otros campos que sean necesarios
 }
+interface Service {
+  name: string;
+} 
 
 
 @Injectable({
@@ -61,7 +64,7 @@ export class GlobalService {
     address: '',
     phoneNumber: '',
     images: [], // Inicializa con un array vacío
-    services: [],
+    services: [] as Service[],
   };
   activeRoute = 'home';
   modalType = 'filter';

@@ -112,7 +112,13 @@
                         </div>
                       </div>
                     </div>
-                  
+                    <div>
+                      <h6 class="title font-w600">Servicios:</h6>
+                      <span *ngIf="!global.clinicSelected?.services?.length" class="text-light">Sin servicios registrados.</span>
+                      <ng-container *ngFor="let service of global.clinicSelected?.services">
+                        <h6 class="text-light">{{service?.name}}</h6>
+                      </ng-container>
+                    </div>
                   
                   </div>
                  
