@@ -59,25 +59,7 @@
                     </div>
                 </div> -->
                 <div *ngIf="isMobile">
-                    <div id="diasSection" class="product-size " >
-                      <h6 class="title font-w600">Días que labora:</h6>
-                      <div class="dz-select-btn">
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio4">
-                        <label class="btn" for="btnradio4">L</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio5" checked>
-                        <label class="btn" for="btnradio5">M</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio6">
-                        <label class="btn" for="btnradio6">M</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio7">
-                        <label class="btn" for="btnradio7">J</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
-                        <label class="btn" for="btnradio8">V</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
-                        <label class="btn" for="btnradio8">S</label>
-                        <input type="radio" class="btn-check" name="btnradio1" id="btnradio8">
-                        <label class="btn" for="btnradio8">D</label>
-                      </div>
-                    </div>
+                   
                   
                     <div id="profesionalesSection" class="product-size" style="padding-top: 20px;">
                       <h6 class="title font-w600">Profesionales</h6>
@@ -90,6 +72,22 @@
                               <img class="avatar-profesional" [src]="profesional.images[0]" alt="">
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h6 class="title font-w600">Servicios:</h6>
+                      <span *ngIf="!global.clinicSelected?.services?.length" class="text-light">Sin servicios registrados.</span>
+                      <div class="dz-select-btn2 row">
+                        <div class="row">
+                          <ng-container *ngFor="let service of global.clinicSelected?.services">
+                            <div class="col-12 col-md-6" style="cursor: pointer; padding: 10px;">
+                                <span class="service-card">
+                                    <span class="service-name">{{service?.name}}</span>
+                                    <span class="service-price">CLP {{service?.price}}</span>
+                                </span>
+                            </div>
+                        </ng-container>
                         </div>
                       </div>
                     </div>
