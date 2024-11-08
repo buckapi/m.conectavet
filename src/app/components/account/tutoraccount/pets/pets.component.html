@@ -34,7 +34,7 @@ style="margin-right: 10px;">
 <div class="content-box">
     <ul class="row g-2" *ngIf="!global.showHistory">
         <li class="col-6 col-lg-4" *ngFor="let pet of (realtimePets.pets$ | async)"  (click)="showHistoryF(pet)" style="cursor: pointer;">							
-            <a >
+            <a class="pet">
                 <div class="profile-image">
                 
                     <img *ngIf="pet.images && pet.images.length > 0"
