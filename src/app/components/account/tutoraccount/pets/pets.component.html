@@ -35,15 +35,14 @@ style="margin-right: 10px;">
     <ul class="row g-2" *ngIf="!global.showHistory">
         <li class="col-6 col-lg-4" *ngFor="let pet of (realtimePets.pets$ | async)"  (click)="showHistoryF(pet)" style="cursor: pointer;">							
             <a class="pet">
-                <div class="profile-image">
-                
+                <div class="profile-image" style="text-align: center;">
                     <img *ngIf="pet.images && pet.images.length > 0"
-                    [src]="pet.images[0]" class="avt" alt="Imagen de perfil" style="width: 150px; height: 150px;">
-                   
+                         [src]="pet.images[0]" class="avt" alt="Imagen de perfil" style="width: 150px; height: 150px;">
                 </div>
             </a>
+            <div class="profile-info" style="text-align: center; margin-top: 8px;">{{pet.name}}</div>
         </li>
-       
     </ul>
+    
     <app-history *ngIf="global.showHistory"></app-history>
 </div>

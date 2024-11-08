@@ -1,5 +1,8 @@
 .pet{
+    background: none !important;
     padding: 0px !important;
+    box-shadow: none !important;
+    border-radius: 25px !important;
 }
 .avt{
     border-radius: 25px !important;
