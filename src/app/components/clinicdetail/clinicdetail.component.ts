@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
   styleUrl: './clinicdetail.component.css'
 })
 export class ClinicdetailComponent implements OnInit {
+  cartQuantity: number = 0;
+
   isMobile: boolean = false;
   selectedDates: any; 
   selectedService: any = null;
@@ -69,7 +71,9 @@ export class ClinicdetailComponent implements OnInit {
     this.saveCartToLocalStorage();
   }
   saveCartToLocalStorage() {
+    this.global.updateCartQuantity(); 
     localStorage.setItem('cart', JSON.stringify(this.global.cart));
+    this.global.cartStatus$.next(this.global.cart.length > 0);
   }  
   
   selectService(service: any) {
@@ -97,6 +101,11 @@ export class ClinicdetailComponent implements OnInit {
     return this.selectedService === service;
   }
   ngOnInit() {
+    this.global.cartQuantity$.subscribe(quantity => {
+      this.global.cartQuantity = quantity;
+    this.global.updateCartQuantity(); 
+
+    });
     this.device.isMobile().subscribe(isMobile => {
       this.isMobile = isMobile;
     });

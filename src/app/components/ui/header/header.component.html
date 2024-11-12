@@ -28,6 +28,8 @@
                 <i class="icon feather icon-bell"></i>
                 <span class="badge badge-danger">14</span>
             </a>
+        <app-cart-button ></app-cart-button>
+
             <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>
             <a (click)="toggleScroll()" class="icon font-20" 
             

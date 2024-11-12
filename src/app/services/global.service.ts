@@ -4,6 +4,8 @@ import { Category } from '@app/interfaces/category.interface'; // Importar la in
 import { RealtimeSpecialistsService } from './realtime-specialists.service';
 import { RealtimeProfessionalsService } from './realtime-professional.service';
 import { Pet } from './realtime-pet.service';
+import { BehaviorSubject } from 'rxjs';
+
 export interface Clinic {
   id: string;
   name: string;
@@ -28,6 +30,10 @@ interface Service {
 
 
 export class GlobalService {
+  hasItemsInCart: boolean = false;
+  cartStatus$ = new BehaviorSubject<boolean>(false);
+  cartQuantity: number = 10;
+  cartQuantity$ = new BehaviorSubject<number>(0); 
   hasPendingOrder: boolean = false;
   showHistory=false;
   professionalsCount: number = 0;
@@ -78,7 +84,24 @@ export class GlobalService {
 
   ) {
     this.showMemberMenu = !this.isMobile();
+    this.loadCartFromLocalStorage();
 
+  }
+  // public updateCartQuantity() {
+  //   const totalQuantity = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+  //   this.cartQuantity$.next(totalQuantity);
+  // }
+  public updateCartQuantity() {
+    const totalItems = this.cart.length; // Cantidad de ítems únicos en el carrito
+    this.cartQuantity$.next(totalItems);
+  }
+  
+  private loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      this.cart = JSON.parse(savedCart);
+      this.cartStatus$.next(this.cart.length > 0); // Emitir estado inicial
+    }
   }
   async acept(clinica: any) {
     if (clinica && clinica.id) {

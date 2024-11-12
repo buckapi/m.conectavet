@@ -7,11 +7,13 @@ import { ReeldetailComponent } from '@app/components/reeldetail/reeldetail.compo
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { AuthboxComponent } from '@app/components/sections/authbox/authbox.component';
 import { DeviceService } from '@app/services/device.service';
+import { CartButtonComponent } from '../cart-button/cart-button.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
+    CartButtonComponent,
     ReeldetailComponent,
     CommonModule,
     CategoriesComponent,
@@ -23,6 +25,8 @@ import { DeviceService } from '@app/services/device.service';
 })
 export class HeaderComponent implements OnInit{
   isMobile: boolean = false;
+  hasItemsInCart: boolean = false;
+
   constructor(
     public device:DeviceService,
     public global: GlobalService,
@@ -50,6 +54,9 @@ export class HeaderComponent implements OnInit{
     this.global.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Para evitar valores negativos
   }
   ngOnInit() {
+    this.global.cartStatus$.subscribe(status => {
+      this.global.hasItemsInCart = status;
+    });
     this.device.isMobile().subscribe(isMobile => {
       this.isMobile = isMobile;
     });
