@@ -35,17 +35,40 @@
 .r-rating {
   font-size: 25px;
 }
+/* Estilo original */
 .service-card {
   display: flex;
+  flex-direction: row; /* Organización en una fila en pantallas grandes */
   justify-content: space-between;
   align-items: center;
-  min-width: 200px; /* Ajusta según necesites */
+  /* min-width: 200px; Ajusta según necesites */
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }
+
+/* Cambios en el diseño en pantallas pequeñas */
+@media (max-width: 768px) {
+  .service-card {
+    flex-direction: column; /* Coloca el nombre y el precio en columna en móviles */
+    align-items: flex-start; /* Alinea el texto al inicio en móviles */
+  }
+}
+.service-card-hover {
+  color: white !important;
+  background-color: #3ba5a8 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.service-card-hover .service-price {
+  color: white !important;
+  background-color: #3ba5a8 !important;
+  transform: translateY(-2px);
+}
+
 
 .service-card:hover {
   color: white !important;

@@ -16,6 +16,7 @@ export interface Clinic {
   // Otros campos que sean necesarios
 }
 interface Service {
+  id: string;
   name: string;
   price: number;
 } 
@@ -27,6 +28,7 @@ interface Service {
 
 
 export class GlobalService {
+  hasPendingOrder: boolean = false;
   showHistory=false;
   professionalsCount: number = 0;
   idS: string = "";
@@ -45,6 +47,7 @@ export class GlobalService {
   myServices: any[] = [];
   myServicesAct: any[] = [];
   categories: any[] = [];
+  cart: any[] = [];
   categorySelected: any = { // Cambiar 'category' a 'Category'
   };
   petSelected: Pet = {
