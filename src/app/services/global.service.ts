@@ -63,7 +63,7 @@ export class GlobalService {
     birthDate: new Date(),
     breed: '',
     images: [], // JSON array
-    IdMember: '',
+    idTutor: '',
     status: '',
   };
   clinicSelected: Clinic = {
@@ -158,7 +158,7 @@ export class GlobalService {
       breed: '',
       images: [], // JSON array
       birthDate: new Date(),
-      IdMember: '',
+      idTutor: '',
       status: '',
     }
     this.showHistory=false;

@@ -25,7 +25,8 @@ export class LoginComponent {
   ) {
     // Inicializar el formulario con validaciones
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
+      // email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

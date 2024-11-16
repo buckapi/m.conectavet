@@ -2,7 +2,7 @@
     <div
   class="profile-area row"
   [ngClass]="{'mobile-padding': !isMobile()}"
-  *ngIf="auth.getCurrentUser()">
+  *ngIf="auth.getCurrentUser().type==='tutor'">
   <!-- Contenido de tu div -->
 <!-- </div> -->
     <div class="col-md-4" 
@@ -14,17 +14,17 @@
                     <img src="{{ auth.getCurrentUser().images[0] ? auth.getCurrentUser().images[0] : 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg' }}"
                          alt="profile-image"
                          class="profile-image">
-                    <div class="edit">
+                    <!-- <div class="edit">
                         <input type="file" class="form-control d-none" id="imageUpload" accept=".png, .jpg, .jpeg">
                         <label for="imageUpload">
                             <i class="fi fi-rr-upload"></i>
                         </label>
-                    </div>
+                    </div> -->
                 </div>
                 
                    
                 <h3 class="name mb-0 " style="margin-top: 10px !important; margin-left: 10px !important;"><span
-                        class="greetings">Hola,</span> {{ auth.getFullName() }}</h3>
+                        class="greetings"></span> &#64;{{ currentUser.username }}</h3>
             </div>
         </div>
         <div [hidden]="!global.showTutorMenu && isMobile()">

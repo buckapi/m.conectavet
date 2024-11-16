@@ -1,11 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { GlobalService } from '@app/services/global.service';
 import { ImageService } from '@app/services/image.service';
 import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 import { FormsModule } from '@angular/forms';
+interface TutorRecord {
+  id: string;
+  collectionId: string;
+  collectionName: string;
+  created: string;
+  updated: string;
+  full_name: string;
+  address: string;
+  phone: string;
+  userId: string;
+  status: string;
+  images: string[];
+  rut: string;
+}
 
 interface ImageRecord {
   collectionId: string;
@@ -19,13 +33,36 @@ interface ImageRecord {
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+  canEditRut: boolean = false;
+  
   fields = {
     full_name: '',
     rut: '',
+    address: '',
     phone: '',
-    address: ''
   };
+
+  visibleFields = {
+    full_name: false,
+    rut: false,
+    address: false,
+    phone: false,
+  };
+
+  toggleField(field: keyof typeof this.visibleFields): void {
+    this.visibleFields[field] = !this.visibleFields[field];
+    
+  }
+
+  saveRut() {
+    if (this.fields.rut) {
+      // You might want to add RUT validation here
+      this.onInputChange('rut', this.fields.rut);
+      this.visibleFields.rut = false;
+    }
+  }
+
   private debounceTimers: { [key: string]: any } = {};
   @ViewChild('imageUpload', { static: false }) imageUpload!: ElementRef;
   selectedImagePreview: string | null = null; // URL para la previsualización de la imagen
@@ -48,11 +85,22 @@ private pb: PocketBase;
   constructor(
     private imageService: ImageService,
     public global: GlobalService,
-    public auth: AuthPocketbaseService
+    public auth: AuthPocketbaseService,
+    private cdr: ChangeDetectorRef
   ) {
 
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
 
+  }
+  ngOnInit(): void {
+    this.fetchTutorData();
+    this.fields = {
+      full_name: '',
+      rut: '',
+      phone: '',
+      address: ''
+    };
+    
   }
   onInputChange(fieldName: string, value: string): void {
     // Cancela el temporizador anterior para el campo actual
@@ -79,6 +127,13 @@ private pb: PocketBase;
         await this.auth.updateTutorField(tutorRecord.id, {
           [fieldName]: value
         });
+      }
+
+      // Si el campo es full_name, actualiza también en localStorage
+      if (fieldName === 'full_name') {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.full_name = value;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
       }
   
       Swal.fire({
@@ -107,6 +162,45 @@ private pb: PocketBase;
       console.log('No se seleccionó ningún archivo.');
     }
   }
+  async fetchTutorData(): Promise<void> {
+    try {
+      const userId = this.auth.getUserId();
+      console.log('UserId obtenido:', userId);
+  
+      const tutorRecord = await this.pb
+        .collection('tutors')
+        .getFirstListItem<TutorRecord>(`userId="${userId}"`);
+  
+      if (tutorRecord) {
+        console.log('Registro completo del tutor:', tutorRecord);
+  
+        // Ahora puedes acceder directamente a las propiedades
+        this.fields.full_name = tutorRecord.full_name || '';
+        this.fields.address = tutorRecord.address || '';
+        this.fields.rut = tutorRecord.rut || '';
+        if (!this.fields.rut) {
+          this.canEditRut = true;
+        }
+        this.fields.phone = tutorRecord.phone || '';
+  
+        console.log('Valores asignados:');
+        console.log('full_name:', this.fields.full_name);
+        console.log('address:', this.fields.address);
+        console.log('rut:', this.fields.rut);
+        console.log('phone:', this.fields.phone);
+        this.cdr.detectChanges();
+        Promise.resolve().then(() => {
+          console.log('Cambio detectado por Angular');
+        });
+      } else {
+        console.warn('No se encontraron datos para el tutor asociado.');
+      }
+    } catch (error) {
+      console.error('Error detallado al obtener los datos del tutor:', error);
+    }
+  }
+  
+  
   
   
   async onImageChange(event: any): Promise<void> {
@@ -235,4 +329,21 @@ private pb: PocketBase;
     return window.innerWidth <= 768; // Ajusta el ancho según tus necesidades
   }
   
+  async confirmSaveRut() {
+    this.canEditRut = false;
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'El RUT solo podrá ser ingresado una vez. Después de guardar, no podrás modificarlo.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+      this.saveRut();
+    }
+  }
 }

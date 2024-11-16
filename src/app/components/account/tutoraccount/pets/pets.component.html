@@ -33,7 +33,7 @@
 </div>
 
 <div class="content-box">
-    <ul class="row g-2" *ngIf="!global.showHistory">
+    <ul class="row g-2" >
         <!-- <li class="col-6 col-lg-4" *ngFor="let pet of (realtimePets.pets$ | async)"  (click)="showHistoryF(pet)" style="cursor: pointer;">							
             <a class="pet">
                 <div class="profile-image" style="text-align: center;">
@@ -43,8 +43,10 @@
             </a>
             <div class="profile-info" style="text-align: center; margin-top: 8px;">{{pet.name}}</div>
         </li> -->
-        <span class="col-6 col-lg-3" *ngFor="let pet of (realtimePets.pets$ | async)" style="cursor: pointer;">
-            <div class="pet" (click)="showHistoryF(pet)">
+        <span [class.col-6]="auth.getUserId() === pet.idTutor" [class.col-lg-3]="auth.getUserId() === pet.idTutor" (click)="showHistoryF(pet)" *ngFor="let pet of (realtimePets.pets$ | async)" style="cursor: pointer;">
+      
+            
+            <div class="pet" *ngIf="!global.showHistory && auth.getUserId()=== pet.idTutor ">
                 <div class="image-container" style="position: relative; text-align: center;">
                     <img *ngIf="pet.images && pet.images.length > 0"
                          [src]="pet.images[0]" class="avt" alt="Imagen de perfil" style="width: 150px; height: 150px;">
@@ -53,9 +55,11 @@
                     </button>
                 </div>
             </div>
-            <div class="profile-info" style="text-align: center; margin-top: 8px;">
+            <div class="profile-info" style="text-align: center; margin-top: 8px;" *ngIf="!global.showHistory && auth.getUserId()=== pet.idTutor ">
                 {{ pet.name }}
             </div>
+
+        
         </span>
         
         

@@ -94,7 +94,9 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.getMemberId()
+    if (this.auth.isMember ()) {
+      this.getMemberId()
+    }
     this.realtimeSpecialists.specialists$.subscribe((data) => {
       this.global.specialists = data;
     });

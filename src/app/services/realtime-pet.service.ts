@@ -15,7 +15,7 @@ export interface Pet {
     breed?: string;
     images?: string[]; // JSON array
     birthDate?: Date;
-    IdMember?: string;
+    idTutor?: string;
     status?: string;
   }
 @Injectable({

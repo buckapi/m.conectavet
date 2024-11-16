@@ -1,25 +1,126 @@
-<div class="title-bar " style="justify-content: flex-start !important;">
-    <button *ngIf="global.memberOption!='' && isMobile()" (click)="global.resetMemberOption()" class="btn btn-light"
+<div class="title-bar" style="justify-content: flex-start !important;">
+  <button *ngIf="global.memberOption != '' && isMobile()" (click)="global.resetMemberOption()" class="btn btn-light"
     style="margin-right: 10px;">
-    <i class="icon feather icon-chevron-left"></i> <!-- Botón de retroceso -->
-</button>
-    <h3 class="name mb-0" style="padding-left: 20px;" *ngIf="auth.getCurrentUser().full_name"><span
-        class="greetings">Hola,</span> {{auth.getCurrentUser().full_name}}.</h3>
+    <i class="icon feather icon-chevron-left"></i>
+  </button>
+  <h3 class="name mb-0" style="padding-left: 20px;">
+    Hola, {{ fields['full_name'] || 'Usuario' }}.
+  </h3>
 </div>
-<div class="content-box">
-    <div class="alert alert-info alert-dismissible fade show" >
-        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
-            stroke-linecap="round" stroke-linejoin="round" class="me-2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-       <span class="personalizedAlerts">
-           Su registro ha sido <strong>exitoso</strong>, ingrese la siguiente información para completar la activación de su cuenta
 
-       </span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-            <span><i class="icon feather icon-x"></i></span>
-        </button>
+<div class="content-box">
+  <div class="alert alert-info alert-dismissible fade show" *ngIf="!fields['full_name'] || !fields['email'] || !fields['rut']">
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+      stroke-linecap="round" stroke-linejoin="round" class="me-2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+    <span>Completa los siguientes campos para activar tu cuenta:</span>
+    <ol>
+      <li *ngIf="!fields['full_name']">Nombre o Razón Social</li>
+      <li *ngIf="!fields['email']">Correo Electrónico</li>
+      <li *ngIf="!fields['rut']">RUT</li>
+    </ol>
+    <button type="button" class="btn-close" data-bs-dismiss="alert">
+      <span><i class="icon feather icon-x"></i></span>
+    </button>
+  </div>
+
+  <!-- Previsualización de la imagen -->
+  <div class="profile-image">
+    <div class="profile-container">
+      <img
+        [style.background-image]="'url(' + (fields['images'][0] || 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg') + ')'"
+        style="background-size: cover; background-position: center; border-radius: 50%; width: 150px; height: 150px;">
+      <div class="edit">
+        <input #imageUpload type="file" (change)="onImageChange($event)" class="form-control" accept="image/*"
+          style="display: none;">
+        <label for="imageUpload" class="edit-icon">
+          <i class="fi fi-rr-pencil"></i>
+        </label>
+      </div>
     </div>
+  </div>
+
+  <!-- Campos del perfil -->
+  <form>
+    <!-- Nombre o Razón Social -->
+    <div class="mb-2">
+      <label class="form-label">Nombre o Razón Social</label>
+      <div *ngIf="!visibleFields['full_name']">
+        {{ fields['full_name'] || 'No especificado' }}
+        <button class="btn btn-link" (click)="toggleField('full_name')">Editar</button>
+      </div>
+      <div *ngIf="visibleFields['full_name']">
+        <input class="form-control" [(ngModel)]="fields['full_name']" (input)="onInputChange('full_name', fields['full_name'])"
+          placeholder="Nombre o Razón Social" />
+      </div>
     </div>
+
+    <!-- Biografía -->
+    <div class="mb-2">
+      <label class="form-label">Biografía</label>
+      <div *ngIf="!visibleFields['bio']">
+        {{ fields['bio'] || 'No especificada' }}
+        <button class="btn btn-link" (click)="toggleField('bio')">Editar</button>
+      </div>
+      <div *ngIf="visibleFields['bio']">
+        <textarea class="form-control" [(ngModel)]="fields['bio']" (input)="onInputChange('bio', fields['bio'])"
+          placeholder="Escriba una breve descripción"></textarea>
+      </div>
+    </div>
+
+    <!-- RUT -->
+    <div class="mb-2">
+      <label class="form-label">RUT</label>
+      <div *ngIf="!visibleFields['rut']">
+        {{ fields['rut'] || 'No especificado' }}
+        <button class="btn btn-link" (click)="toggleField('rut')" [disabled]="!canEditRut">Editar</button>
+      </div>
+      <div *ngIf="visibleFields['rut']">
+        <input class="form-control" [(ngModel)]="fields['rut']" placeholder="RUT" />
+        <button class="btn btn-primary mt-2" (click)="confirmSaveRut()">Guardar</button>
+      </div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-2">
+      <label class="form-label">Dirección Completa</label>
+      <div *ngIf="!visibleFields['address']">
+        {{ fields['address'] || 'No especificada' }}
+        <button class="btn btn-link" (click)="toggleField('address')">Editar</button>
+      </div>
+      <div *ngIf="visibleFields['address']">
+        <input class="form-control" [(ngModel)]="fields['address']"
+          (input)="onInputChange('address', fields['address'])" placeholder="Dirección Completa" />
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-2">
+      <label class="form-label">Teléfono</label>
+      <div *ngIf="!visibleFields['phone']">
+        {{ fields['phone'] || 'No especificado' }}
+        <button class="btn btn-link" (click)="toggleField('phone')">Editar</button>
+      </div>
+      <div *ngIf="visibleFields['phone']">
+        <input class="form-control" [(ngModel)]="fields['phone']" (input)="onInputChange('phone', fields['phone'])"
+          placeholder="Teléfono" />
+      </div>
+    </div>
+
+    <!-- Campos adicionales (Días de atención, Horarios, Encargado) -->
+    <div class="mb-2" *ngFor="let field of ['days', 'hours', 'manager_name', 'manager_phone', 'manager_email', 'manager_position']">
+      <label class="form-label">{{ field | titlecase }}</label>
+      <div *ngIf="!visibleFields[field]">
+        {{ fields[field] || 'No especificado' }}
+        <button class="btn btn-link" (click)="toggleField(field)">Editar</button>
+      </div>
+      <div *ngIf="visibleFields[field]">
+        <input class="form-control" [(ngModel)]="fields[field]" (input)="onInputChange(field, fields[field])"
+          placeholder="{{ field | titlecase }}" />
+      </div>
+    </div>
+  </form>
+</div>

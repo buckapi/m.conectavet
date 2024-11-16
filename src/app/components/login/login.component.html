@@ -12,18 +12,25 @@
                 <div class="section-head">
                     <h3 class="title" style="text-align: center;">Hola</h3>
                     <p class="sub" style="text-align: center;">Inicia sesión</p>
-                </div>
+                </div>  
                 <div class="account-section">
                     <!-- Añadimos el manejador ngSubmit y enlazamos el formulario -->
                     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <div class="mb-3">
-                            <input type="email" id="email" class="form-control" placeholder="Email" 
+                            <!-- <input type="email" id="email" class="form-control" placeholder="Email" 
                                    formControlName="email" 
                                    [ngClass]="{'is-invalid': emailControl.invalid && emailControl.touched}">
                             <div *ngIf="emailControl.invalid && emailControl.touched" class="invalid-feedback">
                                 <small *ngIf="emailControl.errors?.['required']">El email es requerido.</small>
                                 <small *ngIf="emailControl.errors?.['email']">Formato de email inválido.</small>
-                            </div>
+                            </div> -->
+                            <input type="email" id="email" class="form-control" placeholder="Nombre de usuario o email" 
+                            formControlName="email" 
+                            [ngClass]="{'is-invalid': emailControl.invalid && emailControl.touched}">
+                     <div *ngIf="emailControl.invalid && emailControl.touched" class="invalid-feedback">
+                         <small *ngIf="emailControl.errors?.['required']">El email o nombre de usuario es requerido.</small>
+                         <!-- <small *ngIf="emailControl.errors?.['email']">Formato de email inválido.</small> -->
+                     </div>
                         </div>
                         <div class="mb-3">
                             <div class="input-group input-group-icon mb-2">
