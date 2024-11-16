@@ -6,7 +6,7 @@
                     <div class="media-35 m-r10">
                         <img *ngIf="auth.getCurrentUser()" class="rounded-xl"src="{{ auth.getCurrentUser().images[0] ? auth.getCurrentUser().images[0] : 'assets/images/default.png' }}" alt="">
                     </div>
-                    <h6 class="mb-0 font-13" *ngIf="auth.getCurrentUser()?.full_name">Hola {{auth.getCurrentUser().full_name}}</h6>
+                    <h6 class="mb-0 font-13" *ngIf="auth.getCurrentUser()?.full_name">  &#64;{{auth.getCurrentUser().username}}</h6>
                 </div>
             </a>
         </div>

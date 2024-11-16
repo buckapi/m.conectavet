@@ -59,6 +59,98 @@ interface MemberRecord {
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+
+   regions = [
+    {
+      name: 'Región de Arica y Parinacota',
+      communes: ['Arica', 'Camarones', 'Putre', 'General Lagos']
+    },
+    {
+      name: 'Región de Tarapacá',
+      communes: ['Iquique', 'Alto Hospicio', 'Pozo Almonte', 'Camiña', 'Colchane', 'Huara', 'Pica']
+    },
+    {
+      name: 'Región de Antofagasta',
+      communes: ['Antofagasta', 'Mejillones', 'Sierra Gorda', 'Taltal', 'Calama', 'Ollagüe', 'San Pedro de Atacama', 'Tocopilla', 'María Elena']
+    },
+    {
+      name: 'Región de Atacama',
+      communes: ['Copiapó', 'Caldera', 'Tierra Amarilla', 'Chañaral', 'Diego de Almagro', 'Vallenar', 'Freirina', 'Huasco', 'Alto del Carmen']
+    },
+    {
+      name: 'Región de Coquimbo',
+      communes: ['La Serena', 'Coquimbo', 'Andacollo', 'La Higuera', 'Paihuano', 'Vicuña', 'Ovalle', 'Combarbalá', 'Monte Patria', 'Punitaqui', 'Río Hurtado', 'Illapel', 'Canela', 'Los Vilos', 'Salamanca']
+    },
+    {
+      name: 'Región de Valparaíso',
+      communes: ['Valparaíso', 'Viña del Mar', 'Concón', 'Quintero', 'Puchuncaví', 'Casablanca', 'Quilpué', 'Villa Alemana', 'Limache', 'Olmué', 'Quillota', 'La Calera', 'Hijuelas', 'Nogales', 'La Cruz', 'San Antonio', 'Cartagena', 'El Quisco', 'El Tabo', 'Algarrobo', 'Los Andes', 'San Esteban', 'Calle Larga', 'Rinconada', 'Petorca', 'La Ligua', 'Zapallar', 'Papudo', 'Cabildo', 'Isla de Pascua']
+    },
+    {
+      name: 'Región Metropolitana de Santiago',
+      communes: ['Santiago', 'Cerro Navia', 'Conchalí', 'El Bosque', 'Estación Central', 'Huechuraba', 'Independencia', 'La Cisterna', 'La Florida', 'La Granja', 'La Pintana', 'La Reina', 'Las Condes', 'Lo Barnechea', 'Lo Espejo', 'Lo Prado', 'Macul', 'Maipú', 'Ñuñoa', 'Pedro Aguirre Cerda', 'Peñalolén', 'Providencia', 'Pudahuel', 'Quilicura', 'Quinta Normal', 'Recoleta', 'Renca', 'San Joaquín', 'San Miguel', 'San Ramón', 'Vitacura', 'Puente Alto', 'San Bernardo', 'Buin', 'Calera de Tango', 'Paine', 'Melipilla', 'Curacaví', 'María Pinto', 'San Pedro', 'Talagante', 'El Monte', 'Isla de Maipo', 'Padre Hurtado', 'Peñaflor']
+    },
+    {
+      name: 'Región de O’Higgins',
+      communes: ['Rancagua', 'Machalí', 'Graneros', 'Codegua', 'Doñihue', 'Coltauco', 'Olivar', 'Requínoa', 'Rengo', 'Malloa', 'San Vicente', 'Pichidegua', 'Peumo', 'Las Cabras', 'San Fernando', 'Chimbarongo', 'Nancagua', 'Placilla', 'Santa Cruz', 'Pichilemu', 'Marchihue', 'Paredones', 'Navidad', 'Litueche', 'La Estrella']
+    },
+    {
+      name: 'Región del Maule',
+      communes: ['Talca', 'Constitución', 'Curepto', 'Empedrado', 'Maule', 'Pelarco', 'Pencahue', 'Río Claro', 'San Clemente', 'San Rafael', 'Cauquenes', 'Chanco', 'Pelluhue', 'Curicó', 'Hualañé', 'Licantén', 'Molina', 'Rauco', 'Romeral', 'Sagrada Familia', 'Teno', 'Linares', 'Colbún', 'Longaví', 'Parral', 'Retiro', 'San Javier', 'Villa Alegre', 'Yerbas Buenas']
+    },
+    {
+      name: 'Región de Ñuble',
+      communes: ['Chillán', 'Chillán Viejo', 'El Carmen', 'Pemuco', 'Pinto', 'Quillón', 'San Ignacio', 'Yungay', 'Cobquecura', 'Coelemu', 'Ninhue', 'Portezuelo', 'Quirihue', 'Ránquil', 'Treguaco', 'Bulnes', 'Quirihue', 'San Carlos']
+    },
+    {
+      name: 'Región del Biobío',
+      communes: ['Concepción', 'Talcahuano', 'Hualpén', 'Chiguayante', 'Coronel', 'San Pedro de la Paz', 'Lota', 'Tomé', 'Penco', 'Santa Juana', 'Hualqui', 'Florida', 'Lebu', 'Arauco', 'Curanilahue', 'Los Álamos', 'Cañete', 'Tirúa', 'Los Ángeles', 'Nacimiento', 'Negrete', 'Mulchén', 'Quilaco', 'Quilleco', 'Santa Bárbara', 'Laja', 'San Rosendo', 'Antuco', 'Cabrero', 'Yumbel']
+    },
+    {
+      name: 'Región de La Araucanía',
+      communes: ['Temuco', 'Padre Las Casas', 'Cunco', 'Curarrehue', 'Freire', 'Galvarino', 'Gorbea', 'Lautaro', 'Loncoche', 'Melipeuco', 'Nueva Imperial', 'Perquenco', 'Pitrufquén', 'Pucón', 'Saavedra', 'Teodoro Schmidt', 'Toltén', 'Vilcún', 'Villarrica', 'Angol', 'Collipulli', 'Curacautín', 'Ercilla', 'Lonquimay', 'Los Sauces', 'Lumaco', 'Purén', 'Renaico', 'Traiguén', 'Victoria']
+    },
+    {
+      name: 'Región de Los Ríos',
+      communes: ['Valdivia', 'Corral', 'Lanco', 'Los Lagos', 'Máfil', 'Mariquina', 'Paillaco', 'Panguipulli', 'La Unión', 'Río Bueno', 'Futrono', 'Lago Ranco']
+    },
+    {
+      name: 'Región de Los Lagos',
+      communes: ['Puerto Montt', 'Puerto Varas', 'Llanquihue', 'Fresia', 'Frutillar', 'Los Muermos', 'Maullín', 'Calbuco', 'Ancud', 'Castro', 'Chonchi', 'Curaco de Vélez', 'Dalcahue', 'Puqueldón', 'Queilén', 'Quellón', 'Quemchi', 'Quinchao', 'Osorno', 'Puerto Octay', 'Purranque', 'Puyehue', 'Río Negro', 'San Juan de la Costa', 'San Pablo', 'Chaitén', 'Futaleufú', 'Hualaihué', 'Palena']
+    },
+    {
+      name: 'Región de Aysén',
+      communes: ['Coyhaique', 'Aysén', 'Cisnes', 'Guaitecas', 'Chile Chico', 'Río Ibáñez', 'Cochrane', 'O’Higgins', 'Tortel']
+    },
+    {
+      name: 'Región de Magallanes y de la Antártica Chilena',
+      communes: ['Punta Arenas', 'Puerto Natales', 'Porvenir', 'Primavera', 'Timaukel', 'Cabo de Hornos', 'Antártica']
+    }
+  ];
+  
+  
+  selectedRegion: string = '';
+  selectedComune: string = '';
+  filteredComunes: string[] = [];
+
+  // Manejar el cambio de región
+  onRegionChange(): void {
+    const region = this.regions.find(r => r.name === this.selectedRegion);
+    this.filteredComunes = region ? region.communes : [];
+    this.selectedComune = ''; // Resetear la provincia seleccionada
+    this.onInputChange('region', this.selectedRegion);
+  }
+
+  onComuneChange() {
+    this.onInputChange('comuna', this.selectedComune);
+    
+    Swal.fire({
+      title: 'Éxito',
+      text: 'Ubicación actualizada correctamente',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    });
+  }
+
   canEditRut: boolean = false;
   fields: MemberRecord = {
     id: '',
@@ -128,9 +220,12 @@ currentUser = {
     if (this.debounceTimers[fieldName]) {
       clearTimeout(this.debounceTimers[fieldName]);
     }
+    if (fieldName === 'region' ) {
+      this.onRegionChange();
+    }
     this.debounceTimers[fieldName] = setTimeout(() => {
       this.updateFields(fieldName, value);
-    }, 1000);
+    }, 4000);
   }
 
   async updateFields(fieldName: string, value: string): Promise<void> {

@@ -111,7 +111,7 @@ private pb: PocketBase;
     // Inicia un nuevo temporizador de 3 segundos
     this.debounceTimers[fieldName] = setTimeout(() => {
       this.updateFields(fieldName, value);
-    }, 1000);
+    }, 4000);
   }
 
   async updateFields(fieldName: string, value: string): Promise<void> {
