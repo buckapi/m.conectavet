@@ -260,7 +260,9 @@ private pb: PocketBase;
             await this.pb.collection('tutors').update(tutorRecord.id, updatedTutor);
             console.log('Ficha en tutors actualizada:', updatedTutor);
           }
-  
+         this.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+         
           // Actualizar previsualización y localStorage
           this.selectedImagePrev = uploadedImageUrl;
           this.currentUser.images[0] = uploadedImageUrl;

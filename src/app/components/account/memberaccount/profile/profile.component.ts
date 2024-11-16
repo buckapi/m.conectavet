@@ -7,7 +7,11 @@ import { ImageService } from '@app/services/image.service';
 import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 
-
+interface ImageRecord {
+  collectionId: string;
+  id: string;
+  image: string;
+}
 interface MemberRecord {
   id: string;
   full_name: string;
@@ -90,12 +94,16 @@ export class ProfileComponent implements OnInit {
     manager_email: false,
     manager_position: false,
   };
-  
+
 
   private debounceTimers: { [key: string]: any } = {};
   @ViewChild('imageUpload', { static: false }) imageUpload!: ElementRef;
-  selectedImage: File | null = null;
+  selectedImagePreview: string | null = null; // URL para la previsualización de la imagen
+currentUser = {
+  images: ['assets/images/default.png'], // Imagen predeterminada
+}; selectedImage: File | null = null;
   selectedImagePrev: string | null = null;
+  apiUrl = 'https://db.conectavet.cl:8080/api/files/';
 
   private pb: PocketBase;
 
@@ -149,6 +157,9 @@ export class ProfileComponent implements OnInit {
       const userId = this.auth.getUserId();
       const memberRecord = await this.pb.collection('members').getFirstListItem<MemberRecord>(`userId="${userId}"`);
       if (memberRecord) {
+        if (!this.fields.rut) {
+          this.canEditRut = true;
+        }
         this.fields = memberRecord;
         this.cdr.detectChanges();
         console.log('Datos cargados:', this.fields);
@@ -164,31 +175,87 @@ export class ProfileComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
+  
+      // Mostrar previsualización de la imagen seleccionada
       const reader = new FileReader();
       reader.onload = () => {
-        this.selectedImagePrev = reader.result as string;
+        this.selectedImagePrev = reader.result as string; // Previsualización
       };
       reader.readAsDataURL(file);
-
+  
+      // Crear FormData para enviar al servidor
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append('type', 'avatar');
       formData.append('userId', this.auth.getUserId());
-
-      try {
-        const newImageRecord = await this.pb.collection('images').create(formData);
-        if (newImageRecord) {
-          const uploadedImageUrl = `https://db.conectavet.cl:8080/api/files/${newImageRecord.collectionId}/${newImageRecord.id}/${newImageRecord['image']}`;
-          await this.pb.collection('members').update(this.fields.id, {
-            images: [uploadedImageUrl],
-          });
-          this.fields.images = [uploadedImageUrl];
-          localStorage.setItem('currentUser', JSON.stringify({ ...this.fields, images: [uploadedImageUrl] }));
-          Swal.fire('Éxito', 'La imagen se ha cargado correctamente.', 'success');
-        }
-      } catch (error) {
-        Swal.fire('Error', 'No se pudo cargar la imagen.', 'error');
-        console.error('Error al cargar la imagen:', error);
+  
+      if (this.selectedImage) {
+        formData.append('image', this.selectedImage);
       }
+  
+      try {
+        const newImageRecord: ImageRecord | null = await this.pb
+          .collection('images')
+          .create(formData);
+  
+        if (newImageRecord) {
+          const uploadedImageUrl = `${this.apiUrl}${newImageRecord.collectionId}/${newImageRecord.id}/${newImageRecord.image}`;
+  
+          const userId = this.auth.getUserId();
+  
+          // Actualizar el registro de `users`
+          const userRecord = await this.pb.collection('users').getOne(userId);
+          if (userRecord) {
+            const updatedUser = {
+              ...userRecord,
+              images: [uploadedImageUrl],
+            };
+  
+            await this.pb.collection('users').update(userRecord.id, updatedUser);
+            console.log('Imagen actualizada en users:', updatedUser);
+          }
+  
+          // Actualizar el registro de `members`
+          const tutorRecord = await this.pb
+            .collection('members')
+            .getFirstListItem(`userId="${userId}"`);
+  
+          if (tutorRecord) {
+            const updatedTutor = {
+              ...tutorRecord,
+              images: [uploadedImageUrl],
+            };
+  
+            await this.pb.collection('members').update(tutorRecord.id, updatedTutor);
+            console.log('Ficha en members actualizada:', updatedTutor);
+          }
+  this.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+          // Actualizar previsualización y localStorage
+          this.selectedImagePrev = uploadedImageUrl;
+          this.currentUser.images[0] = uploadedImageUrl;
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+  
+          // Notificación de éxito
+          Swal.fire({
+            icon: 'success',
+            title: 'Imagen actualizada',
+            text: 'La imagen se ha subido correctamente.',
+          });
+        }
+      } catch (error: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al subir imagen',
+          text: 'No se pudo actualizar la imagen. Inténtelo de nuevo.',
+        });
+        console.error('Error al subir la imagen o actualizar registros:', error.response?.data || error);
+      }
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No se seleccionó archivo',
+        text: 'Por favor selecciona un archivo para subir.',
+      });
+      console.warn('No se seleccionó ningún archivo.');
     }
   }
 

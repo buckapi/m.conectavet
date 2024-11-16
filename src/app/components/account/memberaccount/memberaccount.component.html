@@ -3,11 +3,14 @@
         <div class="main-profile">
             <div class="media" style="justify-content: center !important;">
                 <div class=""  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'assets/images/default.jpeg' }}"
+                    <img src="{{ auth.getCurrentUser().images[0]  ? auth.getCurrentUser().images[0]  : 'assets/images/default.jpeg' }}"
                     alt="profile-image"
                     class="profile-image"> 
                 </div>
-             
+                <!-- <div class="profile-name"> {{currentUser.full_name}} </div> -->
+                       
+                <h3 class="name mb-0 " style="margin-top: 10px !important; margin-left: 10px !important;"><span
+                    class="greetings"></span> &#64;{{ currentUser.username }}</h3>
             </div>
         </div>
         <div [hidden]="!global.showMemberMenu && isMobile()">
