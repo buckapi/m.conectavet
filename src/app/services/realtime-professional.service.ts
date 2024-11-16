@@ -39,7 +39,7 @@ export class RealtimeProfessionalsService implements OnDestroy {
       // (Optional) Authentication
       await this.pb
         .collection('users')
-        .authWithPassword('admin@email.com', 'admin1234');
+        .authWithPassword('platform@conectavet.cl', 'HVPO86drd_D5Zon');
 
       // Subscribe to changes in any record of the 'professionals' collection
       this.pb.collection('professionals').subscribe('*', (e) => {

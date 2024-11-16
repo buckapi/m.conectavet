@@ -29,23 +29,40 @@
             <div class="container">
                 <div class="edit-profile">
                     <div class="profile-image">
-                        <div class="avatar-upload">
-                            <div class="avatar-preview">
-                                <div id="imagePreview"
-                                    style="background-image: url(https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg);">
-                                </div>
-                                <div class="change-btn">
-                                    <input type='file' class="form-control d-none" id="imageUpload"
-                                        accept=".png, .jpg, .jpeg">
-                                    <label for="imageUpload">
-                                        <i class="fi fi-rr-pencil"></i>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="avatar-preview">
+                            <div
+  id="imagePreview"
+  [style.background-image]="'url(' + (auth.getCurrentUser().images[0] || 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg') + ')'"
+  style="background-size: cover; background-position: center; border-radius: 50%; width: 150px; height: 150px; border: 5px solid #3ba5a8; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);"
+></div>
+
+<input 
+#imageUpload3 
+id="imageUpload3" 
+type="file" 
+(change)="onImageChange($event)" 
+class="form-control"
+accept="image/*"
+ style="display: none;" 
+/>
+
+
+                            <!-- <input
+#imageUpload3
+
+                            style="display: none;"
+                              type="file"
+                              id="imageUpload3"
+                              (change)="onImageChange($event)"
+                              accept=".png, .jpg, .jpeg"
+                            /> -->
+                          </div>
+                         
+                        <label for="imageUpload3" class="btn mb-2 me-2 btn-xs btn-primary"><i class="fa-solid fa-edit me-2"></i>Cambiar imagen de perfil</label>
+                          <!-- <button (click)="uploadImage()" [disabled]="!selectedImage">Subir Imagen</button> -->
+                          
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Nombre completo</label>
+                    <form>
                         <div class="mb-2 input-group input-group-icon">
                             <span class="input-group-text">
                                 <div class="input-icon">
@@ -53,12 +70,16 @@
                                     
                                 </div>
                             </span>
-                            <input type="text" class="form-control" placeholder="Nombre completo">								
+                            <input 
+                             class="form-control"
+                          id="full_name"
+                          type="text"
+                          [(ngModel)]="fields.full_name"
+                          (input)="onInputChange('full_name', fields.full_name)"
+                          placeholder="Nombre completo"                            
+                          class="form-control" placeholder="Nombre completo">								
                         </div>
-                    </div>
-                  
-                    <div class="mb-3">
-                        <label class="form-label" for="name">RUT</label>
+                      
                         <div class="mb-2 input-group input-group-icon">
                             <span class="input-group-text">
                                 <div class="input-icon">
@@ -66,34 +87,50 @@
                                     
                                 </div>
                             </span>
-                            <input type="text" class="form-control" placeholder="RUT">								
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Telefono</label>
-                        <div class="mb-2 input-group input-group-icon">
+                            <input
+                              class="form-control"
+                              id="rut"
+                              type="text"
+                              [(ngModel)]="fields.rut"
+                              (input)="onInputChange('rut', fields.rut)"
+                              placeholder="RUT"
+                            />
+                          </div>
+                          
+                          <div class="mb-2 input-group input-group-icon">
                             <span class="input-group-text">
-                                <div class="input-icon">
-                                    <i class="fi fi-rr-circle-phone-flip font-20"></i>
-                                    
-                                </div>
+                              <div class="input-icon">
+                                <i class="icon feather icon-phone"></i> <!-- Ícono para Teléfono -->
+                              </div>
                             </span>
-                            <input type="number" class="form-control" autocomplete="off" required="" placeholder="+91">								
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Dirección</label>
-                        <div class="mb-2 input-group input-group-icon">
+                            <input
+                              class="form-control"
+                              id="phone"
+                              type="text"
+                              [(ngModel)]="fields.phone"
+                              (input)="onInputChange('phone', fields.phone)"
+                              placeholder="Teléfono"
+                            />
+                          </div>
+                          
+                          <div class="mb-2 input-group input-group-icon">
                             <span class="input-group-text">
-                                <div class="input-icon">
-                                    <i class="fi fi-rr-marker font-20"></i>
-                                    
-                                </div>
+                              <div class="input-icon">
+                                <i class="icon feather icon-map-pin"></i> <!-- Ícono para Dirección -->
+                              </div>
                             </span>
-                            <input type="text" class="form-control" autocomplete="off" required="" placeholder="Dirección">								
-
-                        </div>
-                    </div>
+                            <input
+                              class="form-control"
+                              id="address"
+                              type="text"
+                              [(ngModel)]="fields.address"
+                              (input)="onInputChange('address', fields.address)"
+                              placeholder="Dirección"
+                            />
+                          </div>
+                          
+                      </form>
+                      
                    
                    
                 </div>

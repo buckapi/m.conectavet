@@ -16,6 +16,19 @@ export class AuthPocketbaseService {
   constructor(public global: GlobalService) {
     this.pb = new PocketBase('https://db.conectavet.cl:8080');
   }
+  async updateUserField(userId: string, updateData: any): Promise<void> {
+    await this.pb.collection('users').update(userId, updateData);
+  }
+  
+  async findTutorByUserId(userId: string): Promise<any> {
+    return await this.pb
+      .collection('tutors')
+      .getFirstListItem(`userId="${userId}"`);
+  }
+  
+  async updateTutorField(tutorId: string, updateData: any): Promise<void> {
+    await this.pb.collection('tutors').update(tutorId, updateData);
+  }
   async saveCategor(categoryData: any): Promise<any> {
     try {
       const record = await this.pb
@@ -50,6 +63,10 @@ export class AuthPocketbaseService {
   isAdmin() {
     const userType = localStorage.getItem('type');
     return userType === '"admin"';
+  }
+  isPlatform() {
+    const userType = localStorage.getItem('type');
+    return userType === '"platform"';
   }
 
   isTutor() {

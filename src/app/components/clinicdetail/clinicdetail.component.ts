@@ -5,7 +5,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DeviceService } from '@app/services/device.service';
 import { RealtimeProfessionalsService } from '@app/services/realtime-professional.service';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
-import { BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({

@@ -127,8 +127,9 @@ export class RegisterComponent implements OnInit {
 
    // Método para registrar tutor
    registerTutor() {
-     if (this.name && this.email && this.password) {
-       this.auth.registerUser(this.email, this.password, 'tutor', this.name,'').subscribe(
+    const tutorUsername = this.email.split('@')[0];
+     if (tutorUsername && this.email && this.password) {
+       this.auth.registerUser(this.email, this.password, 'tutor', tutorUsername,'').subscribe(
          (response) => {
            console.log('Tutor registrado exitosamente', response);
            this.loginAfterRegistration(this.email, this.password);

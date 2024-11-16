@@ -1,3 +1,25 @@
 .personalizedAlerts{
     font-size: 20px !important;
 }
+.image-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.img-thumbnail:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+}
+
+.upload-label {
+  cursor: pointer;
+  color: #007bff;
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+
+.upload-label:hover {
+  text-decoration: underline;
+}

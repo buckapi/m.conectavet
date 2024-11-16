@@ -11,7 +11,7 @@
         <div class="main-profile">
             <div class="media">
                 <div class="profile-container">
-                    <img src="{{ currentUser.images[0] ? currentUser.images[0] : 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg' }}"
+                    <img src="{{ auth.getCurrentUser().images[0] ? auth.getCurrentUser().images[0] : 'https://static.vecteezy.com/system/resources/previews/026/966/960/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg' }}"
                          alt="profile-image"
                          class="profile-image">
                     <div class="edit">

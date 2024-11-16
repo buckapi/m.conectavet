@@ -39,7 +39,7 @@ export class RealtimePetsService implements OnDestroy {
       // (Optional) Authentication
       await this.pb
         .collection('users')
-        .authWithPassword('admin@email.com', 'admin1234');
+        .authWithPassword('platform@conectavet.cl', 'HVPO86drd_D5Zon');
 
       // Subscribe to changes in any record of the 'pets' collection
       this.pb.collection('pets').subscribe('*', (e) => {

@@ -22,7 +22,7 @@ export class RealtimeServicesService implements OnDestroy {
     // (Opcional) Autenticación
     await this.pb
       .collection('users')
-      .authWithPassword('admin@email.com', 'admin1234');
+      .authWithPassword('platform@conectavet.cl', 'HVPO86drd_D5Zon');
 
     // Suscribirse a cambios en cualquier registro de la colección 'categories'
     this.pb.collection('services').subscribe('*', (e) => {
