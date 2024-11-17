@@ -27,13 +27,13 @@
                 </ul>
               </div>
                 <div class="dz-meta-items" [hidden]="isMobile">
-                    <div class="dz-price m-r60">
+                    <div class="dz-price m-r60 m-b10">
                         <h6 class="title font-w600">Biografía:</h6>
                         <span class="text-light">{{global.clinicSelected.bio}}</span>
                     </div>
                 </div>
                 <div class="dz-meta-items" [hidden]="isMobile">
-                  <div class="dz-price m-r60">
+                  <div class="dz-price m-r60 m-b10">
                       <h6 class="title font-w600">Dirección:</h6>
                       <span class="text-light">{{global.clinicSelected.address}}</span>
                   </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="item-wrapper">
               <div class="dz-meta-items" [hidden]="!isMobile">
-                <div class="dz-price m-r60">
+                <div class="dz-price m-r60 m-b10">
                     <h6 class="title font-w600">Dirección:</h6>
                     <span class="text-light">{{global.clinicSelected.address}}</span>
                 </div>
@@ -70,9 +70,9 @@
                 <div *ngIf="isMobile">
                    
                   
-                    <div id="profesionalesSection" class="product-size" style="padding-top: 20px;">
+                    <div id="profesionalesSection" class="product-size m-b10" style="padding-top: 20px;">
                       <h6 class="title font-w600">Profesionales</h6>
-                      <span *ngIf="global.professionalsCount<1" class="text-light">Sin profesionales registra2.</span>
+                      <span *ngIf="global.professionalsCount<1" class="text-light ">Sin profesionales registra2.</span>
 
                       <div class="dz-select-btn2 row">
                         <div class="row">
@@ -122,7 +122,7 @@
                   </div>
                   
                   <div *ngIf="!isMobile">
-                    <div id="profesionalesSection" class="product-size" >
+                    <div id="profesionalesSection" class="product-size m-b10" >
                       <h6 class="title font-w600">Profesionales</h6>
                       <span *ngIf="global.professionalsCount<1" class="text-light">Sin profesionales registrados.</span>
 
@@ -191,7 +191,7 @@
             <div id="diasSection" class="product-size">
                 <h6 class="title font-w600">Días que labora:</h6>
                 <div class="dz-select-btn">
-                    <ng-container *ngFor="let day of weekDays; let i = index">
+                    <ng-container *ngFor="let day of workDays; let i = index">
                         <input type="radio" 
                                class="btn-check" 
                                [name]="'workday'" 
@@ -207,7 +207,7 @@
                 </div>
             </div>
             <div class="dz-meta-items" style="padding-top: 20px !important;">
-                <div class="dz-price m-r60">
+                <div class="dz-price m-r60 m-b10">
                     <h6 class="title font-w600">Horario de atención:</h6>
                     <span class="text-light">{{global.clinicSelected.hours}}</span>
                 </div>

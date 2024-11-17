@@ -22,7 +22,7 @@ export class ClinicdetailComponent implements OnInit {
   selectedDates: any; 
   selectedService: any = null;
   
-  weekDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  workDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   
   constructor(
     public device:DeviceService,
@@ -155,14 +155,14 @@ export class ClinicdetailComponent implements OnInit {
   }
 
   isDayInClinicDays(day: string): boolean {
-    const validDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    const validDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
     const daysString = this.global.clinicSelected?.days || '';
-    const weekDays = daysString 
+    const workDays = daysString 
     .split(',')
     .map(d => d.trim().toUpperCase())
     .filter(d => validDays.includes(d)); // Filtrar días válidos
     const normalizedDay = day.trim().toUpperCase();
-    return weekDays.includes(normalizedDay);
+    return workDays.includes(normalizedDay);
   }
   
     

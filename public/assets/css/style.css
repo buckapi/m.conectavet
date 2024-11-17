@@ -10435,8 +10435,8 @@ section {
     position: relative; }
     .header .notification-badge .badge {
       position: absolute;
-      top: -4px;
-      left: 10px;
+      top: -6px;
+      left: 24px;
       padding: 2px;
       border-radius: 20px;
       font-weight: 400;
@@ -15213,7 +15213,7 @@ select {
   border: 0; }
 
 .dz-stepper {
-  width: 125px; }
+  width: 105px; }
   .dz-stepper small, .dz-stepper .small {
     text-align: center;
     display: block;
@@ -15228,8 +15228,8 @@ select {
       height: 100%; }
       .dz-stepper .bootstrap-touchspin .input-group-btn .btn {
         border-radius: 40px;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         padding: 0;
         text-align: center;
         border: 1px solid var(--border-color);

@@ -89,7 +89,8 @@
 .service-price {
   color: #3ba5a8;
   font-weight: 900;
-  font-size: 20px;
+  padding-left: 10px;
+  font-size: 16px;
   transition: color 0.3s ease; /* Transición suave en el cambio de color */
 }
 
@@ -107,5 +108,7 @@
 }
 .btn.btn-active{
   background-color: #3ba5a8 !important;
-  color: white;
+  opacity: 1;
+  border: 1px solid #3ba5a8 !important;
+  color: white; 
 }
