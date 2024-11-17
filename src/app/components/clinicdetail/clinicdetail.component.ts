@@ -22,6 +22,8 @@ export class ClinicdetailComponent implements OnInit {
   selectedDates: any; 
   selectedService: any = null;
   
+  weekDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  
   constructor(
     public device:DeviceService,
     public breakpointObserver: BreakpointObserver,
@@ -151,6 +153,19 @@ export class ClinicdetailComponent implements OnInit {
     // Guardar en localStorage
     this.saveCartToLocalStorage();
   }
+
+  isDayInClinicDays(day: string): boolean {
+    const validDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    const daysString = this.global.clinicSelected?.days || '';
+    const weekDays = daysString 
+    .split(',')
+    .map(d => d.trim().toUpperCase())
+    .filter(d => validDays.includes(d)); // Filtrar días válidos
+    const normalizedDay = day.trim().toUpperCase();
+    return weekDays.includes(normalizedDay);
+  }
+  
+    
   
   
   }

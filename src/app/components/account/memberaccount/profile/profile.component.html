@@ -23,12 +23,9 @@
           <br>
           <strong style="color: black;  text-align: left;">Campos pendientes:</strong>
           <ol style="color: red; text-align: left; margin-left: 0px;">
-
-
             <li *ngIf="!fields['full_name']">* Nombre o Razón Social</li>
             <li *ngIf="!fields['rut']">* RUT</li>
             <li *ngIf="!fields['bio']">* Biografía</li>
-            <!-- <li *ngIf="!fields['email']">Email</li> -->
             <li *ngIf="!fields['address']">* Dirección</li>
             <li *ngIf="!fields['region']">* Región</li>
             <li *ngIf="!fields['comuna']">* Comuna</li>
@@ -69,11 +66,7 @@
           </div>
         </div>
       </div>
-      
-
-      <!-- Campos del perfil -->
       <form>
-        <!-- Nombre o Razón Social -->
         <div class="mb-2">
           <button class="btn btn-link" (click)="toggleField('full_name')">
             <span class="text-muted">
@@ -92,7 +85,6 @@
           </div>
         </div>
 
-        <!-- Biografía -->
         <div class="mb-2">
           <button class="btn btn-link" (click)="toggleField('bio')">
             <span class="text-muted">
@@ -111,7 +103,6 @@
           </div>
         </div>
 
-        <!-- RUT -->
         <div class="mb-2">
           <button class="btn btn-link" [disabled]="canEditRut === false" (click)="toggleField('rut')">
             <span class="text-muted">
@@ -175,59 +166,84 @@
             {{fields.region || ''}}
           </button>
           <label *ngIf="visibleFields['region']" for="region" class="form-label">Región:</label>
-          <select *ngIf="visibleFields['region']" class="form-select" id="region" [(ngModel)]="selectedRegion" (change)="onRegionChange()">
+          <select *ngIf="visibleFields['region']" class="form-select" id="region" [(ngModel)]="selectedRegion"
+            (change)="onRegionChange()">
             <option value="" disabled selected>Seleccione una región</option>
             <option *ngFor="let region of regions" [value]="region.name">{{ region.name }}</option>
           </select>
         </div>
-        
+
         <div class="mb-2">
           <button class="btn btn-link" (click)="toggleField('comune')">
             <span class="text-muted">
               Comuna:
             </span>
-            {{fields.region || ''}}
+            {{fields.comuna || ''}}
           </button>
           <label *ngIf="visibleFields['comune']" for="comune" class="form-label">Comuna:</label>
-          <select *ngIf="visibleFields['comune']" class="form-select" id="comune" [(ngModel)]="selectedComune" (change)="onComuneChange()">
-            <option value="" disabled selected>Seleccione una provincia</option>
+          <select *ngIf="visibleFields['comune']" class="form-select" id="comune" [(ngModel)]="selectedComune"
+            (change)="onComuneChange()">
+            <option value="" disabled selected>Seleccione una comuna</option>
             <option *ngFor="let comune of filteredComunes" [value]="comune">{{ comune }}</option>
           </select>
         </div>
-        
+
         <div class="mb-2">
           <button class="btn btn-link" (click)="toggleField('days')">
             <span class="text-muted">
               Días:
             </span>
-            {{fields.days || ''}}
+            {{displaySelectedDays()}}
           </button>
           <div *ngIf="visibleFields['days']" class="input-group input-group-icon">
-            <span class="input-group-text">
-              <div class="input-icon">
-                <i class="icon feather icon-calendar"></i>
-              </div>
-            </span>
-            <input class="form-control" id="days" type="text" [(ngModel)]="fields.days"
-              (input)="onInputChange('days', fields.days)" placeholder="Días" />
+            <div class="dz-select-btn">
+              <input type="checkbox" class="btn-check" id="day-L" [(ngModel)]="selectedDays['L']" (change)="updateDays()">
+              <label class="btn" for="day-L">L</label>
+              
+              <input type="checkbox" class="btn-check" id="day-M" [(ngModel)]="selectedDays['M']" (change)="updateDays()">
+              <label class="btn" for="day-M">M</label>
+              
+              <input type="checkbox" class="btn-check" id="day-X" [(ngModel)]="selectedDays['X']" (change)="updateDays()">
+              <label class="btn" for="day-X">M</label>
+              
+              <input type="checkbox" class="btn-check" id="day-J" [(ngModel)]="selectedDays['J']" (change)="updateDays()">
+              <label class="btn" for="day-J">J</label>
+              
+              <input type="checkbox" class="btn-check" id="day-V" [(ngModel)]="selectedDays['V']" (change)="updateDays()">
+              <label class="btn" for="day-V">V</label>
+              
+              <input type="checkbox" class="btn-check" id="day-S" [(ngModel)]="selectedDays['S']" (change)="updateDays()">
+              <label class="btn" for="day-S">S</label>
+              
+              <input type="checkbox" class="btn-check" id="day-D" [(ngModel)]="selectedDays['D']" (change)="updateDays()">
+              <label class="btn" for="day-D">D</label>
+            </div>
           </div>
         </div>
 
         <div class="mb-2">
           <button class="btn btn-link" (click)="toggleField('hours')">
             <span class="text-muted">
-              Horas:
+              Horario de atención:
             </span>
             {{fields.hours || ''}}
           </button>
           <div *ngIf="visibleFields['hours']" class="input-group input-group-icon">
-            <span class="input-group-text">
-              <div class="input-icon">
-                <i class="icon feather icon-clock"></i>
-              </div>
-            </span>
-            <input class="form-control" id="hours" type="text" [(ngModel)]="fields.hours"
-              (input)="onInputChange('hours', fields.hours)" placeholder="Horas" />
+            <div class="d-flex align-items-center gap-2">
+              <p-calendar [(ngModel)]="startTime" 
+                         [timeOnly]="true" 
+                         hourFormat="12" 
+                         placeholder="Hora de apertura"
+                         (onSelect)="updateHours()">
+              </p-calendar>
+              <span>a</span>
+              <p-calendar [(ngModel)]="endTime" 
+                         [timeOnly]="true" 
+                         hourFormat="12" 
+                         placeholder="Hora de cierre"
+                         (onSelect)="updateHours()">
+              </p-calendar>
+            </div>
           </div>
         </div>
 

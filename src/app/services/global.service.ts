@@ -8,8 +8,11 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Clinic {
   id: string;
+  hours: string;
   name: string;
+  days: string;
   full_name: string;
+  bio: string;
   address: string;
   userId: string;
   phoneNumber: string;
@@ -66,9 +69,12 @@ export class GlobalService {
     idTutor: '',
     status: '',
   };
-  clinicSelected: Clinic = {
+  clinicSelected: Clinic = {  
+    days: '',
+    hours: '',
     id: '',
     userId: '',
+    bio: '',
     name: '',
     full_name: '',
     address: '',

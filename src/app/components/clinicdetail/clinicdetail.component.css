@@ -92,3 +92,20 @@
   font-size: 20px;
   transition: color 0.3s ease; /* Transición suave en el cambio de color */
 }
+
+.day {
+  padding: 8px;
+  margin: 2px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+.day.active {
+  opacity: 1;
+  background-color: #3ba5a8 !important;
+  color: white;
+}
+.btn.btn-active{
+  background-color: #3ba5a8 !important;
+  color: white;
+}

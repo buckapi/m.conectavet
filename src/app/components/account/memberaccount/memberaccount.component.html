@@ -83,8 +83,7 @@
                             <div class="dz-inner">
                                 <span class="title"
                                 [ngClass]="{'menuOption':  global.memberOption === 'profile'}"
-                                
-                                >Mi perfil</span>
+                                >{{ auth.getCurrentUser().type === 'clinica' ? 'Cuenta' : 'Mi perfil' }}</span>
                             </div>
                         </a>
                     </li>

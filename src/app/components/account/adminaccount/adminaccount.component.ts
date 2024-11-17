@@ -9,12 +9,14 @@ import { AddcategoryComponent } from './forms/addcategory/addcategory.component'
 import { CategoriesadministratorComponent } from "./categoriesadministrator/categoriesadministrator.component";
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { RequestsComponent } from './requests/requests.component';
 
 @Component({
   selector: 'app-adminaccount',
   standalone: true,
   imports: [
     CommonModule, 
+    RequestsComponent,
     ServicesadministratorComponent, 
     AddserviceComponent, 
     AddcategoryComponent, 

@@ -6,6 +6,7 @@ import { GlobalService } from '@app/services/global.service';
 import { ImageService } from '@app/services/image.service';
 import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
+import { CalendarModule } from 'primeng/calendar';
 
 interface ImageRecord {
   collectionId: string;
@@ -54,7 +55,7 @@ interface MemberRecord {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,CalendarModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
@@ -138,6 +139,7 @@ export class ProfileComponent implements OnInit {
     this.filteredComunes = region ? region.communes : [];
     this.selectedComune = ''; // Resetear la provincia seleccionada
     this.onInputChange('region', this.selectedRegion);
+    this.toggleField('comune'); 
   }
 
   onComuneChange() {
@@ -199,6 +201,19 @@ currentUser = {
 
   private pb: PocketBase;
 
+  startTime: Date | null = null;
+  endTime: Date | null = null;
+
+  selectedDays = {
+    'L': false,
+    'M': false,
+    'X': false,
+    'J': false,
+    'V': false,
+    'S': false,
+    'D': false
+  };
+
   constructor(
     private imageService: ImageService,
     public global: GlobalService,
@@ -210,6 +225,14 @@ currentUser = {
 
   ngOnInit(): void {
     this.fetchMemberData();
+    this.initializeTimeFields();
+    // Initialize selectedDays from fields.days if it exists
+    if (this.fields.days) {
+      const days = this.fields.days.split(',');
+      days.forEach(day => {
+        this.selectedDays[day.trim() as keyof typeof this.selectedDays] = true;
+      });
+    }
   }
 
   toggleField(field: keyof typeof this.visibleFields): void {
@@ -217,15 +240,19 @@ currentUser = {
   }
 
   onInputChange(fieldName: string, value: string): void {
+    if (fieldName === 'comuna' ) {
+      return;
+    }
     if (this.debounceTimers[fieldName]) {
       clearTimeout(this.debounceTimers[fieldName]);
     }
-    if (fieldName === 'region' ) {
-      this.onRegionChange();
-    }
+  
     this.debounceTimers[fieldName] = setTimeout(() => {
       this.updateFields(fieldName, value);
     }, 4000);
+    if (fieldName === 'region' ) {
+      this.onRegionChange();
+    }
   }
 
   async updateFields(fieldName: string, value: string): Promise<void> {
@@ -372,5 +399,60 @@ currentUser = {
     if (result.isConfirmed) {
       this.updateFields('rut', this.fields.rut);
     }
+  }
+
+  updateHours() {
+    if (this.startTime && this.endTime) {
+      const formatTime = (date: Date) => {
+        return date.toLocaleTimeString('es-ES', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: true 
+        }).toUpperCase();
+      };
+      
+      this.fields.hours = `${formatTime(this.startTime)} - ${formatTime(this.endTime)}`;
+      this.onInputChange('hours', this.fields.hours);
+    }
+  }
+
+  // Opcional: Si necesitas inicializar los valores cuando se carga un horario existente
+  initializeTimeFields() {
+    if (this.fields.hours) {
+      const [start, end] = this.fields.hours.split('-').map(t => t.trim());
+      if (start && end) {
+        // Convertir las strings de tiempo a objetos Date
+        const today = new Date();
+        
+        const setTimeFromString = (timeStr: string) => {
+          const date = new Date(today);
+          const [time, period] = timeStr.toLowerCase().split(' ');
+          let [hours, minutes] = time.split(':');
+          let hour = parseInt(hours);
+          
+          if (period === 'pm' && hour !== 12) hour += 12;
+          if (period === 'am' && hour === 12) hour = 0;
+          
+          date.setHours(hour, parseInt(minutes));
+          return date;
+        };
+
+        this.startTime = setTimeFromString(start);
+        this.endTime = setTimeFromString(end);
+      }
+    }
+  }
+
+  updateDays() {
+    const selectedDays = Object.entries(this.selectedDays)
+      .filter(([_, selected]) => selected)
+      .map(([day, _]) => day);
+    
+    this.fields.days = selectedDays.join(', ');
+    this.onInputChange('days', this.fields.days);
+  }
+
+  displaySelectedDays() {
+    return this.fields.days || '';
   }
 }
