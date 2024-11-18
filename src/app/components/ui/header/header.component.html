@@ -1,4 +1,4 @@
-<header class="header header-fixed style-2 " [hidden]="global.isScrollingDown">
+<header class="header header-fixed style-2 " [hidden]="global.isScrollingDown || global.activeRoute=='shopping'">
     <div class="header-content" [hidden]="global.isScrollingDown">
         <div class="left-content" [hidden]="global.activeRoute!='account' || !auth.isLogin()">
             <a href="javascript:void(0);" class="menu-toggler bg-white pe-2 rounded-xl">
@@ -28,7 +28,7 @@
                 <i class="icon feather icon-bell"></i>
                 <span class="badge badge-danger">14</span>
             </a>
-        <app-cart-button ></app-cart-button>
+        <app-cart-button style="padding-top: 10px;"></app-cart-button>
 
             <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>
             <a (click)="toggleScroll()" class="icon font-20" 
@@ -40,7 +40,7 @@
         </div>
     </div>
 </header>
-<header class="header header-fixed shadow" style="background-color: white;" [hidden]="!global.isScrollingDown">
+<header class="header header-fixed shadow" style="background-color: white;" [hidden]="!global.isScrollingDown || global.activeRoute=='shopping'">
     <div class="header-content" [hidden]="!global.isScrollingDown">
         <div class="left-content">
             <a href="javascript:void(0);" class="menu-toggler bg-white pe-2 rounded-xl">

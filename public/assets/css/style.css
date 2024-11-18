@@ -17543,11 +17543,11 @@ label input {
 
 .view-cart {
   padding: 15px 15px 30px;
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   max-width: 600px;
   left: 50%;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
   bottom: 70px; }
   .view-cart ul {
     display: flex;

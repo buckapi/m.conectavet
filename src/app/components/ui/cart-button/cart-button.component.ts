@@ -9,5 +9,9 @@ import { GlobalService } from '@app/services/global.service';
   styleUrl: './cart-button.component.css'
 })
 export class CartButtonComponent {
- constructor(public global: GlobalService) {} 
+ constructor(public global: GlobalService) {}
+
+ goToShopping(){
+  this.global.activeRoute='shopping';
+ }
 }

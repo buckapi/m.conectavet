@@ -161,3 +161,6 @@
 ::ng-deep .mat-calendar-body-cell {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+::ng-deep .mat-calendar-period-button {
+  display: none !important; /* Oculta solo el selector del mes */
+}

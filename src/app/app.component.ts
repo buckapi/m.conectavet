@@ -22,10 +22,12 @@ import { RealtimeCategoriesService } from './services/realtime-catwgories.servic
 import { AccountComponent } from './components/account/account.component';
 import { AuthPocketbaseService } from './services/auth-pocketbase.service';
 import { RealtimeServicesService } from './services/realtime-services.service';
+import { ShoppingComponent } from './components/shopping/shopping.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    ShoppingComponent,
     AccountComponent,
     RouterOutlet,
     ServicesComponent,

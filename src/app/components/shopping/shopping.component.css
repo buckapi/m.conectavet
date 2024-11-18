@@ -1,0 +1,32 @@
+a:hover {
+    color: red !important;
+  }
+
+  button:hover {
+    background-color: red !important;
+    border-color: red !important;
+  }
+  .stepper-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.stepper-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.fa {
+    font-size: 12px;
+}

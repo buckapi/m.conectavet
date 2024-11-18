@@ -17,6 +17,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { Injectable } from '@angular/core';
 import { NativeDateAdapter, DateAdapter } from '@angular/material/core';
+import { Router } from '@angular/router';
 @Injectable()
 export class CustomDateAdapter extends NativeDateAdapter {
   override getFirstDayOfWeek(): number {
@@ -31,19 +32,31 @@ registerLocaleData(localeEs);
   imports: [CommonModule,MatDatepickerModule,MatNativeDateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   template: `
-    <mat-calendar [dateFilter]="isDaySelectable" (selectedChange)="onDateSelected($event)" [class.custom-calendar]="true">
+    <mat-calendar
+      [dateClass]="dateClass"
+      [startAt]="startDate"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      (selectedChange)="onDateSelected($event)"
+    >
     </mat-calendar>
   `,
-  styles: [`
-    ::ng-deep .custom-calendar .mat-calendar-body-disabled > .mat-calendar-body-cell-content {
-      background-color: #ffebee !important;  /* Rojo claro */
-      color: rgba(0, 0, 0, 0.38) !important;
-    }
-    
-    ::ng-deep .custom-calendar .mat-calendar-table-header {
-      display: none;
-    }
-  `],
+  styles: [
+    `
+      ::ng-deep .mat-calendar-body-cell.highlight-enabled-day {
+        border: 1px solid rgba(59, 165, 168, 0.2) !important;
+        background-color: rgba(59, 165, 168, 0.2) !important;
+        color: #000 !important;
+        border-radius: 50%;
+      }
+      ::ng-deep .mat-calendar-body-selected {
+        background-color: #3b82f6 !important;
+        border-radius: 50%;
+        color: white !important;
+        font-weight: bold;
+      }
+    `,
+  ],
   templateUrl: './clinicdetail.component.html',
   styleUrl: './clinicdetail.component.css',
   providers: [
@@ -53,6 +66,14 @@ registerLocaleData(localeEs);
   ]
 })
 export class ClinicdetailComponent implements OnInit {
+
+  startDate = new Date(); // Fecha inicial
+  minDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() - 3, 1); // 3 meses antes
+  maxDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 3, 0); // 3 meses después
+
+
+
+
   cartQuantity: number = 0;
 
   isMobile: boolean = false;
@@ -61,6 +82,7 @@ export class ClinicdetailComponent implements OnInit {
   
   workDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
   selectedDates: Date | null = null;
+  selectedDateText: string = '';
 
   dateClass = (date: Date): string => {
     return this.isDaySelectable(date) ? 'highlight-enabled-day' : '';
@@ -73,9 +95,35 @@ export class ClinicdetailComponent implements OnInit {
     public breakpointObserver: BreakpointObserver,
     public global:GlobalService,
     public auth:AuthPocketbaseService,
-    public realtimeProfessionals:RealtimeProfessionalsService
+    public realtimeProfessionals:RealtimeProfessionalsService,
+    private router: Router
   ){}
+  // dateClass = (date: Date): string => {
+  //   if (this.isDaySelectable(date)) {
+  //     return 'highlight-enabled-day';
+  //   }
+  //   return '';
+  // };
+
+  // Verificar si el día es seleccionable según los días laborables
+  getCartFromLocalStorage(): boolean {
+    const savedCart = localStorage.getItem('cart');
+    if (!savedCart) return false;
+    const parsedCart = JSON.parse(savedCart);
+    return Array.isArray(parsedCart) && parsedCart.length > 0;
+  }
+  private formatDate(date: Date): string {
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
   
+    const dia = date.getDate();
+    const mes = meses[date.getMonth()];
+    const anio = date.getFullYear();
+  
+    return `${mes} ${dia} de ${anio}`;
+  }
   isDaySelectable = (date: Date | null): boolean => {
     if (!date || !this.global.clinicSelected?.days) return false;
 
@@ -101,9 +149,19 @@ export class ClinicdetailComponent implements OnInit {
     return clinicDays.includes(dayOfWeek);
   };
 
+  // onDateSelected(selectedDate: Date | null): void {
+  //   if (selectedDate) {
+  //     console.log('Fecha seleccionada:', selectedDate);
+  //     this.selectedDates = selectedDate;
+  //   } else {
+  //     console.log('No se seleccionó ninguna fecha.');
+  //   }
+  // }
   onDateSelected(selectedDate: Date | null): void {
     if (selectedDate) {
-      console.log('Fecha seleccionada:', selectedDate);
+      const formattedDate = this.formatDate(selectedDate);
+      console.log('Fecha seleccionada:', formattedDate);
+      this.selectedDateText = formattedDate; // Guardar el texto formateado
       this.selectedDates = selectedDate;
     } else {
       console.log('No se seleccionó ninguna fecha.');
@@ -246,6 +304,12 @@ export class ClinicdetailComponent implements OnInit {
     
   
   
+  goToCalendar(): void {
+    // Add your navigation logic here
+    // For example, using Router:
+
+    this.global.activeRoute = 'shopping';
+  }
   }
 
 @Component({
@@ -258,10 +322,10 @@ export class ClinicdetailComponent implements OnInit {
   template: `
     <div class="mat-calendar-header">
       <div class="mat-calendar-controls">
-        <button mat-button type="button" class="mat-calendar-period-button"
+        <!-- <button mat-button type="button" class="mat-calendar-period-button"
                 (click)="currentPeriodClicked()">
           {{periodButtonText}}
-        </button>
+        </button> -->
         <div class="mat-calendar-spacer"></div>
         <button mat-icon-button type="button" class="mat-calendar-previous-button"
                 [disabled]="!previousEnabled()" (click)="previousClicked()">
