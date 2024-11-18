@@ -85,7 +85,9 @@
 .service-name {
   font-weight: 500;
 }
-
+.calendar {
+  width: 100px;
+}
 .service-price {
   color: #3ba5a8;
   font-weight: 900;
@@ -97,6 +99,7 @@
 .day {
   padding: 8px;
   margin: 2px;
+  
   border-radius: 4px;
   opacity: 0.5;
 }
@@ -111,4 +114,50 @@
   opacity: 1;
   border: 1px solid #3ba5a8 !important;
   color: white; 
+}
+
+/* Oculta el texto completo del día */
+.mat-calendar-table-header span {
+  font-size: 0;
+}
+
+/* Muestra solo la primera letra */
+.mat-calendar-table-header span::first-letter {
+  font-size: 14px;
+}
+
+/* Estilo para días laborables en el calendario */
+.mat-calendar-body-cell.workday {
+  background-color: #e8f5e9;
+}
+
+/* Asegurarse que el día seleccionado mantenga su estilo */
+.mat-calendar-body-selected {
+  background-color: #3ba5a8 !important;
+  border-radius: 50%;
+  color: white !important;
+}
+::ng-deep .mat-calendar-body-cell.highlight-enabled-day {
+  border: 1px solid rgba(59, 165, 168, 0.2) !important;
+  /* background-color: rgba(59, 165, 168, 0.2) !important; Version clara de #3ba5a8 */
+  background-color: rgba(59, 165, 168, 0.2) !important; /* Version clara de #3ba5a8 */
+  color: #000 !important; /* Texto negro */
+  border-radius: 50%; /* Opcional: hace que el fondo sea circular */
+}
+/* Cambiar el estilo del día seleccionado */
+::ng-deep .mat-calendar-body-selected {
+  background-color: #3b82f6 !important; /* Azul */
+  border-radius: 50%; /* Redondear el día seleccionado */
+  color: white !important; /* Texto blanco */
+  font-weight: bold;
+}
+
+/* Asegurarse de que al hacer hover en el día seleccionado, el color se mantenga */
+::ng-deep .mat-calendar-body-selected:hover {
+  background-color: #2563eb !important; /* Azul más oscuro */
+}
+
+/* Añadir una transición suave al cambio de selección */
+::ng-deep .mat-calendar-body-cell {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -1,29 +1,73 @@
 import { CommonModule } from '@angular/common';
-import { Component,OnInit ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { Component,OnInit , ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver,  } from '@angular/cdk/layout';
 import { DeviceService } from '@app/services/device.service';
 import { RealtimeProfessionalsService } from '@app/services/realtime-professional.service';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import Swal from 'sweetalert2';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCalendarHeader } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LOCALE_ID } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { Injectable } from '@angular/core';
+import { NativeDateAdapter, DateAdapter } from '@angular/material/core';
+@Injectable()
+export class CustomDateAdapter extends NativeDateAdapter {
+  override getFirstDayOfWeek(): number {
+    return 1; // Lunes como primer día de la semana
+  }
+}
+registerLocaleData(localeEs);
 
 @Component({
   selector: 'app-clinicdetail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatDatepickerModule,MatNativeDateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
+  template: `
+    <mat-calendar [dateFilter]="isDaySelectable" (selectedChange)="onDateSelected($event)" [class.custom-calendar]="true">
+    </mat-calendar>
+  `,
+  styles: [`
+    ::ng-deep .custom-calendar .mat-calendar-body-disabled > .mat-calendar-body-cell-content {
+      background-color: #ffebee !important;  /* Rojo claro */
+      color: rgba(0, 0, 0, 0.38) !important;
+    }
+    
+    ::ng-deep .custom-calendar .mat-calendar-table-header {
+      display: none;
+    }
+  `],
   templateUrl: './clinicdetail.component.html',
-  styleUrl: './clinicdetail.component.css'
+  styleUrl: './clinicdetail.component.css',
+  providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: LOCALE_ID, useValue: 'es-ES' }
+  ]
 })
 export class ClinicdetailComponent implements OnInit {
   cartQuantity: number = 0;
 
   isMobile: boolean = false;
-  selectedDates: any; 
+ 
   selectedService: any = null;
   
-  workDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-  
+  workDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  selectedDates: Date | null = null;
+
+  dateClass = (date: Date): string => {
+    return this.isDaySelectable(date) ? 'highlight-enabled-day' : '';
+  };
+
+  customHeader = CustomHeader;
+
   constructor(
     public device:DeviceService,
     public breakpointObserver: BreakpointObserver,
@@ -31,6 +75,40 @@ export class ClinicdetailComponent implements OnInit {
     public auth:AuthPocketbaseService,
     public realtimeProfessionals:RealtimeProfessionalsService
   ){}
+  
+  isDaySelectable = (date: Date | null): boolean => {
+    if (!date || !this.global.clinicSelected?.days) return false;
+
+    const daysMapping: Record<'L' | 'M' | 'X' | 'J' | 'V' | 'S' | 'D', number> = {
+      L: 1, // Lunes
+      M: 2, // Martes
+      X: 3, // Miércoles
+      J: 4, // Jueves
+      V: 5, // Viernes
+      S: 6, // Sábado
+      D: 0, // Domingo
+    };
+
+    const clinicDays = this.global.clinicSelected.days
+    .split(',')
+    .map((day) => {
+      const key = day.trim().toUpperCase() as keyof typeof daysMapping;
+      return daysMapping[key];
+    })
+    .filter((day) => day !== undefined);
+
+    const dayOfWeek = date.getDay();
+    return clinicDays.includes(dayOfWeek);
+  };
+
+  onDateSelected(selectedDate: Date | null): void {
+    if (selectedDate) {
+      console.log('Fecha seleccionada:', selectedDate);
+      this.selectedDates = selectedDate;
+    } else {
+      console.log('No se seleccionó ninguna fecha.');
+    }
+  }
   
   getQuantityInCart(serviceId:string) {
     const serviceInCart = this.global.cart.find(item => item.id === serviceId);
@@ -155,7 +233,7 @@ export class ClinicdetailComponent implements OnInit {
   }
 
   isDayInClinicDays(day: string): boolean {
-    const validDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    const validDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
     const daysString = this.global.clinicSelected?.days || '';
     const workDays = daysString 
     .split(',')
@@ -169,3 +247,34 @@ export class ClinicdetailComponent implements OnInit {
   
   
   }
+
+@Component({
+  selector: 'custom-header',
+  standalone: true,
+  imports: [MatButtonModule, MatIconModule],
+  styles: [`.mat-calendar-header .mat-calendar-controls .mat-calendar-period-button {
+    font-size: 14px;
+  }`],
+  template: `
+    <div class="mat-calendar-header">
+      <div class="mat-calendar-controls">
+        <button mat-button type="button" class="mat-calendar-period-button"
+                (click)="currentPeriodClicked()">
+          {{periodButtonText}}
+        </button>
+        <div class="mat-calendar-spacer"></div>
+        <button mat-icon-button type="button" class="mat-calendar-previous-button"
+                [disabled]="!previousEnabled()" (click)="previousClicked()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button type="button" class="mat-calendar-next-button"
+                [disabled]="!nextEnabled()" (click)="nextClicked()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CustomHeader<D> extends MatCalendarHeader<D> {
+}

@@ -211,9 +211,17 @@
                     <h6 class="title font-w600">Horario de atención:</h6>
                     <span class="text-light">{{global.clinicSelected.hours}}</span>
                 </div>
+                <mat-calendar 
+                #calendar
+                [dateFilter]="isDaySelectable" 
+                [dateClass]="dateClass"
+                
+                (selectedChange)="onDateSelected($event)"
+                >
+                </mat-calendar>
+                <p>Selected date: {{selectedDates | date: 'dd/MM/yyyy'}}</p>
             </div>
-            <modern-calendar [language]="'es'" [selectedDates]="selectedDates"></modern-calendar>
-
+            
         </div>
          
         </div>
