@@ -1,18 +1,21 @@
+import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatCommonModule } from '@angular/material/core';
 import { GlobalService } from '@app/services/global.service';
 import { AuthboxComponent } from "../sections/authbox/authbox.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping',
   standalone: true,
-  imports: [MatCommonModule, CommonModule, AuthboxComponent],
+  imports: [MatCommonModule, CommonModule, AuthboxComponent, FormsModule],
   templateUrl: './shopping.component.html',
   styleUrl: './shopping.component.css'
 })
 export class ShoppingComponent {
   isMobile: boolean = false;
+  shippingAddress: string = '';
 
   
 constructor(public global: GlobalService){
@@ -68,4 +71,37 @@ updateCart() {
     // Puedes agregar aquí cualquier otra lógica necesaria para actualizar el carrito
 }
 
+
+  // ... existing code ...
+
+ removeItem(item: any) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas eliminar este producto del carrito?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const index = this.global.cart.indexOf(item);
+        if (index > -1) {
+          this.global.cart.splice(index, 1);
+          this.global.cartQuantity = this.global.cart.reduce((total, item) => total + item.quantity, 0);
+          
+          // Actualizar localStorage
+          localStorage.setItem('cart', JSON.stringify(this.global.cart));
+          
+          Swal.fire(
+            '¡Eliminado!',
+            'El producto ha sido eliminado del carrito.',
+            'success'
+          );
+        }
+      }
+    });
 }
+}
+

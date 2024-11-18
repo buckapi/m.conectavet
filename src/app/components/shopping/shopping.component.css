@@ -30,3 +30,6 @@ a:hover {
 .fa {
     font-size: 12px;
 }
+.invalid-input {
+    border: 1px solid red !important;
+  }
