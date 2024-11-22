@@ -10,7 +10,7 @@ import { RecordModel } from 'pocketbase';
   providedIn: 'root',
 })
 export class AuthPocketbaseService {
-  private pb: PocketBase;
+  public pb: PocketBase;
   complete: boolean = false;
 
   constructor(public global: GlobalService) {

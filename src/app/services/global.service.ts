@@ -33,6 +33,7 @@ interface Service {
 
 
 export class GlobalService {
+  newUser: boolean = false;
   hasItemsInCart: boolean = false;
   cartStatus$ = new BehaviorSubject<boolean>(false);
   cartQuantity: number = 10;

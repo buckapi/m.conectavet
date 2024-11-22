@@ -10,6 +10,7 @@ import { DeviceService } from '@app/services/device.service';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { FilterSpecialistsPipe } from '@app/pipes/filter-specialists.pipe';
 import { RealtimeCategoriesService } from 'src/app/services/realtime-catwgories.service'; // {{ edit_1 }}
+import { FavoritesService } from '@app/services/favorites.service';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,8 @@ export class HomeComponent implements OnInit {
     public auth:AuthPocketbaseService,
     public global: GlobalService,
     public configService: ConfigService,
-    private realtimeCategoriesService: RealtimeCategoriesService // {{ edit_1 }}
+    private realtimeCategoriesService: RealtimeCategoriesService, // {{ edit_1 }}
+    public favoritesService: FavoritesService
   ) {}
 
   ngOnInit(): void {
@@ -47,5 +49,14 @@ export class HomeComponent implements OnInit {
 
   toggleView(view: string): void {
     this.isListView = (view === 'list');
+  }
+
+  async mostrarFavorito(event: Event, specialistId: string) {
+    event.stopPropagation();
+    await this.favoritesService.toggleFavorite(specialistId, specialistId);
+  }
+
+  isFavorite(specialistId: string): boolean {
+    return this.favoritesService.isFavorite(specialistId);
   }
 }

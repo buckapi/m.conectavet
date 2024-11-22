@@ -22,12 +22,12 @@
         </div>
         <div class="mid-content"></div>
         <div class="right-content d-flex align-items-center gap-3"  >
-            <a class="notification-badge font-20" 
+            <!-- <a class="notification-badge font-20" 
             [hidden]="!auth.isLogin() || global.activeRoute=='account'"
             >
                 <i class="icon feather icon-bell"></i>
                 <span class="badge badge-danger">14</span>
-            </a>
+            </a> -->
         <app-cart-button style="padding-top: 10px;"></app-cart-button>
 
             <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>

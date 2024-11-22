@@ -5,21 +5,33 @@ import { MatCommonModule } from '@angular/material/core';
 import { GlobalService } from '@app/services/global.service';
 import { AuthboxComponent } from "../sections/authbox/authbox.component";
 import { FormsModule } from '@angular/forms';
+import { noop } from 'rxjs';
+import { NotLoggedInComponent } from '../sections/not-logged-in/not-logged-in.component';
+import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
+import { NewUserComponent } from '../sections/new-user/new-user.component';
+import { AuthFlowComponent } from '../auth-flow/auth-flow.component';
 
 @Component({
   selector: 'app-shopping',
   standalone: true,
-  imports: [MatCommonModule, CommonModule, AuthboxComponent, FormsModule],
+  imports: [
+    AuthFlowComponent,
+    NewUserComponent,
+    MatCommonModule, 
+    CommonModule, 
+    AuthboxComponent, 
+    FormsModule,
+    NotLoggedInComponent],
   templateUrl: './shopping.component.html',
   styleUrl: './shopping.component.css'
 })
 export class ShoppingComponent {
   isMobile: boolean = false;
   shippingAddress: string = '';
-
-  
-constructor(public global: GlobalService){
-
+constructor
+(
+  public auth: AuthPocketbaseService ,
+  public global: GlobalService){
 } 
 
 ngOnInit(): void {
@@ -30,24 +42,26 @@ ngOnInit(): void {
     this.checkMobileDevice();
   });
 }
-
+register() {
+  this.global.newUser = true;
+}
 private checkMobileDevice(): void {
   this.isMobile = window.innerWidth < 992; // Bootstrap lg breakpoint
 }
-
+backToLogin() {
+  this.global.newUser = false;
+}
 calculateTotal(): number {
   let subtotal = 0;
   this.global.cart.forEach(item => {
       subtotal += item.price * item.quantity;
   });
   
-  // Agregar 7% de comisión Conectavet
   const comision = subtotal * 0.07;
   
   return subtotal + comision;
 }
 ngOnDestroy(): void {
-  // Remover el event listener cuando el componente se destruye
   window.removeEventListener('resize', () => {
     this.checkMobileDevice();
   });
@@ -66,13 +80,8 @@ decreaseQuantity(item: any) {
 }
 
 updateCart() {
-    // Actualizar totales y cantidad en el carrito
     this.global.cartQuantity = this.global.cart.reduce((total, item) => total + item.quantity, 0);
-    // Puedes agregar aquí cualquier otra lógica necesaria para actualizar el carrito
 }
-
-
-  // ... existing code ...
 
  removeItem(item: any) {
     Swal.fire({

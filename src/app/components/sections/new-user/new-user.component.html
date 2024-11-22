@@ -1,0 +1,26 @@
+<div class="form-container">
+    <h2>Ingresa un correo electrónico</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="email" class="form-label">Correo Electrónico:</label>
+      <input 
+        type="email" 
+        id="email"
+        formControlName="email"
+        class="form-control"
+        placeholder="Ingrese su correo electrónico">
+      
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-message">
+        <span *ngIf="userForm.get('email')?.errors?.['required']">El correo electrónico es requerido</span>
+        <span *ngIf="userForm.get('email')?.errors?.['email']">Ingrese un correo electrónico válido</span>
+      </div>
+    </div>
+
+    <button 
+      type="submit" 
+      [disabled]="userForm.invalid"
+      class="btn btn-primary w-100">
+      Enviar
+    </button>
+  </form>
+</div>

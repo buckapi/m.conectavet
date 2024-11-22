@@ -99,3 +99,12 @@
 }.star{
     color: #FFD700;
 }
+.hover-heart {
+    transition: all 0.3s ease;
+    
+    &:hover {
+        i {
+            color: #ff4d4d; /* o el color que prefieras */
+        }
+    }
+}

@@ -11,9 +11,18 @@
 	<!-- Preloader end-->
 
 	<!-- Header -->
-	<app-header [hidden]="global.activeRoute=='login'||  
-	global.activeRoute=='chat'|| global.activeRoute=='messages' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail' "></app-header>
-	<app-backheader [hidden]="global.activeRoute=='chat'||    global.activeRoute!='messages' && global.activeRoute!='login'  && global.activeRoute!='register' && global.activeRoute!='addpet' && global.activeRoute!='clinicdetail' "></app-backheader>
+	<app-header [hidden]=" global.activeRoute=='login'||  
+	global.activeRoute=='chat'|| global.activeRoute=='messages' ||global.activeRoute=='register' || global.activeRoute=='addpet' || global.activeRoute=='clinicdetail' || global.activeRoute=='shopping'"></app-header>
+	<app-backheader 
+	[hidden]="global.activeRoute=='chat' 
+	|| global.activeRoute!='messages' 
+	&& global.activeRoute!='login' 
+	&& global.activeRoute!='register' 
+	&& global.activeRoute!='addpet' 
+	&& global.activeRoute!='clinicdetail' 
+	&& global.activeRoute!='shopping'">
+  </app-backheader>
+  
 	<!-- Header -->
 
 	<!-- Sidebar -->

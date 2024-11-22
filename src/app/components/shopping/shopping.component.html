@@ -36,14 +36,10 @@
        
         </div>
     </main>
-
-
     </div>
-    <!-- <div class=" dz-product-detail col-12 col-lg-8 m-b35"  le, 'row col-8': !isMobile}"> -->
       <div class="col-12 col-md-4">
         <main class="page-content  p-b80">
-            <h2>Datos de envío</h2>
-
+            <h2>Información de pago</h2>
             <div class="dz-total-area" *ngIf="shippingAddress">
                 <div class="dz-text"><i class="feather icon-check"></i>Método selecionado webPay </div>
             </div>
@@ -51,49 +47,26 @@
                 <div class="dz-list m-b20">
                     <ol class="dz-list-group">
                         <li class="list-group-items">
-                            <a href="delivery-address.html" class="item-link">
-                                <div class="dz-icon style-2 icon-fill"><i class="fi fi-rr-marker font-20"></i></div>
-                                <div class="list-content">
-                                    <h5 class="title mt-2">Dirección de envío</h5>
-                                </div>
-                            </a>
-                        </li>
-                     
-                    </ol>
-                    <input type="text" 
-                           class="active-status form-control" 
-                           [ngClass]="{'invalid-input': !shippingAddress}" 
-                           [(ngModel)]="shippingAddress"
-                           name="shippingAddress"
-                           placeholder="Ingresa tu dirección"  
-                           style="padding-top: 10px;">
-                  
-                    <ol class="dz-list-group">
-                        <li class="list-group-items">
                             <a href="payment.html" class="item-link">
                                 <div class="dz-icon dz-icon style-2 icon-fill"><i class="fi fi-rr-credit-card font-20"></i></div>
                                 <div class="list-content">
                                     <h5 class="title">Método de pago</h5>
                                     <span class="badge badge-primary">webPay TransBank</span>
-
                                 </div>
                             </a>
                         </li>
-                     
                     </ol>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="notes">Nota adicional:</label>
-                    <textarea class="form-control bg-white" name="notes" id="notes" rows="4" placeholder="Write Here"></textarea>
+                    <textarea class="form-control bg-white" name="notes" id="notes" rows="4" placeholder="¿Tienes alguna indicación especial para tu veterinario? Escríbela aquí..."></textarea>
                 </div>
-    
                 <div class="view-cart mb-2">
                     <ul>
                         <li *ngFor="let item of global.cart">
                             <span class="name">{{item.name}}</span>
                             <span class="about"> x {{item.quantity}} CLP{{item.price | number:'1.2-2'}}</span>
                         </li>
-                        
                         <li>
                             <span class="name">Comisión Conectavet</span>
                             <span class="about">CLP {{calculateTotal() * 0.07 | number:'1.2-2'}}</span>
@@ -111,25 +84,22 @@
             </div>
         </main>
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-4"  *ngIf="!auth.isLogin() && !global.newUser">
         <div class="login-form"></div>
-          <h2 >Ingresa tus datos</h2>
-          <form>
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo electrónico</label>
-              <input type="email" class="form-control" id="email" placeholder="ejemplo@correo.com">
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-          </form>
+         <app-not-logged-in></app-not-logged-in>
+         <div class="text-center" *ngIf="!auth.isLogin() && !global.newUser">
+           <p class="mb-2">o</p>
+           <a href="javascript:void(0);" class="d-block" (click)="register()">crea una cuenta</a>
+         </div>
+       
         </div>
-      </div>
-
-    <!-- </div> -->
-
-
-  
+        <div  class="col-12 col-md-4" *ngIf="!auth.isLogin() && global.newUser">
+            <app-new-user ></app-new-user>
+            <div class="text-center" *ngIf="!auth.isLogin() && global.newUser">
+                <a href="javascript:void(0);" class="d-block" (click)="backToLogin()">ya tengo cuenta</a>
+              </div>
+            
+        </div>
+        </div>
+      
 </main>
