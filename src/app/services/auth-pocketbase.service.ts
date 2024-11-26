@@ -192,7 +192,6 @@ export class AuthPocketbaseService {
     localStorage.removeItem('clientFicha');
     localStorage.removeItem('memberId');
     localStorage.removeItem('status');
-
     this.pb.authStore.clear();
     this.global.setRoute('home');
     // this.virtualRouter.routerActive = "home";

@@ -2,11 +2,13 @@ import { Component, HostListener } from '@angular/core';
 import { GlobalService } from '@app/services/global.service';
 import { CommonModule } from '@angular/common';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
+import { AuthboxComponent } from '@app/components/sections/authbox/authbox.component';
+import { NotLoggedInComponent } from "../../sections/not-logged-in/not-logged-in.component";
 
 @Component({
   selector: 'app-menubar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AuthboxComponent, NotLoggedInComponent],
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.css']
 })
@@ -20,7 +22,9 @@ export class MenubarComponent {
   constructor(public global: GlobalService,
     public auth: AuthPocketbaseService
   ) {}
-
+  isMobile() {
+    return window.innerWidth <= 768; // Ajusta el tamaño según tus necesidades
+  }
   // Método para prevenir el comportamiento del click en el ícono marker
   preventClick(event: MouseEvent) {
     event.preventDefault(); // Evita el comportamiento predeterminado del click
@@ -54,6 +58,7 @@ export class MenubarComponent {
     }
   }
 
+    
   // Detecta cuando el arrastre termina
   @HostListener('touchend', ['$event'])
   onTouchEnd() {

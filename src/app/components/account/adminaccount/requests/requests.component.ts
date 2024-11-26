@@ -1,31 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RealtimeRequestsWebsService } from '@app/services/realtime-requests.service';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-requests',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule  ],
   templateUrl: './requests.component.html',
-  styleUrl: './requests.component.css'
+  styleUrls: ['./requests.component.css']
 })
-export class RequestsComponent {
-  accordions = [
-    {
-      id: 'collapseOne',
-      header: 'Accordion Header One',
-      content: 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid...',
-      expanded: true,
-    },
-    {
-      id: 'collapseTwo',
-      header: 'Accordion Header Two',
-      content: 'Food truck quinoa nesciunt laborum eiusmod...',
-      expanded: false,
-    },
-    {
-      id: 'collapseThree',
-      header: 'Accordion Header Three',
-      content: '3 wolf moon officia aute, non cupidatat skateboard dolor brunch...',
-      expanded: false,
-    },
-  ];
+export class RequestsComponent implements OnInit, OnDestroy {
+  requestsWebs: any[] = [];
+  // private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
+
+
+  constructor(public realtimeRequestsService: RealtimeRequestsWebsService) {
+    this.realtimeRequestsService.requestsWebs$.subscribe(requests => {
+      this.requestsWebs = requests;
+      // Swal.fire({
+      //       title: 'Solicitudes Recibidas',
+      //       text: `Total de solicitudes: ${this.requestsWebs.length}`,
+      //       icon: 'info',
+      //       confirmButtonText: 'OK'
+      //     });
+    });
+
+  }
+
+  ngOnInit(): void {
+    // this.subscription = this.realtimeRequestsService.requestsWebs$.subscribe(requests => {
+    //   this.requestsWebs = requests;
+      
+    //   Swal.fire({
+    //     title: 'Solicitudes Recibidas',
+    //     text: `Total de solicitudes: ${this.requestsWebs.length}`,
+    //     icon: 'info',
+    //     confirmButtonText: 'OK'
+    //   });
+    // });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.realtimeRequestsService.unsubscribeFromRealtimeChanges();
+  }
 }

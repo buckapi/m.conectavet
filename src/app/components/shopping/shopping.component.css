@@ -1,10 +1,13 @@
 a:hover {
-    color: red !important;
+    color: #000 !important;
   }
+.remove:hover {
+  color: red !important;
+}
 
   button:hover {
-    background-color: red !important;
-    border-color: red !important;
+    background-color: #3ba5a8 !important;
+    border-color: #3ba5a8 !important;
   }
   .stepper-btn {
     width: 30px;

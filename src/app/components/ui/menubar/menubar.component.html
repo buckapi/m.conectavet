@@ -1,7 +1,7 @@
 <div class="menubar-area footer-fixed" 
      [ngClass]="{'bg-transparent': !auth.isLogin()}" 
      style="margin: 10px 10px 10px 10px !important; width: 95%; border-radius: 50px;">
-   <div class="toolbar-inner menubar-nav" style="justify-content: space-around;">
+   <div class="toolbar-inner menubar-nav" style="justify-content: space-around;" [hidden]="global.activeRoute=='shopping'">
       <a [hidden]="!auth.isLogin()" (click)="global.setRoute('home')" [class.active]="global.activeRoute === 'home'" class="nav-link">
         <i class="fi fi-rr-home"></i>
       </a>
@@ -12,6 +12,10 @@
       <a [hidden]="!auth.isLogin()" class="nav-link" (click)="global.setRoute('favorites')"  [class.active]="global.activeRoute === 'favorites'">
         <i class="fi fi-rr-star"></i>
       </a>
+    </div>
+    <div class="toolbar-inner menubar-nav" style="justify-content: space-around;">
+
+      <app-not-logged-in [hidden]="auth.isLogin() || !isMobile() "></app-not-logged-in> 
     </div>
   </div>
   <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: -webkit-fill-available;">

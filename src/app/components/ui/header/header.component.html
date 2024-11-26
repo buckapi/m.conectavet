@@ -28,15 +28,15 @@
                 <i class="icon feather icon-bell"></i>
                 <span class="badge badge-danger">14</span>
             </a> -->
-        <app-cart-button style="padding-top: 10px;"></app-cart-button>
-
-            <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>
             <a (click)="toggleScroll()" class="icon font-20" 
             
-            [hidden]="!auth.isLogin() || global.activeRoute=='account' || (global.activeRoute=='account' && auth.isAdmin())"
+            [hidden]="global.activeRoute=='account' || (global.activeRoute=='account' && auth.isAdmin())"
             >
-                <i class="icon feather icon-search"></i>
-            </a>
+            <i class="icon feather icon-search"></i>
+        </a>
+        <app-cart-button style="padding-top: 10px;"></app-cart-button>
+
+    <app-authbox [hidden]="auth.isLogin() || isMobile || global.activeRoute=='account' "></app-authbox>
         </div>
     </div>
 </header>

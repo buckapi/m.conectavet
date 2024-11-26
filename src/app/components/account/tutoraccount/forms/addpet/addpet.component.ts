@@ -17,6 +17,9 @@ interface PetData {
   type: string;
   idTutor: string;
   status: string;
+  petWeight: number;
+  petAge: number;
+  petColor: string;
 }
 
 @Component({
@@ -35,16 +38,24 @@ export class AddpetComponent {
   public selectedImage: File | null = null;
   public selectedImagePrev: File | null = null;
   public petName: string = '';
+  public petWeight: number | null = null;
+  public petAge: number | null = null;
+  public petColor: string = '';
+  public petBreed: string = '';
   public petType: string = '';
   public isVisible: boolean = false;
   public images: string[] = [];
   public idTutor: string = '';
+  public otherPetType: string = '';
    formData:PetData = {
     images: [] ,
     name: '',
     type: '',
     idTutor: '',
-    status: ''
+    status: '',
+    petWeight: 0,
+    petAge: 0,
+    petColor: '' 
   };
 
   constructor(public auth: AuthPocketbaseService) {
@@ -110,6 +121,9 @@ export class AddpetComponent {
      
 
         const petData: PetData = {
+          petWeight: this.formData.petWeight,
+          petAge: this.formData.petAge,
+          petColor: this.formData.petColor,
           images: this.formData.images,
           name: this.petName,
           type: this.petType,

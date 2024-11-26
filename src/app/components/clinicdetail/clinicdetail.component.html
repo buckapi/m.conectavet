@@ -76,11 +76,17 @@
 
                     <div class="dz-select-btn2 row">
                       <div class="row">
-                        <div *ngFor="let profesional of realtimeProfessionals.professionals$ | async" class="col-6 col-md-3">
+                        <!-- <div *ngFor="let profesional of realtimeProfessionals.professionals$ | async" class="col-6 col-md-3">
                           <div class="media" *ngIf="profesional.images && profesional.IdMember === global.clinicSelected.userId">
                             <img class="avatar-profesional" [src]="profesional.images[0]" alt="">
                           </div>
-                        </div>
+                        </div> -->
+                        <ng-container *ngFor="let profesional of realtimeProfessionals.professionals$ | async">
+                          <div class="media col-6 col-md-4" *ngIf="profesional.images && profesional.IdMember === global.clinicSelected.userId">
+                            <img class="avatar-profesional" [src]="profesional.images[0]" alt="">
+                              <h6 class="text-light">{{profesional.name}}</h6>
+                          </div>
+                        </ng-container>
                       </div>
                     </div>
                   </div>

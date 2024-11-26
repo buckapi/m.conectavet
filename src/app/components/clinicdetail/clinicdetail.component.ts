@@ -188,7 +188,9 @@ export class ClinicdetailComponent implements OnInit {
       // Mostrar alerta si la clínica es diferente
       Swal.fire({
         title: 'Orden pendiente',
-        html: 'Para crear una nueva orden, usted debe completar la orden que tiene pendiente.',
+        html: 'Para crear una nueva orden, usted debe <a style="text-decoration: underline;" id="goToOrderLink" (click)="global.setRoute(\'shopping\')">completar la orden</a> que tiene pendiente.',
+       
+        // html: 'Para crear una nueva orden, usted debe completar la orden que tiene pendiente.',
         icon: 'warning',
         showConfirmButton: true,
         confirmButtonText: 'Entendido'
@@ -227,7 +229,7 @@ export class ClinicdetailComponent implements OnInit {
         showConfirmButton: false
       });
       return; // Evita que seleccione el servicio
-    }
+    } 
   
     // Selecciona el servicio si pertenece a la misma clínica o el carrito está vacío
     this.selectedService = service;

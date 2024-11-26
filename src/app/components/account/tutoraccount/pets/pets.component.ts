@@ -21,10 +21,12 @@ interface PetInterface {
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.css'
 })
+
 export class PetsComponent {
   
+  canAddMorePets: boolean = false; // Agrega esta propiedad
 
-pets: any[] = [];
+pets: Pet[] = [];
 filteredPets: any[] = [];
   currentUser: UserInterface = {} as UserInterface;
 
@@ -35,7 +37,9 @@ filteredPets: any[] = [];
     public realtimePets:RealtimePetsService
   
   ) {
-    this.realtimePets.pets$;
+    this.realtimePets.pets$.subscribe(pets => {
+      this.pets = pets;
+    });
 
     this.currentUser = this.auth.getCurrentUser();
   }
@@ -92,5 +96,20 @@ filteredPets: any[] = [];
   showHistoryF(pet:Pet){
     this.global.showHistory=true;
     this.global.petSelected=pet;
+  }
+  validatePetsLimit() {
+    const currentPets = this.pets.length || 0;
+    
+    if (currentPets >= 1) {
+      Swal.fire({
+        title: '¡Plan Limitado!',
+        text: 'Para agregar más mascotas, necesitas suscribirte a un plan premium',
+        icon: 'warning',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#3ba5a8'
+      });
+    } else {
+      this.global.setFormOption('category');
+    }
   }
 }

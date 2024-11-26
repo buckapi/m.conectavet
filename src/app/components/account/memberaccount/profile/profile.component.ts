@@ -30,7 +30,11 @@ interface MemberRecord {
   manager_email: string;
   manager_position: string;
   images: string[];
-  [key: string]: any; // Agregado para permitir índices dinámicos
+  [key: string]: any; 
+  account_number: string;
+  account_holder: string;
+  bank_name: string;
+  // Agregado para permitir índices dinámicos
 }
 
 // interface MemberRecord {
@@ -171,6 +175,9 @@ export class ProfileComponent implements OnInit {
     manager_email: '',
     manager_position: '',
     images: [],
+    account_number: '',
+    account_holder: '',
+    bank_name: '',
   };
   visibleFields: { [key: string]: boolean } = {
     full_name: false,
