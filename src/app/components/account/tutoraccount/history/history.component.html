@@ -53,7 +53,7 @@
                                     src="{{global.petSelected.images[0]}}" alt="Imagen de perfil" style="width: 150px; height: 150px; margin-right: 20px;  border-radius: 25px !important;">
                                     <div class="pt-4">
                                         <h6>{{global.petSelected.name}}</h6>
-                                        <h6>Fecha de Nacimiento: {{ global.petSelected?.birthDate | date: 'dd \'de\' MMM \'de\' yyyy' }} </h6>
+                                        <h6>Fecha de Nacimiento: {{ global.petSelected.birthDate | date: 'dd \'de\' MMM \'de\' yyyy' }} </h6>
                                         <h6>Edad ({{ age }})</h6>
                                         <h6>Raza: {{global.petSelected.breed}}</h6>
                                         <h6>Especie: {{global.petSelected.species}}</h6>

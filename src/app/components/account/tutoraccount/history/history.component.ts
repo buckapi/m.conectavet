@@ -221,7 +221,7 @@ constructor(  public config: ConfigService,public global:GlobalService,
 
 get age(): string {
     const today = new Date();
-    if (!this.global.petSelected?.birthDate) {
+    if (!this.global.petSelected.birthDate) {
         return 'Edad no disponible';
     }
     const birthDate = new Date(this.global.petSelected.birthDate);
