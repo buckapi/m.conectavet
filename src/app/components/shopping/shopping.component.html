@@ -1,4 +1,4 @@
-<main class="page-content space-top p-b80">
+<main class="page-content space-top p-b80" [ngStyle]="{'margin-top': !isMobile ? '150px' : '60px'}">
   <div class="container p-0 row">
     <div class="dz-product-preview col-12 col-lg-4"
       [ngClass]="{'col-12': isMobile, 'col-4': !isMobile, 'padding-top-20': !isMobile}">
@@ -47,7 +47,7 @@
                 <div class="dz-list m-b20">
                     <ol class="dz-list-group">
                         <li class="list-group-items">
-                            <a href="payment.html" class="item-link">
+                            <a class="item-link">
                                 <div class="dz-icon dz-icon style-2 icon-fill"><i class="fi fi-rr-credit-card font-20"></i></div>
                                 <div class="list-content">
                                     <h5 class="title">Método de pago</h5>

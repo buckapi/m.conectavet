@@ -70,7 +70,7 @@ export class MenubarComponent {
         this.isOffcanvasActive = true;
 
         // Activa la clase 'show' en el offcanvas para mostrarlo
-        const offcanvas = document.querySelector('#offcanvasBottom') as HTMLElement;
+        const offcanvas = document.querySelector('#offcanvasBottom18') as HTMLElement;
         if (offcanvas) {
           offcanvas.classList.add('show');
         }
@@ -91,8 +91,8 @@ export class MenubarComponent {
   closeOffcanvas() {
     this.isOffcanvasActive = false;
 
-    // Remueve la clase 'show' para ocultar el offcanvas
-    const offcanvas = document.querySelector('#offcanvasBottom') as HTMLElement;
+18    // Remueve la clase 'show' para ocultar el offcanvas
+    const offcanvas = document.querySelector('#offcanvasBottom18') as HTMLElement;
     if (offcanvas) {
       offcanvas.classList.remove('show');
     }
