@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { AuthPocketbaseService } from '@app/services/auth-pocketbase.service';
 import { AuthboxComponent } from '@app/components/sections/authbox/authbox.component';
 import { NotLoggedInComponent } from "../../sections/not-logged-in/not-logged-in.component";
+import { MapComponent } from '@app/components/map/map.component';
 
 @Component({
   selector: 'app-menubar',
   standalone: true,
-  imports: [CommonModule, AuthboxComponent, NotLoggedInComponent],
+  imports: [CommonModule, AuthboxComponent, NotLoggedInComponent, MapComponent],
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.css']
 })
@@ -91,7 +92,7 @@ export class MenubarComponent {
   closeOffcanvas() {
     this.isOffcanvasActive = false;
 
-18    // Remueve la clase 'show' para ocultar el offcanvas
+    // Remueve la clase 'show' para ocultar el offcanvas
     const offcanvas = document.querySelector('#offcanvasBottom18') as HTMLElement;
     if (offcanvas) {
       offcanvas.classList.remove('show');
