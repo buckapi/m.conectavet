@@ -69,14 +69,39 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
     
-    // Agregar control de geolocalización
-    this.map.addControl(new mapboxgl.GeolocateControl({
+    // Crear elemento personalizado para el marcador de ubicación
+    const geolocateCustomMarker = document.createElement('div');
+    geolocateCustomMarker.className = 'custom-geolocate-marker';
+    geolocateCustomMarker.style.backgroundImage = 'url(assets/images/markerred.png)';
+    geolocateCustomMarker.style.width = '32px';
+    geolocateCustomMarker.style.height = '32px';
+    geolocateCustomMarker.style.backgroundSize = 'cover';
+    geolocateCustomMarker.style.cursor = 'pointer';
+
+    // Agregar control de geolocalización con marcador personalizado
+    const geolocateControl = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
       },
       trackUserLocation: true,
       showUserHeading: true
-    }));
+    });
+
+    this.map.addControl(geolocateControl);
+
+    // Escuchar el evento de geolocalización para agregar el marcador personalizado
+    geolocateControl.on('geolocate', (e: any) => {
+      // Eliminar marcador anterior si existe
+      const existingMarker = document.querySelector('.custom-geolocate-marker');
+      if (existingMarker) {
+        existingMarker.remove();
+      }
+
+      // Crear nuevo marcador en la posición actual
+      new mapboxgl.Marker(geolocateCustomMarker)
+        .setLngLat([e.coords.longitude, e.coords.latitude])
+        .addTo(this.map);
+    });
 
     // Configurar el idioma del mapa cuando se cargue
     this.map.on('load', () => {
