@@ -15,8 +15,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private map!: mapboxgl.Map;
   private markers: Marker[] = [];
   private markerSubscription: Subscription;
-  private userLocationMarker?: mapboxgl.Marker;
-
+  
   @Input() centerLat: number = -33.4489; // Santiago, Chile por defecto
   @Input() centerLng: number = -70.6483;
 
@@ -47,177 +46,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initializeMap();
   }
 
-  private createUserLocationMarker(lngLat: [number, number]) {
-    // Eliminar el marcador anterior si existe
-    if (this.userLocationMarker) {
-      this.userLocationMarker.remove();
-    }
-
-    // Crear elemento para el marcador personalizado
-    const el = document.createElement('div');
-    el.className = 'user-location-marker';
-    el.style.backgroundImage = 'url(assets/images/markerred.png)';
-    el.style.width = '32px';
-    el.style.height = '32px';
-    el.style.backgroundSize = 'cover';
-    el.style.cursor = 'pointer';
-
-    // Crear el nuevo marcador
-    this.userLocationMarker = new mapboxgl.Marker(el)
-      .setLngLat(lngLat)
-      .addTo(this.map);
-  }
-
-  private async initializeMap() {
-    try {
-      // Intentar obtener la ubicación del usuario antes de inicializar el mapa
-      const position = await this.getCurrentPosition();
-      const initialCenter: [number, number] = position ? 
-        [position.coords.longitude, position.coords.latitude] : 
-        [-70.6483, -33.4489]; // Coordenadas por defecto si falla la geolocalización
-
-      // Inicializar el mapa con la ubicación del usuario
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: initialCenter,
-        zoom: 15,
-        language: 'es',
-        maxZoom: 19,
-        minZoom: 11,
-        pitch: 45,
-        bearing: -17.6
-      });
-
-      // Agregar controles de navegación
-      this.map.addControl(
-        new mapboxgl.NavigationControl({
-          showCompass: true,
-          showZoom: true,
-          visualizePitch: true
-        })
-      );
-
-      // Agregar control de geolocalización
-      this.map.addControl(new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true,
-        showUserHeading: true
-      }));
-
-      // Si tenemos la posición del usuario, crear el marcador
-      if (position) {
-        this.createUserLocationMarker([position.coords.longitude, position.coords.latitude]);
-      }
-
-      // Iniciar el seguimiento de la ubicación
-      this.startLocationTracking();
-
-      // Configurar el idioma del mapa cuando se cargue
-      this.map.on('load', () => {
-        // Hacer las calles más visibles
-        const streetLayers = {
-          'road-street': '#ffffff',
-          'road-secondary-tertiary': '#ffffff',
-          'road-primary': '#ffffff',
-          'road-motorway-trunk': '#ffffff',
-          'road-construction': '#ffffff',
-          'road-path': '#ffffff',
-          'road-steps': '#ffffff',
-          'road-pedestrian': '#ffffff'
-        };
-
-        // Configurar cada capa de calle
-        Object.entries(streetLayers).forEach(([layerId, color]) => {
-          if (this.map.getLayer(layerId)) {
-            // Hacer las calles más anchas y visibles
-            this.map.setPaintProperty(layerId, 'line-width', [
-              'interpolate', ['linear'], ['zoom'],
-              14, 2,  // zoom 14, ancho 2
-              16, 4,  // zoom 16, ancho 4
-              18, 6   // zoom 18, ancho 6
-            ]);
-
-            // Añadir borde a las calles
-            this.map.setPaintProperty(layerId, 'line-color', color);
-          }
-        });
-
-        // Configurar las etiquetas de las calles
-        const labelLayers = [
-          'road-label',
-          'road-number-shield'
-        ];
-
-        labelLayers.forEach(layerId => {
-          if (this.map.getLayer(layerId)) {
-            // Hacer el texto más grande
-            this.map.setLayoutProperty(layerId, 'text-size', [
-              'interpolate', ['linear'], ['zoom'],
-              14, 14,  // zoom 14, tamaño 14
-              16, 16,  // zoom 16, tamaño 16
-              18, 18   // zoom 18, tamaño 18
-            ]);
-
-            // Hacer el texto más visible
-            this.map.setPaintProperty(layerId, 'text-color', '#000000');
-            this.map.setPaintProperty(layerId, 'text-halo-color', '#ffffff');
-            this.map.setPaintProperty(layerId, 'text-halo-width', 2);
-
-            // Mostrar más etiquetas
-            this.map.setLayoutProperty(layerId, 'symbol-placement', 'line');
-            this.map.setLayoutProperty(layerId, 'text-field', [
-              'coalesce',
-              ['get', 'name_es'],
-              ['get', 'name']
-            ]);
-            
-            // Aumentar la densidad de etiquetas
-            this.map.setLayoutProperty(layerId, 'symbol-spacing', 250);
-          }
-        });
-
-        // Debug: Imprimir las capas disponibles
-        const style = this.map.getStyle();
-        if (style && style.layers) {
-          console.log('Capas disponibles:', style.layers.map(l => l.id).join(', '));
-        }
-
-        // Agregar los marcadores
-        this.addMarkersToMap();
-      });
-
-      // Hacer zoom out al límite
-      this.map.setZoom(0);
-    } catch (error) {
-      console.error('Error initializing map:', error);
-      // Si hay error, inicializar el mapa con las coordenadas por defecto
-      this.initializeMapWithDefaultLocation();
-    }
-  }
-
-  private getCurrentPosition(): Promise<GeolocationPosition> {
-    return new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error('Geolocation is not supported'));
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        position => resolve(position),
-        error => reject(error),
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
-        }
-      );
-    });
-  }
-
-  private initializeMapWithDefaultLocation() {
+  private initializeMap() {
+    // Primero inicializamos el mapa con una vista por defecto
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
@@ -226,8 +56,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       language: 'es',
       maxZoom: 19,
       minZoom: 11,
-      pitch: 45,
-      bearing: -17.6
+      pitch: 45, // Inclinar el mapa para mejor visualización
+      bearing: -17.6 // Rotar ligeramente para mejor perspectiva
     });
 
     // Agregar controles de navegación
@@ -238,27 +68,129 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         visualizePitch: true
       })
     );
+    
+    // Agregar control de geolocalización
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+    }));
 
-    this.startLocationTracking();
-  }
+    // Configurar el idioma del mapa cuando se cargue
+    this.map.on('load', () => {
+      // Hacer las calles más visibles
+      const streetLayers = {
+        'road-street': '#ffffff',
+        'road-secondary-tertiary': '#ffffff',
+        'road-primary': '#ffffff',
+        'road-motorway-trunk': '#ffffff',
+        'road-construction': '#ffffff',
+        'road-path': '#ffffff',
+        'road-steps': '#ffffff',
+        'road-pedestrian': '#ffffff'
+      };
 
-  private startLocationTracking() {
+      // Configurar cada capa de calle
+      Object.entries(streetLayers).forEach(([layerId, color]) => {
+        if (this.map.getLayer(layerId)) {
+          // Hacer las calles más anchas y visibles
+          this.map.setPaintProperty(layerId, 'line-width', [
+            'interpolate', ['linear'], ['zoom'],
+            14, 2,  // zoom 14, ancho 2
+            16, 4,  // zoom 16, ancho 4
+            18, 6   // zoom 18, ancho 6
+          ]);
+
+          // Añadir borde a las calles
+          this.map.setPaintProperty(layerId, 'line-color', color);
+        }
+      });
+
+      // Configurar las etiquetas de las calles
+      const labelLayers = [
+        'road-label',
+        'road-number-shield'
+      ];
+
+      labelLayers.forEach(layerId => {
+        if (this.map.getLayer(layerId)) {
+          // Hacer el texto más grande
+          this.map.setLayoutProperty(layerId, 'text-size', [
+            'interpolate', ['linear'], ['zoom'],
+            14, 14,  // zoom 14, tamaño 14
+            16, 16,  // zoom 16, tamaño 16
+            18, 18   // zoom 18, tamaño 18
+          ]);
+
+          // Hacer el texto más visible
+          this.map.setPaintProperty(layerId, 'text-color', '#000000');
+          this.map.setPaintProperty(layerId, 'text-halo-color', '#ffffff');
+          this.map.setPaintProperty(layerId, 'text-halo-width', 2);
+
+          // Mostrar más etiquetas
+          this.map.setLayoutProperty(layerId, 'symbol-placement', 'line');
+          this.map.setLayoutProperty(layerId, 'text-field', [
+            'coalesce',
+            ['get', 'name_es'],
+            ['get', 'name']
+          ]);
+          
+          // Aumentar la densidad de etiquetas
+          this.map.setLayoutProperty(layerId, 'symbol-spacing', 250);
+        }
+      });
+
+      // Debug: Imprimir las capas disponibles
+      const style = this.map.getStyle();
+      if (style && style.layers) {
+        console.log('Capas disponibles:', style.layers.map(l => l.id).join(', '));
+      }
+
+      // Agregar los marcadores
+      this.addMarkersToMap();
+    });
+
+    // Intentar obtener la ubicación del usuario
     if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(
+      navigator.geolocation.getCurrentPosition(
         (position) => {
           const { longitude, latitude } = position.coords;
-          this.createUserLocationMarker([longitude, latitude]);
+          
+          // Centrar el mapa en la ubicación del usuario
+          this.map.flyTo({
+            center: [longitude, latitude],
+            zoom: 13,
+            essential: true,
+            duration: 2000
+          });
         },
         (error) => {
-          console.log('Error tracking location:', error);
-        },
-        {
-          enableHighAccuracy: true,
-          maximumAge: 10000,
-          timeout: 5000
+          console.log('Error getting location:', error);
+          // Si hay error, usar la animación por defecto
+          this.defaultMapAnimation();
         }
       );
+    } else {
+      // Si no hay geolocalización disponible, usar la animación por defecto
+      this.defaultMapAnimation();
     }
+  }
+
+  private defaultMapAnimation() {
+    // Hacer zoom out al límite
+    this.map.setZoom(0);
+
+    // Después de un breve momento, centrar en Santiago con una animación suave
+    setTimeout(() => {
+      this.map.flyTo({
+        center: [-70.6483, -33.4489],
+        zoom: 11,
+        essential: true,
+        duration: 2000
+      });
+    }, 1000);
   }
 
   private fitMapToMarkers() {
