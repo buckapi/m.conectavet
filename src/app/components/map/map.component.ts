@@ -15,7 +15,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private map!: mapboxgl.Map;
   private markers: Marker[] = [];
   private markerSubscription: Subscription;
-  
+  private userLocationMarker?: mapboxgl.Marker;
+
   @Input() centerLat: number = -33.4489; // Santiago, Chile por defecto
   @Input() centerLng: number = -70.6483;
 
@@ -46,6 +47,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initializeMap();
   }
 
+  private createUserLocationMarker(lngLat: [number, number]) {
+    // Eliminar el marcador anterior si existe
+    if (this.userLocationMarker) {
+      this.userLocationMarker.remove();
+    }
+
+    // Crear elemento para el marcador personalizado
+    const el = document.createElement('div');
+    el.className = 'user-location-marker';
+    el.style.backgroundImage = 'url(assets/images/markerred.png)';
+    el.style.width = '32px';
+    el.style.height = '32px';
+    el.style.backgroundSize = 'cover';
+    el.style.cursor = 'pointer';
+
+    // Crear el nuevo marcador
+    this.userLocationMarker = new mapboxgl.Marker(el)
+      .setLngLat(lngLat)
+      .addTo(this.map);
+  }
+
   private initializeMap() {
     // Primero inicializamos el mapa con una vista por defecto
     this.map = new mapboxgl.Map({
@@ -68,7 +90,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         visualizePitch: true
       })
     );
-    
+
     // Agregar control de geolocalización
     this.map.addControl(new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -77,6 +99,41 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       trackUserLocation: true,
       showUserHeading: true
     }));
+
+    // Intentar obtener la ubicación del usuario
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const { longitude, latitude } = position.coords;
+          
+          // Crear o actualizar el marcador de ubicación del usuario
+          this.createUserLocationMarker([longitude, latitude]);
+
+          // Centrar el mapa en la ubicación del usuario si es la primera vez
+          if (!this.userLocationMarker) {
+            this.map.flyTo({
+              center: [longitude, latitude],
+              zoom: 15,
+              essential: true,
+              duration: 1000
+            });
+          }
+        },
+        (error) => {
+          console.log('Error getting location:', error);
+          // Si hay error, usar la animación por defecto
+          this.defaultMapAnimation();
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 10000,
+          timeout: 5000
+        }
+      );
+    } else {
+      // Si no hay geolocalización disponible, usar la animación por defecto
+      this.defaultMapAnimation();
+    }
 
     // Configurar el idioma del mapa cuando se cargue
     this.map.on('load', () => {
@@ -152,30 +209,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.addMarkersToMap();
     });
 
-    // Intentar obtener la ubicación del usuario
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { longitude, latitude } = position.coords;
-          
-          // Centrar el mapa en la ubicación del usuario
-          this.map.flyTo({
-            center: [longitude, latitude],
-            zoom: 13,
-            essential: true,
-            duration: 2000
-          });
-        },
-        (error) => {
-          console.log('Error getting location:', error);
-          // Si hay error, usar la animación por defecto
-          this.defaultMapAnimation();
-        }
-      );
-    } else {
-      // Si no hay geolocalización disponible, usar la animación por defecto
-      this.defaultMapAnimation();
-    }
+    // Hacer zoom out al límite
+    this.map.setZoom(0);
+
+    // Después de un breve momento, centrar en Santiago con una animación suave
+    setTimeout(() => {
+      this.map.flyTo({
+        center: [-70.6483, -33.4489],
+        zoom: 11,
+        essential: true,
+        duration: 2000
+      });
+    }, 1000);
   }
 
   private defaultMapAnimation() {
