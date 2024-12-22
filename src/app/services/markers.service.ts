@@ -1,45 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { RealtimeSpecialistsService } from './realtime-specialists.service';
+import { Observable, map } from 'rxjs';
 
 export interface Marker {
-  id: number;
+  id: string;
   name: string;
   lat: number;
   lng: number;
   description: string;
+  imageUrl: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarkersService {
-  private markers: Marker[] = [
-    {
-      id: 1,
-      name: 'Clínica Veterinaria Central',
-      lat: -33.4489,
-      lng: -70.6483,
-      description: 'Atención 24/7, Urgencias veterinarias'
-    },
-    {
-      id: 2,
-      name: 'Hospital Veterinario Norte',
-      lat: -33.4372,
-      lng: -70.6506,
-      description: 'Especialistas en cirugía y tratamientos avanzados'
-    },
-    {
-      id: 3,
-      name: 'Centro Veterinario Sur',
-      lat: -33.4596,
-      lng: -70.6455,
-      description: 'Servicios de emergencia y hospitalización'
-    }
-  ];
+  private markers$: Observable<Marker[]>;
 
-  constructor() { }
+  // Límites aproximados de Santiago
+  private readonly SANTIAGO_BOUNDS = {
+    north: -33.3567, // Huechuraba
+    south: -33.5147, // La Pintana
+    east: -70.5516,  // La Reina
+    west: -70.7516   // Pudahuel
+  };
+
+  constructor(private realtimeService: RealtimeSpecialistsService) {
+    this.markers$ = this.realtimeService.specialists$.pipe(
+      map(specialists => specialists.map(specialist => {
+        const randomCoords = this.getRandomSantiagoCoordinates();
+        return {
+          id: specialist.id,
+          name: `${specialist.full_name }`,
+          lat: specialist.latitude || randomCoords.lat,
+          lng: specialist.longitude || randomCoords.lng,
+          description: `${specialist.specialty || 'Veterinario'} - ${specialist.status || 'Disponible'}`,
+          imageUrl: specialist.images?.[0] || 'assets/images/default-profile.png'
+        };
+      }))
+    );
+  }
+
+  private getRandomSantiagoCoordinates(): { lat: number; lng: number } {
+    const lat = this.SANTIAGO_BOUNDS.south + 
+                (Math.random() * (this.SANTIAGO_BOUNDS.north - this.SANTIAGO_BOUNDS.south));
+    const lng = this.SANTIAGO_BOUNDS.west + 
+                (Math.random() * (this.SANTIAGO_BOUNDS.east - this.SANTIAGO_BOUNDS.west));
+    
+    return {
+      lat: Number(lat.toFixed(6)),
+      lng: Number(lng.toFixed(6))
+    };
+  }
 
   getMarkers(): Observable<Marker[]> {
-    return of(this.markers);
+    return this.markers$;
   }
 }
