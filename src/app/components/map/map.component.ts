@@ -149,7 +149,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       const popup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`
           <div class="marker-popup">
-            <img src="${marker.imageUrl}" alt="${marker.name}" class="marker-image"/>
+            <img src="${marker.imageUrl}" alt="${marker.name}" class="marker-image" style="padding: 5px; border-radius: 15%;"/>
             <h3>${marker.name}</h3>
             <p>${marker.description}</p>
           </div>

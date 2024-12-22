@@ -34,7 +34,7 @@ export class MarkersService {
           name: `${specialist.full_name }`,
           lat: specialist.latitude || randomCoords.lat,
           lng: specialist.longitude || randomCoords.lng,
-          description: `${specialist.specialty || 'Veterinario'} - ${specialist.status || 'Disponible'}`,
+          description: `${specialist.address} - ${specialist.phone}`,
           imageUrl: specialist.images?.[0] || 'assets/images/default-profile.png'
         };
       }))
