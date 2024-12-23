@@ -16033,7 +16033,7 @@ label input {
     right: 0;
     padding: 12px 15px; }
   .dz-card .dz-content {
-    padding: 10px 15px; }
+    padding: 0px 9px 0px 15px !important; }
   .dz-card .dz-quantity {
     font-size: 14px; }
     .dz-card .dz-quantity .quantity {

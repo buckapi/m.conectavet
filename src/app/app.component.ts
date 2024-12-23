@@ -23,6 +23,7 @@ import { AccountComponent } from './components/account/account.component';
 import { AuthPocketbaseService } from './services/auth-pocketbase.service';
 import { RealtimeServicesService } from './services/realtime-services.service';
 import { ShoppingComponent } from './components/shopping/shopping.component';
+import { VisitTrackerService } from './services/visit-tracker.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -64,7 +65,8 @@ export class AppComponent implements OnInit {
     public global: GlobalService,
     public scriptLoader: ScriptLoaderService,
     private loadStyleService: LoadStyleService,
-    public configService: ConfigService
+    public configService: ConfigService,
+    private visitTrackerService: VisitTrackerService
   ) {}
   selectCategory(
     categoryKey: keyof typeof this.configService.defaultConfig.categories
@@ -96,6 +98,7 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.visitTrackerService.trackVisit();
     if (this.auth.isMember ()) {
       this.getMemberId()
     }

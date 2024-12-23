@@ -29,7 +29,7 @@
                     'col-lg-2': !auth.isAdmin(),
                     'col-lg-1': auth.isAdmin()
                 }" *ngFor="let specialist of global.specialists | filterSpecialists:auth.isAdmin()">
-                    <div class="dz-card style-2 specialist-card" style="cursor: pointer;">
+                    <div class="dz-card style-2 specialist-card" style="cursor: pointer ;     border-style: solid ; border-width: 1px ; border-color: #3ba5a8;">
                         <div class="dz-media" (click)="global.viewClinic(specialist)">
                             <a class="image-container">
                                 <div class="dz-media">
@@ -44,12 +44,12 @@
                         <div class="dz-content">
                             <ul class="dz-top-meta mb-2 particular">
                                 <span class="brand-tag">
-                                    <h4 class="title uppercase">{{specialist.full_name}}</h4>
+                                    <h5 class="">{{specialist.full_name}}</h5>
                                 </span>
                                 <li class="dz-review">
                                     <i class="feather icon-star-on star"></i>
                                     <span class="r-rating">4.5</span>
-                                    <span class="r-status">(470)</span>
+                                    <span class="r-status" *ngIf="!global.isMobile()">(470)</span>
                                 </li>
                             </ul>
                             <div *ngIf="auth.isAdmin()" class="form-check form-switch">
