@@ -251,12 +251,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       el.style.backgroundSize = 'cover';
       
       // Crear el popup con imagen
-      const popup = new mapboxgl.Popup({ offset: 25 })
+      const popup = new mapboxgl.Popup({ 
+        offset: 25,
+        className: 'rounded-popup'
+      })
         .setHTML(`
-          <div class="marker-popup">
-            <img src="${marker.imageUrl}" alt="${marker.name}" class="marker-image" style="padding: 5px; border-radius: 15%;"/>
-            <h3>${marker.name}</h3>
-            <p>${marker.description}</p>
+          <div class="marker-popup" style="border-radius: 10px; overflow: hidden; padding: 10px;">
+            <img src="${marker.imageUrl}" alt="${marker.name}" class="marker-image" style="padding: 2px; border-radius: 8%;"/>
+            <h3 style="margin: 8px 0;">${marker.name}</h3>
+            <p style="margin: 0;">${marker.description}</p>
           </div>
         `);
 

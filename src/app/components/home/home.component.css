@@ -53,7 +53,7 @@
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
-    height: 250px; /* Ajusta esta altura según tu diseño */
+    /* height: 250px; Ajusta esta altura según tu diseño */
     width: 100%;
     overflow: hidden;
     border-radius: 15px;

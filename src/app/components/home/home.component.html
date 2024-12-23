@@ -26,8 +26,8 @@
                 <div class="col-12 m-b35" [ngClass]="{
                     'col-12': isListView, 
                     'col-6': !isListView && !auth.isAdmin(), 
-                    'col-lg-3': !auth.isAdmin(),
-                    'col-lg-2': auth.isAdmin()
+                    'col-lg-2': !auth.isAdmin(),
+                    'col-lg-1': auth.isAdmin()
                 }" *ngFor="let specialist of global.specialists | filterSpecialists:auth.isAdmin()">
                     <div class="dz-card style-2 specialist-card" style="cursor: pointer;">
                         <div class="dz-media" (click)="global.viewClinic(specialist)">

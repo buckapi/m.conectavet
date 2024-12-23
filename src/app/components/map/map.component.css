@@ -99,8 +99,28 @@
     }
 }
 
+.rounded-popup .mapboxgl-popup-content {
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.rounded-popup .mapboxgl-popup-tip {
+    display: none;
+}
+
+.marker-popup img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 /* Ocultar el marcador por defecto de geolocalización */
 .mapboxgl-user-location-dot,
 .mapboxgl-user-location-accuracy-circle {
     display: none;
+}
+.mapboxgl-popup-content {
+    padding: 13px 0px 15px 15px !important;
+    border-radius: 8px;
 }
